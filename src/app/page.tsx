@@ -21,7 +21,7 @@ export default function HomePage() {
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
             <Link href="/curriculum" className="hover:text-white transition-colors">커리큘럼</Link>
-            <a href="#" className="hover:text-white transition-colors">기능실습</a>
+            <Link href="/practice" className="hover:text-white transition-colors">기능실습</Link>
             <a href="#" className="hover:text-white transition-colors">자료실</a>
             <a href="#" className="hover:text-white transition-colors">기본가이드</a>
           </div>
@@ -62,10 +62,10 @@ export default function HomePage() {
                 <BookOpen className="w-5 h-5" />
                 커리큘럼 시작하기 <ArrowRight className="w-4 h-4" />
               </Link>
-              <button className="bg-white/10 hover:bg-white/20 border border-white/10 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all">
+              <Link href="/practice" className="bg-white/10 hover:bg-white/20 border border-white/10 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all">
                 <Terminal className="w-5 h-5" />
                 기능 실습 보러가기 <ArrowRight className="w-4 h-4" />
-              </button>
+              </Link>
             </div>
           </div>
           

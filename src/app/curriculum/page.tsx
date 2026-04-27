@@ -21,7 +21,7 @@ export default function CurriculumPage() {
           </Link>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
             <Link href="/curriculum" className="text-white border-b-2 border-indigo-500 pb-1">커리큘럼</Link>
-            <a href="#" className="hover:text-white transition-colors">기능실습</a>
+            <Link href="/practice" className="hover:text-white transition-colors">기능실습</Link>
             <a href="#" className="hover:text-white transition-colors">자료실</a>
             <a href="#" className="hover:text-white transition-colors">기본가이드</a>
           </div>
