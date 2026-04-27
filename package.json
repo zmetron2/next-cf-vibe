@@ -13,6 +13,7 @@
     "pages:dev": "npx wrangler pages dev --port 8788 --proxy 3000 --compatibility-date=2024-04-03 --d1=DB --r2=BUCKET"
   },
   "dependencies": {
+    "lucide-react": "^1.11.0",
     "next": "15.5.2",
     "react": "19.0.0",
     "react-dom": "19.0.0"
