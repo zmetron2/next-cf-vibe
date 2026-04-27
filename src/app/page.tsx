@@ -22,7 +22,7 @@ export default function HomePage() {
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
             <Link href="/curriculum" className="hover:text-white transition-colors">커리큘럼</Link>
             <Link href="/practice" className="hover:text-white transition-colors">기능실습</Link>
-            <a href="#" className="hover:text-white transition-colors">자료실</a>
+            <Link href="/resources" className="hover:text-white transition-colors">자료실</Link>
             <a href="#" className="hover:text-white transition-colors">기본가이드</a>
           </div>
         </div>
