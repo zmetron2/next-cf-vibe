@@ -24,6 +24,7 @@ export default function HomePage() {
             <Link href="/practice" className="hover:text-white transition-colors">기능실습</Link>
             <Link href="/resources" className="hover:text-white transition-colors">자료실</Link>
             <Link href="/guide" className="hover:text-white transition-colors">기본가이드</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">문의하기</Link>
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -300,7 +301,7 @@ export default function HomePage() {
           </div>
           <div className="flex items-center gap-8 text-sm font-bold text-slate-500">
             <a href="#" className="hover:text-indigo-600 transition-colors">GitHub</a>
-            <a href="#" className="hover:text-indigo-600 transition-colors font-black text-indigo-600 underline underline-offset-4">문의하기</a>
+            <Link href="/contact" className="hover:text-indigo-600 transition-colors">문의하기</Link>
             <a href="#" className="hover:text-indigo-600 transition-colors">업데이트 로그</a>
           </div>
           <div className="text-xs text-slate-400">
