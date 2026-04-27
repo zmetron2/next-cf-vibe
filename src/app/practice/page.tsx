@@ -1,10 +1,10 @@
 import React from 'react';
 import { 
-  Search, Code2, Layers, ArrowRight, Zap, CheckCircle2, Circle, 
-  Bookmark, Download, Copy, Edit3, Clock, Calendar, PlayCircle, 
-  ChevronDown, Bell, ChevronRight, Layout, Filter, Flame, Star, 
-  PlusCircle, Database, Upload, Moon, MessageSquare, LineChart, 
-  ShieldCheck, Globe, MoreHorizontal, Lightbulb
+  Search, Code2, Layers, ArrowRight, Zap, CheckCircle2, 
+  Bookmark, Edit3, PlayCircle, 
+  ChevronDown, Bell, Star, 
+  PlusCircle, Upload, Moon, MessageSquare, LineChart, 
+  ShieldCheck, MoreHorizontal, Lightbulb
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -328,7 +328,7 @@ export default function PracticePage() {
 }
 
 // Helper Components
-function StatusCard({ icon: Icon, label, count, unit, color }: { icon: any, label: string, count: string, unit: string, color: string }) {
+function StatusCard({ icon: Icon, label, count, unit, color }: { icon: React.ElementType, label: string, count: string, unit: string, color: string }) {
   return (
     <div className="space-y-2 group cursor-pointer">
       <div className={`p-2 rounded-xl bg-white/5 border border-white/5 flex justify-center group-hover:bg-white/10 transition-colors`}>
@@ -372,8 +372,8 @@ function TabItem({ label, active = false }: { label: string, active?: boolean })
   );
 }
 
-function ProjectCard({ icon: Icon, level, title, desc, tags, link, views, rate }: { icon: any, level: string, title: string, desc: string, tags: string[], link: string, views: string, rate: string }) {
-  const levelColors: any = {
+function ProjectCard({ icon: Icon, level, title, desc, tags, link, views, rate }: { icon: React.ElementType, level: string, title: string, desc: string, tags: string[], link: string, views: string, rate: string }) {
+  const levelColors: Record<string, string> = {
     '입문': 'text-green-500 bg-green-50',
     '초급': 'text-orange-500 bg-orange-50',
     '중급': 'text-indigo-500 bg-indigo-50',
