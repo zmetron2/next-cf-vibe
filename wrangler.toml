@@ -5,8 +5,8 @@ pages_build_output_dir = ".next"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "vibe_db"
-database_id = "YOUR_D1_DATABASE_ID"
+database_name = "vibe-db"
+database_id = "7198806d-f710-44d2-866e-d5cbcc5a5619"
 
 [[r2_buckets]]
 binding = "BUCKET"
