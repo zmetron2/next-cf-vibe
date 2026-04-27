@@ -1,13 +1,11 @@
 import React from 'react';
 import { 
-  Search, Code2, ArrowRight, Zap, 
+  Search, Code2, ArrowRight, 
   Bell, 
-  ChevronRight,
-  BookOpen, Laptop, 
-  Target, Rocket, Users, ShieldCheck,
+  BookOpen, 
+  Users, ShieldCheck,
   Mail, MessageSquare, Send, Paperclip,
-  CheckCircle2, Clock, Info, ExternalLink,
-  ChevronDown
+  CheckCircle2, Clock, ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
 
