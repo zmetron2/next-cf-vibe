@@ -1,11 +1,9 @@
 import React from 'react';
 import { 
-  Search, Sun, Code2, BookOpen, Layers, 
-  Terminal, Database, Upload, Moon, ArrowRight, 
-  MessageSquare, Zap, Flame, FileText, Lightbulb, 
-  ChevronRight, Layout, CheckCircle2, Circle, 
-  Bookmark, Share2, Download, Copy, Edit3, 
-  Clock, Calendar, PlayCircle, ChevronDown, Bell
+  Search, Code2, Layers, 
+  ArrowRight, Zap, CheckCircle2, Circle, 
+  Bookmark, Download, Copy, Edit3, 
+  Clock, Calendar, PlayCircle, ChevronDown, Bell, ChevronRight, Layout
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -347,7 +345,7 @@ function StatRow({ label, value, date }: { label: string, value: string, date: s
   );
 }
 
-function PracticeCard({ title, desc, badge, icon: Icon }: { title: string, desc: string, badge: string, icon: any }) {
+function PracticeCard({ title, desc, badge, icon: Icon }: { title: string, desc: string, badge: string, icon: React.ElementType }) {
   return (
     <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 group hover:border-indigo-200 transition-all cursor-pointer">
       <div className="flex items-start justify-between mb-3">
