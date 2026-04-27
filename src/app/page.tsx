@@ -1,8 +1,8 @@
 import React from 'react';
 import { 
-  Search, Sun, User, Code2, Play, BookOpen, Layers, 
-  Terminal, Database, Upload, Moon, ArrowRight, Github, 
-  HelpCircle, MessageSquare, ExternalLink, Zap, Flame,
+  Search, Sun, Code2, BookOpen, Layers, 
+  Terminal, Database, Upload, Moon, ArrowRight, 
+  MessageSquare, Zap, Flame,
   FileText, Lightbulb, ChevronRight, Layout
 } from 'lucide-react';
 
@@ -80,7 +80,7 @@ export default function HomePage() {
               <div className="p-6 font-mono text-sm leading-relaxed">
                 <div className="text-slate-500 mb-2">1  export default function Welcome() &#123;</div>
                 <div className="text-slate-500 mb-2">2    return (</div>
-                <div className="text-slate-500 ml-4 mb-2">3      &lt;div className="welcome"&gt;</div>
+                <div className="text-slate-500 ml-4 mb-2">3      &lt;div className=&quot;welcome&quot;&gt;</div>
                 <div className="text-white ml-8 mb-2">4        &lt;h1&gt;Vibe Coding&lt;/h1&gt;</div>
                 <div className="text-slate-300 ml-8 mb-2">5        &lt;p&gt;코딩의 즐거움, 함께 성장해요 🚀&lt;/p&gt;</div>
                 <div className="text-slate-500 ml-4 mb-2">6      &lt;/div&gt;</div>
@@ -88,10 +88,11 @@ export default function HomePage() {
                 <div className="text-slate-500">8  &#125;</div>
               </div>
               <div className="absolute bottom-4 right-4 bg-indigo-600/90 text-white text-xs font-bold px-4 py-2 rounded-lg backdrop-blur-md shadow-xl border border-white/20">
-                Let's Vibe Coding! ✨
+                Let&apos;s Vibe Coding! ✨
               </div>
             </div>
           </div>
+
         </div>
       </section>
 
