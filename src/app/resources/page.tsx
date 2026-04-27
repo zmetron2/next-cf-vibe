@@ -1,13 +1,12 @@
 import React from 'react';
 import { 
-  Search, Code2, ArrowRight, Zap, CheckCircle2, 
-  Bookmark, Edit3, PlayCircle, 
-  ChevronDown, Bell, Star, 
-  PlusCircle, Upload, Moon, MessageSquare, 
-  ShieldCheck, MoreHorizontal, Lightbulb, 
+  Search, Code2, ArrowRight, Zap, 
+  Bookmark, ChevronDown, Bell, Star, 
+  Upload, Moon, 
+  MoreHorizontal, 
   FileText, Globe, Video, Folder, Terminal, 
   Cpu, Palette, Cloud, Database, ExternalLink,
-  ChevronLeft, ChevronRight, Hash, Github
+  ChevronLeft, ChevronRight, Hash, Github, Layout
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -272,7 +271,7 @@ export default function ResourcesPage() {
 }
 
 // Helper Components
-function StatusCard({ icon: Icon, label, count, color }: { icon: any, label: string, count: string, color: string }) {
+function StatusCard({ icon: Icon, label, count, color }: { icon: React.ElementType, label: string, count: string, color: string }) {
   return (
     <div className="space-y-2 group cursor-pointer">
       <div className={`p-2 rounded-xl bg-white/5 border border-white/5 flex justify-center group-hover:bg-white/10 transition-colors`}>
@@ -286,7 +285,7 @@ function StatusCard({ icon: Icon, label, count, color }: { icon: any, label: str
   );
 }
 
-function CategoryItem({ label, count, icon: Icon, active = false }: { label: string, count: string, icon?: any, active?: boolean }) {
+function CategoryItem({ label, count, icon: Icon, active = false }: { label: string, count: string, icon?: React.ElementType, active?: boolean }) {
   return (
     <div className={`flex items-center justify-between p-2 rounded-xl cursor-pointer transition-all ${active ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'}`}>
       <div className="flex items-center gap-3">
@@ -298,7 +297,7 @@ function CategoryItem({ label, count, icon: Icon, active = false }: { label: str
   );
 }
 
-function RecentResource({ title, category, date, icon: Icon }: { title: string, category: string, date: string, icon: any }) {
+function RecentResource({ title, category, date, icon: Icon }: { title: string, category: string, date: string, icon: React.ElementType }) {
   return (
     <div className="flex items-center gap-3 group cursor-pointer">
       <div className="p-2 bg-slate-50 text-slate-400 rounded-lg group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-all">
@@ -312,7 +311,7 @@ function RecentResource({ title, category, date, icon: Icon }: { title: string, 
   );
 }
 
-function RecommendCard({ label, desc, count, icon: Icon, color }: { label: string, desc: string, count: string, icon: any, color: string }) {
+function RecommendCard({ label, desc, count, icon: Icon, color }: { label: string, desc: string, count: string, icon: React.ElementType, color: string }) {
   return (
     <div className="bg-white rounded-2xl border border-slate-200 p-5 flex flex-col justify-between min-w-[160px] group hover:shadow-lg transition-all cursor-pointer">
       <div className="space-y-3">
