@@ -5,6 +5,7 @@ import {
   MessageSquare, Zap, Flame,
   FileText, Lightbulb, ChevronRight, Layout
 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
@@ -19,7 +20,7 @@ export default function HomePage() {
             <span>Vibe Coding</span>
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-            <a href="#" className="hover:text-white transition-colors">커리큘럼</a>
+            <Link href="/curriculum" className="hover:text-white transition-colors">커리큘럼</Link>
             <a href="#" className="hover:text-white transition-colors">기능실습</a>
             <a href="#" className="hover:text-white transition-colors">자료실</a>
             <a href="#" className="hover:text-white transition-colors">기본가이드</a>
@@ -57,10 +58,10 @@ export default function HomePage() {
               함께 성장하는 바이브 코딩 스터디 공간입니다.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <button className="bg-indigo-600 hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all hover:-translate-y-1 shadow-lg shadow-indigo-600/20">
+              <Link href="/curriculum" className="bg-indigo-600 hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all hover:-translate-y-1 shadow-lg shadow-indigo-600/20">
                 <BookOpen className="w-5 h-5" />
                 커리큘럼 시작하기 <ArrowRight className="w-4 h-4" />
-              </button>
+              </Link>
               <button className="bg-white/10 hover:bg-white/20 border border-white/10 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all">
                 <Terminal className="w-5 h-5" />
                 기능 실습 보러가기 <ArrowRight className="w-4 h-4" />
