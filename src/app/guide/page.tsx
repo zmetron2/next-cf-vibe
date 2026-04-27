@@ -1,14 +1,12 @@
 import React from 'react';
 import { 
   Search, Code2, ArrowRight, Zap, 
-  Bookmark, ChevronDown, Bell, Star, 
-  Upload, Moon, 
-  MoreHorizontal, 
-  FileText, Globe, Video, Folder, Terminal, 
-  Cpu, Palette, Cloud, Database, ExternalLink,
-  ChevronLeft, ChevronRight, Hash, Github, Layout,
-  BookOpen, HelpCircle, MessageSquare, Laptop, 
-  Target, Rocket, Users, ShieldCheck, Clock, Calendar
+  Bell, 
+  Cloud,
+  ChevronRight,
+  BookOpen, Laptop, 
+  Target, Rocket, Users, ShieldCheck,
+  Moon, Hash, ChevronDown, Github, Layout
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -264,7 +262,7 @@ export default function GuidePage() {
 }
 
 // Helper Components
-function StatusCard({ icon: Icon, label, count, color }: { icon: any, label: string, count: string, color: string }) {
+function StatusCard({ icon: Icon, label, count, color }: { icon: React.ElementType, label: string, count: string, color: string }) {
   return (
     <div className="space-y-2 group cursor-pointer">
       <div className={`p-2 rounded-xl bg-white/5 border border-white/5 flex justify-center group-hover:bg-white/10 transition-colors`}>
@@ -298,7 +296,7 @@ function SidebarLink({ label }: { label: string }) {
   );
 }
 
-function CategoryCard({ icon: Icon, title, desc, count, color, bg }: { icon: any, title: string, desc: string, count: string, color: string, bg: string }) {
+function CategoryCard({ icon: Icon, title, desc, count, color, bg }: { icon: React.ElementType, title: string, desc: string, count: string, color: string, bg: string }) {
   return (
     <div className="bg-white rounded-3xl border border-slate-200 p-6 space-y-4 group hover:shadow-lg transition-all cursor-pointer">
       <div className={`w-12 h-12 ${bg} ${color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
@@ -316,7 +314,7 @@ function CategoryCard({ icon: Icon, title, desc, count, color, bg }: { icon: any
 }
 
 function PopularGuideItem({ rank, title, category, views }: { rank: string, title: string, category: string, views: string }) {
-  const categoryColors: any = {
+  const categoryColors: Record<string, string> = {
     '시작하기': 'bg-indigo-50 text-indigo-600',
     '개발 환경 설정': 'bg-blue-50 text-blue-600',
     '학습 방법': 'bg-green-50 text-green-600',
@@ -338,7 +336,7 @@ function PopularGuideItem({ rank, title, category, views }: { rank: string, titl
   );
 }
 
-function RecentUpdateItem({ icon: Icon, title, date }: { icon: any, title: string, date: string }) {
+function RecentUpdateItem({ icon: Icon, title, date }: { icon: React.ElementType, title: string, date: string }) {
   return (
     <div className="p-3 flex items-center justify-between rounded-2xl hover:bg-slate-50 cursor-pointer group transition-colors">
       <div className="flex items-center gap-3">

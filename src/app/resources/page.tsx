@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   Search, Code2, ArrowRight, Zap, 
   Bookmark, ChevronDown, Bell, Star, 
-  Upload, Moon, 
+  Moon, 
   MoreHorizontal, 
   FileText, Globe, Video, Folder, Terminal, 
   Cpu, Palette, Cloud, Database, ExternalLink,
