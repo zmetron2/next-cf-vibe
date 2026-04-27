@@ -5,7 +5,7 @@ import {
   MoreHorizontal, 
   FileText, Globe, Video, Folder, Terminal, 
   Cpu, Palette, Cloud, Database, ExternalLink,
-  ChevronLeft, ChevronRight, Hash, Layout
+  ChevronLeft, ChevronRight, Layout
 } from 'lucide-react';
 import Link from 'next/link';
 
