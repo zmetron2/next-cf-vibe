@@ -1,9 +1,6 @@
-'use client';
-
 export const runtime = 'edge';
 
 import React from 'react';
-import { BookOpen, Terminal, ArrowRight, Zap, Flame } from 'lucide-react';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
@@ -24,12 +21,9 @@ export default function HomePage() {
         </p>
         <div className="hero-buttons">
           <Link href="/curriculum" className="btn-primary">
-            <BookOpen size={18} />
-            커리큘럼 시작하기
-            <ArrowRight size={16} />
+            커리큘럼 시작하기 →
           </Link>
           <Link href="/practice" className="btn-secondary">
-            <Terminal size={18} />
             기능 실습 보러가기
           </Link>
         </div>
@@ -38,19 +32,16 @@ export default function HomePage() {
       <main className="main-content">
         <div className="feature-grid">
           <div className="card">
-            <Zap className="card-icon" />
             <h3>3회차: 상태관리 이해</h3>
             <p>현재 진행 중인 스터디 내용을 확인하세요.</p>
             <Link href="/curriculum" className="card-link">이어보기 →</Link>
           </div>
           <div className="card">
-            <BookOpen className="card-icon" />
             <h3>입문부터 시작하기</h3>
             <p>1회차부터 차근차근 학습해보세요.</p>
             <Link href="/curriculum" className="card-link">바로가기 →</Link>
           </div>
           <div className="card">
-            <Flame className="card-icon" />
             <h3>로그인 기능 만들기</h3>
             <p>가장 인기 있는 실습 프로젝트입니다.</p>
             <Link href="/practice" className="card-link">실습 보기 →</Link>

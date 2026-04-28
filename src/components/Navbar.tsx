@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sun, Moon } from 'lucide-react';
 import Logo from './Logo';
 
 export default function Navbar() {
@@ -57,7 +56,7 @@ export default function Navbar() {
 
         <div className="nav-actions">
           <button onClick={toggleTheme} className="theme-toggle" aria-label="테마 변경">
-            {mounted && (theme === 'light' ? <Moon size={18} /> : <Sun size={18} />)}
+            {mounted && (theme === 'light' ? '🌙' : '☀️')}
           </button>
           <Link href="/login" className="login-btn" id="login-button">로그인</Link>
         </div>
