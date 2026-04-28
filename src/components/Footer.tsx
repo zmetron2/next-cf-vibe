@@ -2,45 +2,51 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { ChevronUp } from 'lucide-react';
 import Logo from './Logo';
 
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-container">
-        <div className="footer-brand">
-          <Link href="/" className="footer-logo">
-            <Logo size={22} />
-            <span>엘쯔의 바이브코딩</span>
-          </Link>
-          <p>함께 배우고 성장하는 바이브 코딩 스터디 공간</p>
+    <footer className="bg-slate-50 dark:bg-slate-900/50 border-t border-border pt-16 pb-8">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+          <div className="footer-brand">
+            <Link href="/" className="flex items-center gap-2 font-black text-lg mb-4 hover:text-primary transition-colors">
+              <Logo size={22} />
+              <span>바이브코딩</span>
+            </Link>
+            <p className="text-sm opacity-60 leading-relaxed max-w-sm">
+              UX디자인, 퍼블리싱, 프런트엔드 개발 지식을 공유하고<br />
+              함께 성장하는 바이브 코딩 스터디 공간입니다.
+            </p>
+          </div>
+
+          <div className="flex gap-16 md:justify-end">
+            <div className="flex flex-col gap-3">
+              <h4 className="text-xs font-black uppercase tracking-widest opacity-40 mb-2">사이트</h4>
+              <Link href="/curriculum" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">커리큘럼</Link>
+              <Link href="/practice" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">기능실습</Link>
+              <Link href="/resources" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">자료실</Link>
+              <Link href="/guide" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">기본가이드</Link>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h4 className="text-xs font-black uppercase tracking-widest opacity-40 mb-2">문의</h4>
+              <Link href="/contact" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all">문의하기</Link>
+            </div>
+          </div>
         </div>
 
-        <div className="footer-nav">
-          <div className="nav-col">
-            <h4>사이트</h4>
-            <Link href="/curriculum">커리큘럼</Link>
-            <Link href="/practice">기능실습</Link>
-            <Link href="/resources">자료실</Link>
-            <Link href="/guide">기본가이드</Link>
-          </div>
-          <div className="nav-col">
-            <h4>문의</h4>
-            <Link href="/contact">문의하기</Link>
-          </div>
+        <div className="pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-6">
+          <p className="text-xs opacity-40 font-medium">© 2024 바이브코딩. All rights reserved.</p>
+          <button
+            className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-border shadow-sm flex items-center justify-center text-foreground hover:border-primary hover:text-primary transition-all group"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="맨 위로"
+            id="scroll-to-top"
+          >
+            <ChevronUp size={18} className="group-hover:-translate-y-0.5 transition-transform" />
+          </button>
         </div>
-      </div>
-
-      <div className="footer-bottom">
-        <p>© 2024 엘쯔의 바이브코딩. All rights reserved.</p>
-        <button
-          className="scroll-top"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label="맨 위로"
-          id="scroll-to-top"
-        >
-          ▲
-        </button>
       </div>
     </footer>
   );
