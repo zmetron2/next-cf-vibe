@@ -26,7 +26,8 @@ export default function Logo({ className = "", size = 32 }: LogoProps) {
         d="M61 59H32s5 0 10-6 5-11 5-11V3h31v39c0 9-7 17-17 17z"
       />
       <path 
-        className="fill-black dark:fill-slate-500 transition-colors duration-300"
+        fill="currentColor"
+        style={{ color: 'var(--foreground)', transition: 'color 0.3s ease' }}
         d="M20 62C9 62 0 53 0 42V3a3 3 0 0 1 6 0v39c0 7 6 14 14 14a3 3 0 1 1 0 6zM30 62a3 3 0 1 1 0-6c7 0 14-7 14-14V3a3 3 0 1 1 6 0v39c0 11-9 20-20 20zM61 62a3 3 0 1 1 0-6c8 0 14-7 14-14V3a3 3 0 1 1 6 0v39c0 11-9 20-20 20z"
       />
     </svg>
