@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
 
     if (!env?.DB) {
       return Response.json({ 
-        error: "데이터베이스 연결을 찾을 수 없습니다. npm run pages:dev (8788 포트)로 접속 중인지 확인해주세요." 
+        error: "데이터베이스 연결(DB binding)을 찾을 수 없습니다. Cloudflare Pages 설정에서 D1 데이터베이스가 'DB'라는 이름으로 바인딩되어 있는지 확인해주세요." 
       }, { status: 500 });
     }
 
@@ -45,6 +45,13 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     console.error('Login API Error:', error);
-    return Response.json({ error: (error as Error).message }, { status: 500 });
+    return Response.json({ 
+      error: `서버 오류: ${(error as Error).message}`,
+      debug: {
+        hasContext: !!getRequestContext(),
+        hasEnv: !!getRequestContext()?.env,
+        hasDB: !!getRequestContext()?.env?.DB
+      }
+    }, { status: 500 });
   }
 }
