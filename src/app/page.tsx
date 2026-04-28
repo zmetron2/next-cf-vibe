@@ -1,5 +1,7 @@
 'use client';
 
+export const runtime = 'edge';
+
 import React from 'react';
 import { BookOpen, Terminal, ArrowRight, Zap, Flame } from 'lucide-react';
 import Link from 'next/link';
