@@ -26,11 +26,11 @@ export default function LoginPage() {
       });
 
       const text = await response.text();
-      let data: { success?: boolean; error?: string };
+      let data: { success?: boolean; error?: string; user?: { username: string; role: string } };
       try {
         data = JSON.parse(text);
       } catch (_e) {
-        setError(`서버 응답 파싱 실패 (HTML/Text 수신). 내용: ${text.slice(0, 100)}...`);
+        setError(`서버 응답 파싱 실패. 내용: ${text.slice(0, 100)}...`);
         return;
       }
 
