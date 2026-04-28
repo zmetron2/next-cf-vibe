@@ -14,7 +14,8 @@ export async function POST(request: NextRequest) {
       }, { status: 500 });
     }
 
-    const { username, password } = await request.json();
+    const body = await request.json() as { username?: string; password?: string };
+    const { username, password } = body;
 
     if (!username || !password) {
       return Response.json({ error: "아이디와 비밀번호를 모두 입력해주세요." }, { status: 400 });
