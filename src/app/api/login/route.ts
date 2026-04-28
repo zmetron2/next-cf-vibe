@@ -8,10 +8,15 @@ export async function POST(request: NextRequest) {
     const context = getRequestContext();
     const env = context?.env;
 
-    if (!env?.DB) {
-      return Response.json({ 
-        error: "데이터베이스 연결(DB binding)을 찾을 수 없습니다. Cloudflare Pages 설정에서 D1 데이터베이스가 'DB'라는 이름으로 바인딩되어 있는지 확인해주세요." 
-      }, { status: 500 });
+    if (!env || !env.DB) {
+      console.error('D1 Binding Missing');
+      return new Response(JSON.stringify({ 
+        error: "데이터베이스 바인딩(DB)을 찾을 수 없습니다. Cloudflare 설정에서 바인딩을 확인해주세요.",
+        debug: { hasContext: !!context, hasEnv: !!env }
+      }), { 
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     const body = await request.json() as { username?: string; password?: string };
