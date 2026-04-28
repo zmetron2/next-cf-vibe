@@ -25,7 +25,12 @@ export default function LoginPage() {
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await response.json().catch(() => ({ error: '서버에서 올바르지 않은 응답을 보냈습니다.' }));
+      interface LoginResponse {
+        success?: boolean;
+        error?: string;
+      }
+      
+      const data = (await response.json().catch(() => ({ error: '서버에서 올바르지 않은 응답을 보냈습니다.' }))) as LoginResponse;
 
       if (response.ok && data.success) {
         router.push('/');
