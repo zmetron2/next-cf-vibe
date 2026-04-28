@@ -13,22 +13,6 @@ function GithubIcon({ className }: { className?: string }) {
   );
 }
 
-function MoonIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-    </svg>
-  );
-}
-
-function HashIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
-    </svg>
-  );
-}
-
 function ChevronDownIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -39,51 +23,125 @@ function ChevronDownIcon({ className }: { className?: string }) {
 
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-[#0f172a] text-slate-900 dark:text-white px-6 py-16 mt-auto border-t border-slate-200 dark:border-white/10">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div className="space-y-4 col-span-1 md:col-span-1">
-          <div className="flex items-center gap-3 font-bold text-xl tracking-tight text-slate-900 dark:text-white">
-            <Logo size={32} />
+    <footer className="footer">
+      <div className="footer-container">
+        <div className="footer-brand">
+          <Link href="/" className="footer-logo">
+            <Logo size={24} />
             <span>엘쯔의 바이브코딩</span>
-          </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">함께 배우고 성장하는 바이브 코딩 스터디 공간</p>
-          <div className="flex gap-4 pt-2">
-            <GithubIcon className="w-5 h-5 text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors" />
-            <MoonIcon className="w-5 h-5 text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors" />
-            <HashIcon className="w-5 h-5 text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors" />
+          </Link>
+          <p>함께 배우고 성장하는 바이브 코딩 스터디 공간</p>
+          <div className="social-links">
+            <GithubIcon className="icon" />
           </div>
         </div>
         
-        <FooterNav title="사이트" links={['커리큘럼', '기능실습', '자료실', '기본가이드']} />
-        <FooterNav title="문의" links={['문의하기', '피드백', '자료 제안']} isLink />
-        <FooterNav title="기타" links={['업데이트 로그', '이용 약관', '개인정보 처리방침']} />
+        <div className="footer-nav">
+          <div className="nav-col">
+            <h4>사이트</h4>
+            <Link href="/curriculum">커리큘럼</Link>
+            <Link href="/practice">기능실습</Link>
+          </div>
+          <div className="nav-col">
+            <h4>문의</h4>
+            <Link href="/contact">문의하기</Link>
+          </div>
+        </div>
       </div>
-      <div className="max-w-7xl mx-auto border-t border-slate-200 dark:border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-xs text-slate-500">© 2024 엘쯔의 바이브코딩. All rights reserved.</p>
-        <button 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/20"
-          id="scroll-to-top"
-        >
-          <ChevronDownIcon className="w-6 h-6 rotate-180" />
+      
+      <div className="footer-bottom">
+        <p>© 2024 엘쯔의 바이브코딩. All rights reserved.</p>
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="scroll-top">
+          <ChevronDownIcon className="icon rotate" />
         </button>
       </div>
-    </footer>
-  );
-}
 
-function FooterNav({ title, links, isLink }: { title: string, links: string[], isLink?: boolean }) {
-  return (
-    <div className="space-y-4">
-      <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest">{title}</h4>
-      <div className="flex flex-col gap-2">
-        {links.map((link) => (
-          isLink && link === '문의하기' ? 
-          <Link key={link} href="/contact" className="text-xs text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">{link}</Link>
-          :
-          <a key={link} href="#" className="text-xs text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">{link}</a>
-        ))}
-      </div>
-    </div>
+      <style jsx>{`
+        .footer {
+          background: var(--card);
+          border-top: 1px solid var(--border);
+          padding: 60px 20px;
+          margin-top: auto;
+        }
+        .footer-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 40px;
+        }
+        .footer-brand h1 {
+          font-size: 1.2rem;
+          margin-bottom: 15px;
+        }
+        .footer-logo {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-weight: bold;
+          margin-bottom: 15px;
+        }
+        .footer-brand p {
+          font-size: 0.9rem;
+          opacity: 0.6;
+          margin-bottom: 20px;
+        }
+        .social-links {
+          display: flex;
+          gap: 15px;
+        }
+        .icon {
+          width: 20px;
+          height: 20px;
+          opacity: 0.5;
+        }
+        .footer-nav {
+          display: flex;
+          gap: 60px;
+        }
+        .nav-col h4 {
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          margin-bottom: 15px;
+          opacity: 0.8;
+        }
+        .nav-col {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .nav-col a {
+          font-size: 0.85rem;
+          opacity: 0.6;
+        }
+        .footer-bottom {
+          max-width: 1200px;
+          margin: 40px auto 0;
+          padding-top: 20px;
+          border-top: 1px solid var(--border);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 0.8rem;
+          opacity: 0.5;
+        }
+        .scroll-top {
+          background: var(--primary);
+          color: white;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .rotate {
+          transform: rotate(180deg);
+          opacity: 1;
+        }
+      `}</style>
+    </footer>
   );
 }

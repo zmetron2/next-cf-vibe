@@ -8,27 +8,23 @@
     "start": "next start",
     "lint": "eslint",
     "pages:build": "npx @cloudflare/next-on-pages",
-    "pages:deploy": "npx rimraf .vercel && npm run pages:build && npx wrangler pages deploy .vercel/output --branch main --project-name zmetron-study",
-    "pages:watch": "npx @cloudflare/next-on-pages --watch",
-    "pages:dev": "npx wrangler pages dev public --port 8788 --proxy 3000 --compatibility-date=2024-04-03 --d1=DB --r2=BUCKET"
+    "pages:deploy": "npx @cloudflare/next-on-pages && npx wrangler pages deploy .vercel/output"
   },
   "dependencies": {
-    "lucide-react": "^1.11.0",
-    "next": "15.5.2",
+    "lucide-react": "^0.473.0",
+    "next": "15.1.0",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.13.16",
-    "@cloudflare/workers-types": "^4.20260426.1",
-    "@tailwindcss/postcss": "^4",
+    "@cloudflare/workers-types": "^4.20241218.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.4",
-    "tailwindcss": "^4",
+    "eslint-config-next": "15.1.0",
     "typescript": "^5",
-    "wrangler": "^4.85.0"
+    "wrangler": "^3.101.0"
   }
 }
