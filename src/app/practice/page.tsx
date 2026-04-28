@@ -1,53 +1,21 @@
-import React from 'react';
 import { 
-  Search, Code2, Layers, ArrowRight, Zap, CheckCircle2, 
+  Layers, ArrowRight, Zap, CheckCircle2, 
   Bookmark, Edit3, PlayCircle, 
-  ChevronDown, Bell, Star, 
+  Star, 
   PlusCircle, Upload, Moon, MessageSquare, LineChart, 
-  ShieldCheck, MoreHorizontal, Lightbulb
+  ShieldCheck, MoreHorizontal, Lightbulb, Search, ChevronDown
 } from 'lucide-react';
 import Link from 'next/link';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 export default function PracticePage() {
   return (
-    <div className="min-h-screen bg-[#f8f9fc] flex flex-col font-sans">
-      {/* --- Navigation Bar --- */}
-      <nav className="bg-[#0f172a] text-white px-6 py-3 flex items-center justify-between border-b border-white/10 sticky top-0 z-50">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight">
-            <div className="bg-indigo-500 p-1 rounded-lg">
-              <Code2 className="w-6 h-6 text-white" />
-            </div>
-            <span>Vibe Coding</span>
-          </Link>
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-            <Link href="/curriculum" className="hover:text-white transition-colors">커리큘럼</Link>
-            <Link href="/practice" className="text-white border-b-2 border-indigo-500 pb-1">기능실습</Link>
-            <Link href="/resources" className="hover:text-white transition-colors">자료실</Link>
-            <Link href="/guide" className="hover:text-white transition-colors">기본가이드</Link>
-            <Link href="/contact" className="hover:text-white transition-colors">문의하기</Link>
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="relative hidden sm:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input 
-              type="text" 
-              placeholder="검색..." 
-              className="bg-white/10 border border-white/10 rounded-full py-1.5 pl-10 pr-4 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-            />
-          </div>
-          <button className="p-2 hover:bg-white/10 rounded-full transition-colors text-slate-300">
-            <Bell className="w-5 h-5" />
-          </button>
-          <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold border border-white/20">
-            V
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-background flex flex-col font-sans transition-colors">
+      <Navbar />
 
       {/* --- Header Area --- */}
-      <header className="bg-[#0f172a] text-white px-6 py-12">
+      <header className="bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-white px-6 py-12 transition-colors border-b border-slate-200 dark:border-white/5">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="space-y-4">
             <h1 className="text-3xl font-black">기능 실습</h1>
@@ -103,9 +71,9 @@ export default function PracticePage() {
             </FilterSection>
 
             <div className="space-y-3">
-              <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">연계 커리큘럼</h3>
+              <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">연계 커리큘럼</h3>
               <div className="relative">
-                <select className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-slate-600 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <select className="w-full bg-card dark:bg-slate-800/50 border border-border rounded-xl px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer">
                   <option>전체 단계</option>
                   <option>1단계 - 기본 기초</option>
                   <option>2단계 - 상태 관리</option>
@@ -115,9 +83,9 @@ export default function PracticePage() {
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">기술 스택</h3>
+              <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">기술 스택</h3>
               <div className="relative">
-                <select className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold text-slate-600 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <select className="w-full bg-card dark:bg-slate-800/50 border border-border rounded-xl px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer">
                   <option>전체</option>
                   <option>React</option>
                   <option>TypeScript</option>
@@ -129,49 +97,36 @@ export default function PracticePage() {
           </div>
 
           {/* Suggestion Box */}
-          <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 space-y-3">
-            <h4 className="text-xs font-black text-indigo-600 flex items-center gap-1.5">
-              <Lightbulb className="w-3.5 h-3.5" /> 실습 아이디어 제안
-            </h4>
-            <p className="text-[10px] text-slate-500 leading-relaxed">
-              직접 만들고 싶은 기능이 있으신가요?<br />
-              실습 프로젝트로 추가 제안해 주세요!
+          <div className="bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-2xl p-5 space-y-3 transition-colors">
+            <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
+               <Lightbulb className="w-4 h-4" />
+               <h4 className="text-xs font-black">실습 아이디어</h4>
+            </div>
+            <p className="text-[10px] text-indigo-700/70 dark:text-indigo-300/60 leading-relaxed font-medium">
+              직접 만들어보고 싶은 기능이 있나요? 아이디어를 제안해주시면 실습 리스트에 추가됩니다!
             </p>
-            <button className="w-full bg-white py-2 rounded-lg text-[10px] font-black text-indigo-600 shadow-sm hover:shadow-md transition-all border border-indigo-50">
-              아이디어 제안하기 →
+            <button className="w-full bg-white dark:bg-white/10 py-2 rounded-xl text-[10px] font-black text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
+              아이디어 제안하기
             </button>
           </div>
         </aside>
 
-        {/* Practice Grid Area */}
+        {/* Practice Grid */}
         <div className="flex-1 space-y-8">
-          {/* Controls Bar */}
-          <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-            <div className="relative w-full md:w-96">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input 
-                type="text" 
-                placeholder="실습 프로젝트 검색 (예: 로그인, 게시판, 필터...)" 
-                className="w-full bg-white border border-slate-200 rounded-xl py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
-              />
-            </div>
-            <div className="flex items-center gap-4 w-full md:w-auto">
-              <div className="flex gap-1 bg-slate-100 p-1 rounded-xl">
-                <TabItem label="전체" active />
-                <TabItem label="인기 실습" />
-                <TabItem label="신규 추가" />
-                <TabItem label="진행 중" />
-                <TabItem label="완료" />
-              </div>
-              <div className="relative">
-                <select className="bg-white border border-slate-200 rounded-xl px-4 py-2 text-xs font-bold text-slate-600 appearance-none pr-8">
-                  <option>최신순</option>
-                  <option>인기순</option>
-                  <option>성공률순</option>
-                </select>
-                <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
-              </div>
-            </div>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+             <div className="relative flex-1">
+               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+               <input 
+                 type="text" 
+                 placeholder="어떤 기능을 구현해볼까요?" 
+                 className="w-full bg-card dark:bg-slate-800/50 border border-border rounded-2xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors dark:text-white"
+               />
+             </div>
+             <div className="flex gap-2">
+               <button className="px-4 py-3 bg-card dark:bg-slate-800/50 border border-border rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-indigo-600 transition-colors">최신순</button>
+               <button className="px-4 py-3 bg-card dark:bg-slate-800/50 border border-border rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-indigo-600 transition-colors">인기순</button>
+               <button className="px-4 py-3 bg-card dark:bg-slate-800/50 border border-border rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-indigo-600 transition-colors">난이도순</button>
+             </div>
           </div>
 
           {/* Cards Grid */}
@@ -292,12 +247,12 @@ export default function PracticePage() {
                 <Zap className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-indigo-600 font-black text-sm uppercase tracking-widest mb-1">TIP</p>
-                <p className="text-slate-700 text-sm font-bold">실습을 완료하고 나면 커리큘럼 회차에 기록해 보세요!</p>
-                <p className="text-slate-500 text-xs mt-1">학습 기록을 남기면 나중에 복습하기에도 좋아요.</p>
+                <p className="text-indigo-600 dark:text-indigo-400 font-black text-sm uppercase tracking-widest mb-1">TIP</p>
+                <p className="text-slate-700 dark:text-slate-200 text-sm font-bold">실습을 완료하고 나면 커리큘럼 회차에 기록해 보세요!</p>
+                <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">학습 기록을 남기면 나중에 복습하기에도 좋아요.</p>
               </div>
             </div>
-            <Link href="/curriculum" className="bg-white px-6 py-3 rounded-xl text-indigo-600 font-bold text-sm shadow-sm hover:shadow-md transition-all border border-indigo-50">
+            <Link href="/curriculum" className="bg-white dark:bg-white/10 px-6 py-3 rounded-xl text-indigo-600 dark:text-indigo-400 font-bold text-sm shadow-sm hover:shadow-md transition-all border border-indigo-50 dark:border-white/10">
               커리큘럼으로 기록하기 →
             </Link>
           </div>
@@ -305,25 +260,7 @@ export default function PracticePage() {
       </section>
 
       {/* --- Footer --- */}
-      <footer className="bg-white border-t border-slate-200 px-6 py-12 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="space-y-2 text-center md:text-left">
-            <div className="flex items-center gap-2 font-bold text-lg text-slate-800 justify-center md:justify-start">
-              <Code2 className="w-5 h-5 text-indigo-600" />
-              <span>Vibe Coding</span>
-            </div>
-            <p className="text-sm text-slate-400">함께 배우고 성장하는 바이브 코딩 스터디 공간</p>
-          </div>
-          <div className="flex items-center gap-8 text-sm font-bold text-slate-500">
-            <Link href="/" className="hover:text-indigo-600 transition-colors">GitHub</Link>
-            <a href="#" className="hover:text-indigo-600 transition-colors">문의하기</a>
-            <a href="#" className="hover:text-indigo-600 transition-colors">업데이트 로그</a>
-          </div>
-          <div className="text-xs text-slate-400">
-            © 2024 Vibe Coding. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
@@ -337,7 +274,7 @@ function StatusCard({ icon: Icon, label, count, unit, color }: { icon: React.Ele
       </div>
       <div>
         <p className="text-[10px] text-slate-500 font-medium whitespace-nowrap">{label}</p>
-        <p className="text-xl font-bold">{count}<span className="text-xs font-normal ml-0.5">{unit}</span></p>
+        <p className="text-xl font-bold dark:text-white">{count}<span className="text-xs font-normal ml-0.5">{unit}</span></p>
       </div>
     </div>
   );
@@ -346,7 +283,7 @@ function StatusCard({ icon: Icon, label, count, unit, color }: { icon: React.Ele
 function FilterSection({ title, children }: { title: string, children: React.ReactNode }) {
   return (
     <div className="space-y-3">
-      <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">{title}</h3>
+      <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">{title}</h3>
       <div className="space-y-2">
         {children}
       </div>
@@ -356,58 +293,53 @@ function FilterSection({ title, children }: { title: string, children: React.Rea
 
 function Checkbox({ label, checked = false }: { label: string, checked?: boolean }) {
   return (
-    <label className="flex items-center gap-3 cursor-pointer group">
-      <div className={`w-4 h-4 rounded border transition-all flex items-center justify-center ${checked ? 'bg-indigo-600 border-indigo-600' : 'bg-white border-slate-300 group-hover:border-indigo-400'}`}>
-        {checked && <CheckCircle2 className="w-3 h-3 text-white" strokeWidth={3} />}
+    <label className="flex items-center gap-2.5 group cursor-pointer">
+      <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
+        checked ? 'bg-indigo-600 border-indigo-600' : 'border-slate-200 dark:border-slate-700 group-hover:border-indigo-400'
+      }`}>
+        {checked && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
       </div>
-      <span className={`text-sm font-bold transition-colors ${checked ? 'text-indigo-600' : 'text-slate-500 group-hover:text-slate-800'}`}>{label}</span>
+      <span className={`text-xs font-bold transition-colors ${checked ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200'}`}>{label}</span>
     </label>
   );
 }
 
-function TabItem({ label, active = false }: { label: string, active?: boolean }) {
-  return (
-    <button className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${active ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}>
-      {label}
-    </button>
-  );
-}
 
 function ProjectCard({ icon: Icon, level, title, desc, tags, link, views, rate }: { icon: React.ElementType, level: string, title: string, desc: string, tags: string[], link: string, views: string, rate: string }) {
   const levelColors: Record<string, string> = {
-    '입문': 'text-green-500 bg-green-50',
-    '초급': 'text-orange-500 bg-orange-50',
-    '중급': 'text-indigo-500 bg-indigo-50',
-    '고급': 'text-red-500 bg-red-50'
+    '입문': 'text-green-500 bg-green-50 dark:bg-green-500/10 dark:text-green-400',
+    '초급': 'text-orange-500 bg-orange-50 dark:bg-orange-500/10 dark:text-orange-400',
+    '중급': 'text-indigo-500 bg-indigo-50 dark:bg-indigo-500/10 dark:text-indigo-400',
+    '고급': 'text-red-500 bg-red-50 dark:bg-red-500/10 dark:text-red-400'
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200 p-6 flex flex-col justify-between group hover:shadow-xl transition-all duration-500 cursor-pointer">
+    <div className="bg-card rounded-3xl border border-border p-6 flex flex-col justify-between group hover:shadow-xl hover:border-indigo-200 dark:hover:border-indigo-500/50 transition-all duration-500 cursor-pointer overflow-hidden relative">
       <div className="space-y-4">
         <div className="flex items-start justify-between">
-          <div className="p-3 bg-slate-50 rounded-2xl text-slate-700 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors">
+          <div className="p-3 bg-slate-50 dark:bg-white/5 rounded-2xl text-slate-700 dark:text-slate-300 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-500/10 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
             <Icon className="w-6 h-6" />
           </div>
           <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${levelColors[level]}`}>{level}</span>
         </div>
         <div>
-          <h4 className="text-sm font-black text-slate-800 mb-1 group-hover:text-indigo-600 transition-colors">{title}</h4>
-          <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2">{desc}</p>
+          <h4 className="text-sm font-black text-slate-800 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{title}</h4>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2">{desc}</p>
         </div>
         <div className="flex flex-wrap gap-1.5 pt-1">
           {tags.map((tag, i) => (
-            <span key={i} className="text-[9px] font-bold px-2 py-0.5 bg-slate-50 text-slate-400 rounded-md border border-slate-100">{tag}</span>
+            <span key={i} className="text-[9px] font-bold px-2 py-0.5 bg-slate-50 dark:bg-white/5 text-slate-400 dark:text-slate-500 rounded-md border border-slate-100 dark:border-border transition-colors">{tag}</span>
           ))}
         </div>
       </div>
-      <div className="pt-6 mt-6 border-t border-slate-50 space-y-3">
+      <div className="pt-6 mt-6 border-t border-border space-y-3 transition-colors">
         <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-medium">
-          <Layers className="w-3 h-3 text-slate-300" />
-          연계: <span className="text-slate-600">{link}</span>
+          <Layers className="w-3 h-3 text-slate-300 dark:text-slate-700" />
+          연계: <span className="text-slate-600 dark:text-slate-400">{link}</span>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Bookmark className="w-4 h-4 text-slate-200 hover:text-indigo-500 transition-colors" />
+            <Bookmark className="w-4 h-4 text-slate-200 dark:text-slate-700 hover:text-indigo-500 transition-colors" />
             <div className="flex items-center gap-1 text-[10px] text-slate-400">
               <PlayCircle className="w-3 h-3" /> {views}
             </div>

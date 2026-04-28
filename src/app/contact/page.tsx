@@ -1,13 +1,13 @@
 import React from 'react';
+import Footer from '@/components/Footer';
 import { 
-  Search, Code2, ArrowRight, 
-  Bell, 
+  Code2, ArrowRight, 
   BookOpen, 
   Users, ShieldCheck,
   Mail, MessageSquare, Send, Paperclip,
   CheckCircle2, Clock, ExternalLink
 } from 'lucide-react';
-import Link from 'next/link';
+import Navbar from '@/components/Navbar';
 
 // Custom Icons to avoid lucide-react import issues
 function GithubIcon({ className }: { className?: string }) {
@@ -26,70 +26,14 @@ function DiscordIcon({ className }: { className?: string }) {
   );
 }
 
-function HashIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
-    </svg>
-  );
-}
-
-function ChevronDownIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-    </svg>
-  );
-}
-
-function MoonIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-    </svg>
-  );
-}
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-[#f8f9fc] flex flex-col font-sans">
-      {/* --- Navigation Bar --- */}
-      <nav className="bg-[#0f172a] text-white px-6 py-3 flex items-center justify-between border-b border-white/10 sticky top-0 z-50">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight">
-            <div className="bg-indigo-500 p-1 rounded-lg">
-              <Code2 className="w-6 h-6 text-white" />
-            </div>
-            <span>Vibe Coding</span>
-          </Link>
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-            <Link href="/curriculum" className="hover:text-white transition-colors">커리큘럼</Link>
-            <Link href="/practice" className="hover:text-white transition-colors">기능실습</Link>
-            <Link href="/resources" className="hover:text-white transition-colors">자료실</Link>
-            <Link href="/guide" className="hover:text-white transition-colors">기본가이드</Link>
-            <Link href="/contact" className="text-white border-b-2 border-indigo-500 pb-1">문의하기</Link>
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="relative hidden sm:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input 
-              type="text" 
-              placeholder="검색..." 
-              className="bg-white/10 border border-white/10 rounded-full py-1.5 pl-10 pr-4 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-            />
-          </div>
-          <button className="p-2 hover:bg-white/10 rounded-full transition-colors text-slate-300">
-            <Bell className="w-5 h-5" />
-          </button>
-          <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold border border-white/20">
-            V
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-background flex flex-col font-sans transition-colors">
+      <Navbar />
 
       {/* --- Header Area --- */}
-      <header className="bg-[#0f172a] text-white px-6 py-16 relative overflow-hidden">
+      <header className="bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-white px-6 py-16 relative overflow-hidden transition-colors border-b border-slate-200 dark:border-white/5">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.15),transparent)] pointer-events-none" />
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
           <div className="space-y-4">
@@ -124,7 +68,7 @@ export default function ContactPage() {
         
         {/* Inquiry Type Selection */}
         <section className="space-y-6">
-          <h2 className="text-xl font-black text-slate-800">문의 유형을 선택해주세요</h2>
+          <h2 className="text-xl font-black text-slate-800 dark:text-white">문의 유형을 선택해주세요</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <TypeCard icon={Users} title="스터디 참여 문의" desc="스터디 참여 방법, 일정, 비용 등에 대해 문의합니다." active />
             <TypeCard icon={BookOpen} title="교육 / 강의 문의" desc="강의 커리큘럼, 수강 방법, 비용 등에 대해 문의합니다." />
@@ -136,92 +80,65 @@ export default function ContactPage() {
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Inquiry Form */}
           <div className="flex-1 space-y-8">
-            <div className="bg-white rounded-[32px] border border-slate-200 p-10 shadow-sm space-y-8">
-              <h3 className="text-lg font-black text-slate-800">문의 내용 입력</h3>
+            <div className="bg-card rounded-[32px] border border-border p-10 shadow-sm space-y-8 transition-colors">
+              <h3 className="text-lg font-black text-slate-800 dark:text-white">문의 내용 입력</h3>
               
               <form className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-700">이름 <span className="text-red-500">*</span></label>
+                    <label className="text-xs font-black text-slate-700 dark:text-slate-300">이름 <span className="text-red-500">*</span></label>
                     <input 
                       type="text" 
                       placeholder="이름을 입력해주세요" 
-                      className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                      className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black text-slate-700">이메일 <span className="text-red-500">*</span></label>
+                    <label className="text-xs font-black text-slate-700 dark:text-slate-300">이메일 <span className="text-red-500">*</span></label>
                     <input 
                       type="email" 
-                      placeholder="이메일 주소를 입력해주세요" 
-                      className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                      placeholder="이메일을 입력해주세요" 
+                      className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-700">문의 유형 <span className="text-red-500">*</span></label>
-                  <div className="relative">
-                    <select className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all cursor-pointer">
-                      <option>문의 유형을 선택해주세요</option>
-                      <option>스터디 참여 문의</option>
-                      <option>교육 / 강의 문의</option>
-                      <option>팀 프로젝트 / 협업 문의</option>
-                      <option>기타 문의</option>
-                    </select>
-                    <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-700">제목 <span className="text-red-500">*</span></label>
+                  <label className="text-xs font-black text-slate-700 dark:text-slate-300">문의 제목 <span className="text-red-500">*</span></label>
                   <input 
                     type="text" 
                     placeholder="제목을 입력해주세요" 
-                    className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                    className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-700">내용 <span className="text-red-500">*</span></label>
+                  <label className="text-xs font-black text-slate-700 dark:text-slate-300">문의 내용 <span className="text-red-500">*</span></label>
                   <textarea 
                     rows={6}
-                    placeholder="문의 내용을 자세히 작성해주세요. 구체적으로 작성해주시면 더 정확한 답변을 드릴 수 있어요." 
-                    className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all resize-none"
+                    placeholder="내용을 상세히 입력해주세요" 
+                    className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white resize-none"
                   ></textarea>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-dashed border-slate-200 group cursor-pointer hover:bg-slate-100 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Paperclip className="w-4 h-4 text-slate-400 group-hover:text-indigo-600" />
-                    <span className="text-xs font-bold text-slate-500">파일 첨부 (선택)</span>
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-4">
+                  <div className="flex items-center gap-3 bg-slate-50 dark:bg-white/5 border border-border px-4 py-2 rounded-xl transition-colors">
+                    <Paperclip className="w-4 h-4 text-slate-400" />
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400">파일 첨부하기</span>
+                    <span className="text-[10px] text-slate-300">(최대 10MB)</span>
                   </div>
-                  <span className="text-[10px] text-slate-400">첨부 가능한 파일: 이미지, PDF, 문서 (최대 5MB)</span>
+                  <button className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-500 px-8 py-3 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all hover:-translate-y-1 shadow-lg shadow-indigo-600/20 text-white">
+                    문의 전송하기 <Send className="w-4 h-4" />
+                  </button>
                 </div>
-
-                <div className="space-y-4 pt-4 border-t border-slate-100">
-                  <h4 className="text-xs font-black text-indigo-600">개인정보 수집 및 이용 동의 (필수)</h4>
-                  <p className="text-[10px] text-slate-500 leading-relaxed">
-                    문의 답변 및 서비스 제공을 위해 개인정보를 수집합니다.<br />
-                    자세한 내용은 개인정보 처리방침을 참고해주세요.
-                  </p>
-                  <label className="flex items-center gap-2 cursor-pointer group">
-                    <input type="checkbox" className="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
-                    <span className="text-xs font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">개인정보 수집 및 이용에 동의합니다.</span>
-                  </label>
-                </div>
-
-                <button className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-2xl font-black flex items-center justify-center gap-2 transition-all hover:-translate-y-1 shadow-lg shadow-indigo-600/20">
-                  <Send className="w-4 h-4" /> 문의 보내기
-                </button>
               </form>
             </div>
           </div>
 
           {/* Right Sidebar Info */}
           <aside className="lg:w-80 space-y-8">
-            <div className="bg-white rounded-3xl border border-slate-200 p-8 space-y-6 shadow-sm">
-              <h3 className="text-sm font-black text-slate-800 tracking-tight">빠른 답변을 약속드려요</h3>
+            <div className="bg-card rounded-3xl border border-border p-8 space-y-6 shadow-sm transition-colors">
+              <h3 className="text-sm font-black text-slate-800 dark:text-white tracking-tight">빠른 답변을 약속드려요</h3>
               <div className="space-y-6">
                 <InfoItem icon={Clock} title="평일 기준 24시간 내 답변" desc="최대한 빠르게 답변드리겠습니다." />
                 <InfoItem icon={CheckCircle2} title="정확하고 친절한 답변" desc="정확한 정보를 바탕으로 답변드려요." />
@@ -229,9 +146,9 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="bg-indigo-50 rounded-3xl p-8 space-y-4 border border-indigo-100">
-              <h3 className="text-sm font-black text-indigo-900">스터디 참가 안내</h3>
-              <p className="text-xs text-indigo-700 leading-relaxed">
+            <div className="bg-indigo-50 dark:bg-indigo-500/10 rounded-3xl p-8 space-y-4 border border-indigo-100 dark:border-indigo-500/20 transition-colors">
+              <h3 className="text-sm font-black text-indigo-900 dark:text-indigo-400">스터디 참가 안내</h3>
+              <p className="text-xs text-indigo-700 dark:text-indigo-300/80 leading-relaxed">
                 바이브 코딩 스터디는 함께 학습하고 성장하는 커뮤니티입니다.
               </p>
               <ul className="space-y-2">
@@ -240,13 +157,13 @@ export default function ContactPage() {
                 <CheckItem label="질문 & 피드백 지원" />
                 <CheckItem label="프로젝트 협업 기회" />
               </ul>
-              <button className="w-full bg-white py-2.5 rounded-xl text-xs font-black text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all border border-indigo-200 flex items-center justify-center gap-2 shadow-sm">
+              <button className="w-full bg-white dark:bg-white/10 py-2.5 rounded-xl text-xs font-black text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition-all border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-center gap-2 shadow-sm">
                 스터디 자세히 보기 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
-            <div className="bg-white rounded-3xl border border-slate-200 p-8 space-y-6 shadow-sm">
-              <h3 className="text-sm font-black text-slate-800 tracking-tight">다른 방법으로 문의하기</h3>
+            <div className="bg-card rounded-3xl border border-border p-8 space-y-6 shadow-sm transition-colors">
+              <h3 className="text-sm font-black text-slate-800 dark:text-white tracking-tight">다른 방법으로 문의하기</h3>
               <div className="space-y-4">
                 <ContactLink icon={GithubIcon} title="GitHub Discussions" value="커뮤니티를 통해 질문하기" />
                 <ContactLink icon={Mail} title="이메일" value="vibecoding.study@gmail.com" />
@@ -258,34 +175,7 @@ export default function ContactPage() {
       </main>
 
       {/* --- Footer --- */}
-      <footer className="bg-white border-t border-slate-200 px-6 py-12 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="space-y-2 text-center md:text-left">
-            <div className="flex items-center gap-2 font-bold text-lg text-slate-800 justify-center md:justify-start">
-              <Code2 className="w-5 h-5 text-indigo-600" />
-              <span>Vibe Coding</span>
-            </div>
-            <p className="text-sm text-slate-400">함께 배우고 성장하는 바이브 코딩 스터디 공간</p>
-          </div>
-          <div className="flex items-center gap-8 text-sm font-bold text-slate-500">
-            <div className="flex items-center gap-4">
-              <GithubIcon className="w-5 h-5 text-slate-500 hover:text-indigo-600 cursor-pointer transition-colors" />
-              <MoonIcon className="w-5 h-5 text-slate-500 hover:text-indigo-600 cursor-pointer transition-colors" />
-              <HashIcon className="w-5 h-5 text-slate-500 hover:text-indigo-600 cursor-pointer transition-colors" />
-            </div>
-            <Link href="/contact" className="text-indigo-600 font-black">문의하기</Link>
-            <a href="#" className="hover:text-indigo-600 transition-colors">업데이트 로그</a>
-          </div>
-          <div className="text-xs text-slate-400">
-            © 2024 Vibe Coding. All rights reserved.
-          </div>
-        </div>
-      </footer>
-      
-      {/* Top Button */}
-      <button className="fixed bottom-8 right-8 w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center hover:bg-indigo-500 transition-all shadow-xl shadow-indigo-600/40 text-white z-40">
-        <ChevronDownIcon className="w-6 h-6 rotate-180" />
-      </button>
+      <Footer />
     </div>
   );
 }
@@ -293,16 +183,20 @@ export default function ContactPage() {
 // Helper Components
 function TypeCard({ icon: Icon, title, desc, active = false }: { icon: React.ElementType, title: string, desc: string, active?: boolean }) {
   return (
-    <div className={`bg-white rounded-2xl border-2 p-6 space-y-4 group cursor-pointer transition-all ${active ? 'border-indigo-600 shadow-lg shadow-indigo-600/5' : 'border-slate-100 hover:border-indigo-200'}`}>
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${active ? 'bg-indigo-600 text-white' : 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100'}`}>
+    <div className={`bg-card rounded-2xl border-2 p-6 space-y-4 group cursor-pointer transition-all ${
+      active ? 'border-indigo-600 shadow-lg shadow-indigo-600/5' : 'border-border hover:border-indigo-200 dark:hover:border-indigo-500/50'
+    }`}>
+      <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${
+        active ? 'bg-indigo-600 text-white' : 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-500/20 transition-colors'
+      }`}>
         {active && <div className="absolute -top-2 -left-2 w-5 h-5 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-md">
           <CheckCircle2 className="w-3 h-3" />
         </div>}
         <Icon className="w-6 h-6" />
       </div>
       <div className="space-y-1">
-        <h4 className="text-sm font-black text-slate-800">{title}</h4>
-        <p className="text-[11px] text-slate-400 leading-relaxed line-clamp-2">{desc}</p>
+        <h4 className="text-sm font-black text-slate-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{title}</h4>
+        <p className="text-[11px] text-slate-400 dark:text-slate-500 leading-relaxed line-clamp-2">{desc}</p>
       </div>
     </div>
   );
@@ -311,12 +205,12 @@ function TypeCard({ icon: Icon, title, desc, active = false }: { icon: React.Ele
 function InfoItem({ icon: Icon, title, desc }: { icon: React.ElementType, title: string, desc: string }) {
   return (
     <div className="flex items-start gap-4">
-      <div className="p-2 bg-indigo-50 rounded-lg shrink-0">
-        <Icon className="w-4 h-4 text-indigo-600" />
+      <div className="p-2 bg-indigo-50 dark:bg-indigo-500/10 rounded-lg shrink-0 transition-colors">
+        <Icon className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
       </div>
       <div>
-        <h4 className="text-xs font-black text-slate-800 mb-0.5">{title}</h4>
-        <p className="text-[10px] text-slate-500">{desc}</p>
+        <h4 className="text-xs font-black text-slate-800 dark:text-white mb-0.5">{title}</h4>
+        <p className="text-[10px] text-slate-500 dark:text-slate-400">{desc}</p>
       </div>
     </div>
   );
@@ -324,9 +218,9 @@ function InfoItem({ icon: Icon, title, desc }: { icon: React.ElementType, title:
 
 function CheckItem({ label }: { label: string }) {
   return (
-    <li className="flex items-center gap-2 text-xs font-bold text-indigo-800">
-      <div className="w-4 h-4 bg-white/50 border border-indigo-200 rounded flex items-center justify-center shrink-0">
-        <CheckCircle2 className="w-2.5 h-2.5 text-indigo-600" />
+    <li className="flex items-center gap-2 text-xs font-bold text-indigo-800 dark:text-indigo-400">
+      <div className="w-4 h-4 bg-white/50 dark:bg-white/10 border border-indigo-200 dark:border-indigo-500/30 rounded flex items-center justify-center shrink-0">
+        <CheckCircle2 className="w-2.5 h-2.5 text-indigo-600 dark:text-indigo-400" />
       </div>
       {label}
     </li>
@@ -336,14 +230,14 @@ function CheckItem({ label }: { label: string }) {
 function ContactLink({ icon: Icon, title, value }: { icon: React.ElementType, title: string, value: string }) {
   return (
     <div className="flex items-center gap-4 group cursor-pointer">
-      <div className="p-2.5 bg-slate-50 text-slate-400 rounded-xl group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors shrink-0">
+      <div className="p-2.5 bg-slate-50 dark:bg-white/5 text-slate-400 rounded-xl group-hover:bg-indigo-50 dark:group-hover:bg-indigo-500/10 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors shrink-0">
         <Icon className="w-5 h-5" />
       </div>
       <div className="overflow-hidden">
         <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-indigo-400 transition-colors">{title}</h4>
-        <p className="text-xs font-bold text-slate-700 truncate group-hover:text-slate-900 transition-colors">{value}</p>
+        <p className="text-xs font-bold text-slate-700 dark:text-slate-300 truncate group-hover:text-slate-900 dark:group-hover:text-white transition-colors">{value}</p>
       </div>
-      <ExternalLink className="w-3 h-3 text-slate-200 ml-auto group-hover:text-indigo-600 transition-all" />
+      <ExternalLink className="w-3 h-3 text-slate-200 dark:text-slate-700 ml-auto group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-all" />
     </div>
   );
 }

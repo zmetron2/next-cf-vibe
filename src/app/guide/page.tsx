@@ -1,87 +1,22 @@
 import React from 'react';
+import Footer from '@/components/Footer';
 import { 
-  Search, Code2, ArrowRight, Zap, 
-  Bell, 
+  Code2, ArrowRight, Zap, 
   Cloud,
   ChevronRight,
   BookOpen, Laptop, 
   Target, Rocket, Users, ShieldCheck
 } from 'lucide-react';
-import Link from 'next/link';
+import Navbar from '@/components/Navbar';
 
 // Custom Icons to avoid lucide-react import issues
-function GithubIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.041-1.416-4.041-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-    </svg>
-  );
-}
-
-function MoonIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-    </svg>
-  );
-}
-
-function HashIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
-    </svg>
-  );
-}
-
-function ChevronDownIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-    </svg>
-  );
-}
-
 export default function GuidePage() {
   return (
-    <div className="min-h-screen bg-[#f8f9fc] flex flex-col font-sans">
-      {/* --- Navigation Bar --- */}
-      <nav className="bg-[#0f172a] text-white px-6 py-3 flex items-center justify-between border-b border-white/10 sticky top-0 z-50">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight">
-            <div className="bg-indigo-500 p-1 rounded-lg">
-              <Code2 className="w-6 h-6 text-white" />
-            </div>
-            <span>Vibe Coding</span>
-          </Link>
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-            <Link href="/curriculum" className="hover:text-white transition-colors">커리큘럼</Link>
-            <Link href="/practice" className="hover:text-white transition-colors">기능실습</Link>
-            <Link href="/resources" className="hover:text-white transition-colors">자료실</Link>
-            <Link href="/guide" className="text-white border-b-2 border-indigo-500 pb-1">기본가이드</Link>
-            <Link href="/contact" className="hover:text-white transition-colors">문의하기</Link>
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="relative hidden sm:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input 
-              type="text" 
-              placeholder="검색..." 
-              className="bg-white/10 border border-white/10 rounded-full py-1.5 pl-10 pr-4 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-            />
-          </div>
-          <button className="p-2 hover:bg-white/10 rounded-full transition-colors text-slate-300">
-            <Bell className="w-5 h-5" />
-          </button>
-          <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold border border-white/20">
-            V
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-background flex flex-col font-sans transition-colors">
+      <Navbar />
 
       {/* --- Header Area --- */}
-      <header className="bg-[#0f172a] text-white px-6 py-12">
+      <header className="bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-white px-6 py-12 transition-colors border-b border-slate-200 dark:border-white/5">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="space-y-4">
             <h1 className="text-3xl font-black">기본 가이드</h1>
@@ -109,15 +44,13 @@ export default function GuidePage() {
         </div>
       </header>
 
-      {/* --- Main Content --- */}
       <main className="max-w-7xl mx-auto w-full px-6 py-10 flex flex-col lg:flex-row gap-8">
         
-        {/* Left Sidebar Index */}
         <aside className="lg:w-64 space-y-8 shrink-0">
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 space-y-6 shadow-sm">
-            <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">가이드 목차</h3>
+          <div className="bg-card rounded-3xl border border-border p-6 space-y-6 shadow-sm transition-colors">
+            <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">가이드 목차</h3>
             <div className="space-y-6">
-              <div className="bg-indigo-50 p-3 rounded-xl flex items-center gap-2 text-indigo-600 font-bold text-sm cursor-pointer border border-indigo-100">
+              <div className="bg-indigo-50 dark:bg-indigo-500/10 p-3 rounded-xl flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-sm cursor-pointer border border-indigo-100 dark:border-indigo-500/20 transition-colors">
                 <BookOpen className="w-4 h-4" /> 바이브 코딩이란?
               </div>
               
@@ -147,12 +80,12 @@ export default function GuidePage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 space-y-4 shadow-sm">
-            <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">궁금한 점이 있나요?</h3>
-            <p className="text-[10px] text-slate-500 leading-relaxed">
+          <div className="bg-card rounded-3xl border border-border p-6 space-y-4 shadow-sm transition-colors">
+            <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">궁금한 점이 있나요?</h3>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed">
               자주 묻는 질문에서 답변을 찾아보세요.
             </p>
-            <button className="w-full bg-slate-50 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-indigo-600 hover:text-white transition-all border border-slate-100 flex items-center justify-center gap-2">
+            <button className="w-full bg-slate-50 dark:bg-white/5 py-2.5 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition-all border border-border flex items-center justify-center gap-2">
               FAQ 보러가기 <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -271,37 +204,7 @@ export default function GuidePage() {
       </main>
 
       {/* --- Footer --- */}
-      <footer className="bg-white border-t border-slate-200 px-6 py-12 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="space-y-2 text-center md:text-left">
-            <div className="flex items-center gap-2 font-bold text-lg text-slate-800 justify-center md:justify-start">
-              <Code2 className="w-5 h-5 text-indigo-600" />
-              <span>Vibe Coding</span>
-            </div>
-            <p className="text-sm text-slate-400">함께 배우고 성장하는 바이브 코딩 스터디 공간</p>
-          </div>
-          <div className="flex items-center gap-8 text-sm font-bold text-slate-500">
-            <div className="flex items-center gap-4">
-              <GithubIcon className="w-5 h-5 text-slate-500 hover:text-indigo-600 cursor-pointer transition-colors" />
-              <MoonIcon className="w-5 h-5 text-slate-500 hover:text-indigo-600 cursor-pointer transition-colors" />
-              <HashIcon className="w-5 h-5 text-slate-500 hover:text-indigo-600 cursor-pointer transition-colors" />
-            </div>
-            <a href="#" className="hover:text-indigo-600 transition-colors">문의하기</a>
-            <a href="#" className="hover:text-indigo-600 transition-colors">업데이트 로그</a>
-          </div>
-          <div className="text-xs text-slate-400">
-            © 2024 Vibe Coding. All rights reserved.
-          </div>
-          <button className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/20 md:hidden">
-            <ChevronDownIcon className="w-6 h-6 rotate-180" />
-          </button>
-        </div>
-      </footer>
-      
-      {/* Top Button for Desktop */}
-      <button className="fixed bottom-8 right-8 w-12 h-12 bg-indigo-600 rounded-full hidden md:flex items-center justify-center hover:bg-indigo-500 transition-all shadow-xl shadow-indigo-600/40 text-white z-40">
-        <ChevronDownIcon className="w-6 h-6 rotate-180" />
-      </button>
+      <Footer />
     </div>
   );
 }

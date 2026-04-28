@@ -3,8 +3,8 @@
 이 파일은 이 프로젝트의 Cloudflare 인프라 연결 상태와 관리 규칙을 정의합니다.
 
 ## ☁️ Cloudflare Resources
-- **Project Name**: `next-cf-vibe`
-- **Domain**: `https://next-cf-vibe.pages.dev`
+- **Project Name**: `zmetron-study`
+- **Domain**: `https://zmetron-study.pages.dev` 및 `https://vibe.ljj.kr`
 - **D1 Database**: `vibe-db` (`7198806d-f710-44d2-866e-d5cbcc5a5619`)
 - **R2 Bucket**: `vibe-storage` (현재 대시보드 활성화 대기 중)
 
@@ -20,6 +20,12 @@
 3. **Icon Reliability**: `Github`, `Moon`, `Hash` 등 `lucide-react`에서 버전별로 export 명칭이 다르거나 누락될 가능성이 있는 아이콘은 안전을 위해 **커스텀 SVG 컴포넌트**로 구현하여 사용합니다.
 4. **Tag Integrity**: `replace_file_content`로 코드 수정 시, `<Link>`나 `<div>` 등 열린 태그와 닫힌 태그의 짝이 맞는지 반드시 재검토합니다.
 5. **SEO & Accessibility**: 모든 페이지에는 적절한 `Title`, `Meta Description`, `Semantic HTML`을 적용하고 인터랙티브 요소에는 유니크한 `id`를 부여합니다.
+6. **Image Optimization**: 모든 이미지는 표준 `<img>` 태그 대신 Next.js의 `<Image />` 컴포넌트를 사용하여 최적화합니다.
+7. **CSS & Theme Management (Tailwind v4)**:
+   - **Specificity**: 모든 커스텀 CSS 변수는 `@layer base` 내부에 정의하여 Tailwind 유틸리티 클래스보다 낮은 구체성을 갖도록 합니다.
+   - **Dark Mode**: Tailwind v4에서 클래스 기반 다크모드를 사용하려면 `@variant dark (&:where(.dark, .dark *));` 설정을 명시해야 합니다.
+   - **Semantic Classes**: 하드코딩된 색상 대신 `@theme`에 등록된 시맨틱 클래스(`bg-background`, `bg-card`, `border-border` 등)를 우선적으로 사용합니다.
+   - **IDE Warnings**: `@theme`, `@variant` 등 v4 전용 규칙으로 인한 IDE 경고는 `.vscode/settings.json`에서 `css.lint.unknownAtRules`를 `ignore` 처리하여 관리합니다.
 
 ## 🚀 CI/CD Flow
 - 빌드 결과물: `.next` 디렉토리를 `next-on-pages`로 변환하여 배포.

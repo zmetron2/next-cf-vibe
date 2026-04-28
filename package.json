@@ -10,7 +10,7 @@
     "pages:build": "npx @cloudflare/next-on-pages",
     "pages:deploy": "npm run pages:build && wrangler pages deploy",
     "pages:watch": "npx @cloudflare/next-on-pages --watch",
-    "pages:dev": "npx wrangler pages dev --port 8788 --proxy 3000 --compatibility-date=2024-04-03 --d1=DB --r2=BUCKET"
+    "pages:dev": "npx wrangler pages dev public --port 8788 --proxy 3000 --compatibility-date=2024-04-03 --d1=DB --r2=BUCKET"
   },
   "dependencies": {
     "lucide-react": "^1.11.0",
