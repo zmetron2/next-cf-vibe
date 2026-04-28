@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, Sun, Moon, User, X } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import Logo from './Logo';
 
 export default function Navbar() {
@@ -45,9 +45,9 @@ export default function Navbar() {
 
         <div className="nav-links">
           {navLinks.map((link) => (
-            <Link 
-              key={link.href} 
-              href={link.href} 
+            <Link
+              key={link.href}
+              href={link.href}
               className={pathname === link.href ? 'active' : ''}
             >
               {link.label}
@@ -56,74 +56,12 @@ export default function Navbar() {
         </div>
 
         <div className="nav-actions">
-          <button onClick={toggleTheme} className="theme-toggle">
-            {mounted && (theme === 'light' ? <Moon size={20} /> : <Sun size={20} />)}
+          <button onClick={toggleTheme} className="theme-toggle" aria-label="테마 변경">
+            {mounted && (theme === 'light' ? <Moon size={18} /> : <Sun size={18} />)}
           </button>
-          <Link href="/login" className="login-btn">로그인</Link>
+          <Link href="/login" className="login-btn" id="login-button">로그인</Link>
         </div>
       </div>
-
-      <style jsx>{`
-        .navbar {
-          background: var(--background);
-          border-bottom: 1px solid var(--border);
-          padding: 15px 20px;
-          position: sticky;
-          top: 0;
-          z-index: 1000;
-        }
-        .nav-container {
-          max-width: 1200px;
-          margin: 0 auto;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .nav-logo {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-weight: bold;
-          font-size: 1.2rem;
-        }
-        .nav-links {
-          display: flex;
-          gap: 30px;
-        }
-        .nav-links a {
-          font-size: 0.9rem;
-          color: var(--foreground);
-          opacity: 0.7;
-          transition: opacity 0.2s;
-        }
-        .nav-links a:hover, .nav-links a.active {
-          opacity: 1;
-          color: var(--primary);
-          font-weight: bold;
-        }
-        .nav-actions {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-        }
-        .theme-toggle {
-          background: none;
-          border: none;
-          cursor: pointer;
-          color: var(--foreground);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .login-btn {
-          background: var(--primary);
-          color: white;
-          padding: 8px 20px;
-          border-radius: 10px;
-          font-weight: bold;
-          font-size: 0.9rem;
-        }
-      `}</style>
     </nav>
   );
 }
