@@ -4,10 +4,15 @@ import { NextRequest } from 'next/server';
 export const runtime = 'edge';
 
 export async function POST(_request: NextRequest) {
+  let context;
   try {
-    const context = getRequestContext();
-    const env = context?.env;
+    context = getRequestContext();
+  } catch (e) {
+    return new Response(`Context Retrieval Failed: ${(e as Error).message}`, { status: 500 });
+  }
 
+  try {
+    const env = context?.env;
     return Response.json({ 
       success: false, 
       error: "진단 모드: API 접속 성공",
@@ -18,7 +23,7 @@ export async function POST(_request: NextRequest) {
         envKeys: env ? Object.keys(env) : []
       }
     });
-  } catch (_error) {
-    return new Response(`Fatal Error: ${(_error as Error).message}`, { status: 500 });
+  } catch (error) {
+    return new Response(`Logic Error: ${(error as Error).message}`, { status: 500 });
   }
 }
