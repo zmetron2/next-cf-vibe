@@ -1,4 +1,4 @@
-# 🤖 Cloudflare Vibe Management (AGENTS.md)
+# 🤖 Cloudflare Vibe Management (AGENTS.md) - Updated at 2026-04-28
 
 이 파일은 이 프로젝트의 Cloudflare 인프라 연결 상태와 관리 규칙을 정의합니다.
 
