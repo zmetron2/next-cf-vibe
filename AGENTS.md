@@ -11,11 +11,11 @@
 ## 🛠 Management Rules
 1. **Edge Runtime First**: 모든 API와 서버 로직은 `export const runtime = 'edge';`를 포함해야 합니다.
 2. **Binding Usage**: `getRequestContext()`를 통해 `env.DB`와 `env.BUCKET`에 접근합니다.
-3. **Local Dev**: Windows 환경에서는 `npm run dev`(포트 3000)와 `npm run pages:dev`(포트 8788 프록시)를 동시에 실행하여 개발합니다.
+3. **Local Dev**: Windows 환경에서는 `npm run dev`(포트 3000)와 `npm run pages:dev`(포트 8788 프록시)를 동시에 실행하며, 프록시 설정 시 호스트 해석 오류 방지를 위해 `http://127.0.0.1:3000` 전체 주소를 사용합니다.
 4. **Deploy**: `npm run pages:deploy`로 빌드 후 즉시 배포합니다.
 
 ## 📏 Coding Rules (Prevent Recurring Issues)
-1. **Type Safety**: `any` 타입 사용을 절대 금지합니다. 컴포넌트 Props나 아이콘 전달 시 `React.ElementType`, `Record<string, string>` 등 구체적인 타입을 명시해야 합니다.
+1. **Type Safety**: `any` 타입 사용을 절대 금지합니다. 특히 `request.json()`이나 `response.json()` 등 외부 데이터 수신 시 TypeScript의 `unknown` 추론으로 인한 빌드 실패를 방지하기 위해 반드시 **명시적인 Interface 정의 및 타입 캐스팅**을 수행해야 합니다.
 2. **Import Hygiene**: 사용하지 않는 임포트는 코드 수정 즉시 제거합니다. ESLint 경고(`defined but never used`)는 빌드 실패의 원인이 되므로 방치하지 않습니다.
 3. **Icon Reliability**: `Github`, `Moon`, `Hash` 등 `lucide-react`에서 버전별로 export 명칭이 다르거나 누락될 가능성이 있는 아이콘은 안전을 위해 **커스텀 SVG 컴포넌트**로 구현하여 사용합니다.
 4. **Tag Integrity**: `replace_file_content`로 코드 수정 시, `<Link>`나 `<div>` 등 열린 태그와 닫힌 태그의 짝이 맞는지 반드시 재검토합니다.
