@@ -1,5 +1,3 @@
-export const runtime = 'edge';
-
 import { 
   Layers, ArrowRight, Zap, CheckCircle2, 
   Bookmark, Edit3, PlayCircle, 

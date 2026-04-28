@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "엘쯔의 바이브코딩 - 퍼블리셔, 프런트엔드 개발자 엘쯔의 정보공유",
