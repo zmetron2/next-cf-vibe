@@ -129,7 +129,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <div className="font-bold text-[13px] text-indigo-600 dark:text-indigo-400 mb-0.5">입문</div>
-                  <div className="text-[10px] opacity-60 leading-tight">AI 바이브 잡기<br/>프롬프트 & 마인드셋</div>
+                  <div className="text-[12px] opacity-60 leading-tight">AI 바이브 잡기<br/>프롬프트 & 마인드셋</div>
                 </div>
               </Link>
 
@@ -143,7 +143,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <div className="font-bold text-[13px] text-blue-600 dark:text-blue-400 mb-0.5">기초</div>
-                  <div className="text-[10px] opacity-60 leading-tight">시스템 구조 이해<br/>도메인 & DNS 설정</div>
+                  <div className="text-[12px] opacity-60 leading-tight">시스템 구조 이해<br/>도메인 & DNS 설정</div>
                 </div>
               </Link>
 
@@ -157,7 +157,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <div className="font-bold text-[13px] text-emerald-600 dark:text-emerald-400 mb-0.5">실전</div>
-                  <div className="text-[10px] opacity-60 leading-tight">프로젝트 빌딩<br/>SaaS & 자동화 실습</div>
+                  <div className="text-[12px] opacity-60 leading-tight">프로젝트 빌딩<br/>SaaS & 자동화 실습</div>
                 </div>
               </Link>
 
@@ -171,7 +171,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <div className="font-bold text-[13px] text-purple-600 dark:text-purple-400 mb-0.5">심화</div>
-                  <div className="text-[10px] opacity-60 leading-tight">비즈니스 스케일업<br/>수익화 & 글로벌 배포</div>
+                  <div className="text-[12px] opacity-60 leading-tight">비즈니스 스케일업<br/>수익화 & 글로벌 배포</div>
                 </div>
               </Link>
             </div>
@@ -202,10 +202,10 @@ export default function HomePage() {
                         <div className="flex-1 min-w-0">
                           <div className="text-base font-black flex items-center gap-2 mb-1 mt-1.5">
                             <span className="truncate">{item.title}</span> 
-                            <span className={`text-[9px] ${item.tagColor} px-1.5 pt-1 pb-[3px] rounded-[4px] font-bold shrink-0 leading-none`}>{item.tag}</span>
+                            <span className={`text-[12px] ${item.tagColor} px-1.5 pt-1 pb-[3px] rounded-[4px] font-bold shrink-0 leading-none`}>{item.tag}</span>
                           </div>
-                          <p className="text-[11px] opacity-60 leading-tight line-clamp-1 mb-2">{item.desc}</p>
-                          <div className="flex items-center text-[10px] font-bold text-primary opacity-0 group-hover/card:opacity-100 transition-opacity">
+                          <p className="text-[12px] opacity-60 leading-tight line-clamp-1 mb-2">{item.desc}</p>
+                          <div className="flex items-center text-[12px] font-bold text-primary opacity-0 group-hover/card:opacity-100 transition-opacity">
                             실습 시작하기 <ArrowRight size={12} className="ml-1" />
                           </div>
                         </div>
@@ -271,8 +271,8 @@ export default function HomePage() {
                     <span className="text-sm font-medium group-hover:text-primary transition-colors">{item.title}</span>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="text-[10px] px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">{item.tag}</span>
-                    <span className="text-[10px] opacity-40 font-mono">{item.date}</span>
+                    <span className="text-[12px] px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-slate-500">{item.tag}</span>
+                    <span className="text-[12px] opacity-40 font-mono">{item.date}</span>
                   </div>
                 </div>
               ))}
@@ -294,7 +294,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-bold">유용한 웹사이트 모음</div>
-                  <div className="text-[11px] opacity-50">개발에 도움이 되는 사이트들을 모아봤어요.</div>
+                  <div className="text-[12px] opacity-50">개발에 도움이 되는 사이트들을 모아봤어요.</div>
                 </div>
               </div>
 
@@ -304,7 +304,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-bold">AI 개발 도구 모음</div>
-                  <div className="text-[11px] opacity-50">바이브 코딩에 활용하기 좋은 AI 도구들</div>
+                  <div className="text-[12px] opacity-50">바이브 코딩에 활용하기 좋은 AI 도구들</div>
                 </div>
               </div>
 
@@ -314,7 +314,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-bold">디자인 리소스 모음</div>
-                  <div className="text-[11px] opacity-50">프로젝트에 활용할 수 있는 디자인 리소스</div>
+                  <div className="text-[12px] opacity-50">프로젝트에 활용할 수 있는 디자인 리소스</div>
                 </div>
               </div>
             </div>
@@ -335,7 +335,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-bold">바이브 코딩이란?</div>
-                  <div className="text-[11px] opacity-50">바이브 코딩의 개념과 장점을 알아보세요.</div>
+                  <div className="text-[12px] opacity-50">바이브 코딩의 개념과 장점을 알아보세요.</div>
                 </div>
               </Link>
 
@@ -345,7 +345,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-bold">어떻게 공부해야 할까?</div>
-                  <div className="text-[11px] opacity-50">효과적인 학습 방법과 로드맵을 안내해드려요.</div>
+                  <div className="text-[12px] opacity-50">효과적인 학습 방법과 로드맵을 안내해드려요.</div>
                 </div>
               </Link>
 
@@ -355,7 +355,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-bold">추천 학습 순서</div>
-                  <div className="text-[11px] opacity-50">초보자를 위한 단계별 학습 순서를 제안해요.</div>
+                  <div className="text-[12px] opacity-50">초보자를 위한 단계별 학습 순서를 제안해요.</div>
                 </div>
               </Link>
             </div>
@@ -376,7 +376,7 @@ function PromotionPopup({ show, onClose }: { show: boolean, onClose: () => void 
         <div className="bg-primary p-8 text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
           <div className="relative z-10 space-y-2">
-            <div className="inline-flex bg-white/20 px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Special Event</div>
+            <div className="inline-flex bg-white/20 px-3 py-1 rounded-full text-[12px] font-black tracking-widest uppercase">Special Event</div>
             <h3 className="text-3xl font-black leading-tight">오프라인 특강<br />전격 오픈!</h3>
           </div>
           <Zap className="absolute bottom-[-10px] right-4 w-24 h-24 text-white/10" />
@@ -393,7 +393,7 @@ function PromotionPopup({ show, onClose }: { show: boolean, onClose: () => void 
           
           <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-2xl flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">한정 기간 혜택</p>
+              <p className="text-[12px] font-black text-slate-400 uppercase tracking-widest mb-1">한정 기간 혜택</p>
               <p className="text-xl font-black text-primary">특가 129,000원</p>
             </div>
             <Link 
@@ -478,7 +478,7 @@ function startProject() {
             <div className="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
             <div className="w-3 h-3 rounded-full bg-[#27C93F]"></div>
           </div>
-          <div className="text-[10px] font-mono text-slate-500 font-bold uppercase tracking-widest">vibe_coding.js</div>
+          <div className="text-[12px] font-mono text-slate-500 font-bold uppercase tracking-widest">vibe_coding.js</div>
           <div className="w-10"></div>
         </div>
         
@@ -504,7 +504,7 @@ function startProject() {
         </div>
 
         {/* Footer Info */}
-        <div className="bg-slate-800/30 px-6 py-3 border-t border-slate-800 flex items-center justify-between text-[10px] font-bold text-slate-500">
+        <div className="bg-slate-800/30 px-6 py-3 border-t border-slate-800 flex items-center justify-between text-[12px] font-bold text-slate-500">
           <div className="flex gap-4">
             <span>UTF-8</span>
             <span>JavaScript</span>

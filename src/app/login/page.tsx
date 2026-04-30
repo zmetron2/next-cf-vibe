@@ -35,6 +35,10 @@ export default function LoginPage() {
       }
 
       if (response.ok && data.success) {
+        // Save login status for client-side checks
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('user', JSON.stringify(data.user));
+        
         router.push('/');
         router.refresh();
       } else {

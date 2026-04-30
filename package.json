@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "pages:build": "npx @cloudflare/next-on-pages",
-    "pages:dev": "next dev -p 8788",
+    "pages:dev": "npx wrangler pages dev . --proxy http://127.0.0.1:3000",
     "pages:dev:cf": "npx wrangler pages dev . --proxy http://127.0.0.1:3000",
     "pages:deploy": "npx @cloudflare/next-on-pages && npx wrangler pages deploy .vercel/output"
   },

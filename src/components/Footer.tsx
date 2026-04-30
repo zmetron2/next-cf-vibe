@@ -29,11 +29,14 @@ export default function Footer() {
               <Link href="/curriculum" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all text-foreground">커리큘럼</Link>
               <Link href="/practice" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all text-foreground">기능실습</Link>
               <Link href="/resources" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all text-foreground">자료실</Link>
-              <Link href="/guide" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all text-foreground">기본가이드</Link>
+              <Link href="/guide" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all text-foreground">사전학습</Link>
             </div>
             <div className="flex flex-col gap-3">
-              <h4 className="text-xs font-black uppercase tracking-widest opacity-40 mb-2 text-foreground">문의</h4>
+              <h4 className="text-xs font-black uppercase tracking-widest opacity-40 mb-2 text-foreground">지원</h4>
+              <Link href="/faq" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all text-foreground">자주하는 질문</Link>
               <Link href="/contact" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all text-foreground">문의하기</Link>
+              <Link href="/terms" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all text-foreground">이용약관</Link>
+              <Link href="/privacy" className="text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all text-foreground">개인정보처리방침</Link>
             </div>
           </div>
         </div>

@@ -1,309 +1,484 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   ArrowRight, Zap, 
   ChevronDown, Star, 
   MoreHorizontal, 
   FileText, Globe, Video, Folder, Terminal, 
   Cpu, Palette, Cloud, Database,
-  ChevronLeft, ChevronRight, Layout, Search
+  ChevronLeft, ChevronRight, Layout, Search, X, MessageSquare, Plus, Link as LinkIcon,
+  Server, Globe2, Shield
 } from 'lucide-react';
 
+interface Resource {
+  id: number;
+  title: string;
+  description: string;
+  url: string;
+  category: string;
+  tags: string;
+  provider: string;
+  rating: number;
+  icon_text: string;
+  created_at: string;
+}
+
+const CATEGORIES = [
+  { label: '전체', icon: Folder },
+  { label: '개발도구', icon: Terminal },
+  { label: 'API', icon: Database },
+  { label: '웹사이트', icon: Globe },
+  { label: '문서/가이드', icon: FileText },
+  { label: '디자인/UX', icon: Palette },
+  { label: 'AI도구', icon: Zap },
+  { label: '배포/운영', icon: Cloud },
+  { label: '도메인', icon: Shield },
+  { label: '기타', icon: MoreHorizontal }
+];
+
+const DEFAULT_RESOURCES: Resource[] = [
+  { id: 1, title: 'MDN Web Docs', description: '웹 개발을 위한 종합 문서. HTML, CSS, JS 가이드 제공', url: 'https://developer.mozilla.org', category: '문서/가이드', tags: 'HTML,CSS,JS', provider: 'Mozilla', rating: 4.9, icon_text: 'MDN', created_at: '' },
+  { id: 2, title: 'React 공식 문서', description: 'React 공식 홈. 최신 기능 가이드 제공', url: 'https://react.dev', category: '문서/가이드', tags: 'Frontend,React', provider: 'Meta', rating: 4.8, icon_text: 'React', created_at: '' },
+  { id: 3, title: 'Tailwind CSS', description: '유틸리티 퍼스트 CSS 프레임워크 공식 문서', url: 'https://tailwindcss.com', category: '개발도구', tags: 'CSS,Tailwind', provider: 'Tailwind Labs', rating: 4.7, icon_text: 'TW', created_at: '' },
+  { id: 4, title: 'Figma', description: '인터랙티브 디자인 및 프로토타이핑 도구', url: 'https://figma.com', category: '디자인/UX', tags: 'Design,UI', provider: 'Figma', rating: 4.8, icon_text: 'Fig', created_at: '' },
+  { id: 5, title: 'ChatGPT', description: 'AI 기반 대화형 모델 및 프롬프트 서비스', url: 'https://chat.openai.com', category: 'AI도구', tags: 'AI,LLM', provider: 'OpenAI', rating: 4.9, icon_text: 'GPT', created_at: '' },
+  { id: 6, title: 'Vercel', description: 'Next.js 최적화 배포 및 호스팅 플랫폼', url: 'https://vercel.com', category: '배포/운영', tags: 'Cloud,Hosting', provider: 'Vercel', rating: 4.8, icon_text: 'Ver', created_at: '' },
+  { id: 7, title: 'Supabase', description: '오픈소스 Firebase 대안 데이터베이스 플랫폼', url: 'https://supabase.com', category: 'API', tags: 'DB,Backend', provider: 'Supabase', rating: 4.7, icon_text: 'Supa', created_at: '' },
+  { id: 8, title: 'Namecheap', description: '합리적인 가격의 도메인 등록 및 관리 서비스', url: 'https://namecheap.com', category: '도메인', tags: 'Domain,Infra', provider: 'Namecheap', rating: 4.5, icon_text: 'Name', created_at: '' },
+  { id: 9, title: 'Visual Studio Code', description: '가장 인기 있는 오픈소스 코드 에디터', url: 'https://code.visualstudio.com', category: '개발도구', tags: 'Editor,IDE', provider: 'Microsoft', rating: 4.9, icon_text: 'VS', created_at: '' },
+  { id: 10, title: 'Public APIs', description: '개발에 필요한 공개 API들의 방대한 모음집', url: 'https://public-apis.io', category: 'API', tags: 'API,OpenData', provider: 'PublicAPIs', rating: 4.6, icon_text: 'API', created_at: '' },
+  { id: 11, title: 'Google Fonts', description: '무료로 사용 가능한 웹 폰트 라이브러리', url: 'https://fonts.google.com', category: '웹사이트', tags: 'Font,Design', provider: 'Google', rating: 4.9, icon_text: 'Font', created_at: '' },
+  { id: 12, title: 'Claude AI', description: 'Anthropic의 고성능 대화형 AI 모델', url: 'https://claude.ai', category: 'AI도구', tags: 'AI,Claude', provider: 'Anthropic', rating: 4.8, icon_text: 'AI', created_at: '' },
+  { id: 13, title: 'W3Schools', description: '웹 기술의 기초를 배우기에 좋은 튜토리얼 사이트', url: 'https://w3schools.com', category: '웹사이트', tags: 'Study,Web', provider: 'W3Schools', rating: 4.4, icon_text: 'W3S', created_at: '' },
+  { id: 14, title: 'GitHub Desktop', description: 'CLI 없이 Git을 편리하게 사용하는 GUI 도구', url: 'https://desktop.github.com', category: '개발도구', tags: 'Git,Tool', provider: 'GitHub', rating: 4.7, icon_text: 'Git', created_at: '' },
+  { id: 15, title: 'Gabia 도메인', description: '국내 최대 도메인 및 호스팅 서비스', url: 'https://gabia.com', category: '도메인', tags: 'Domain,Korea', provider: 'Gabia', rating: 4.3, icon_text: 'Gab', created_at: '' },
+  { id: 16, title: '기타 유용한 사이트 모음', description: '여러 카테고리에 속하지 않는 유용한 유틸리티 모음', url: '#', category: '기타', tags: 'Misc,Utils', provider: 'Vibe', rating: 4.0, icon_text: 'Etc', created_at: '' }
+];
+
 export default function ResourcesPage() {
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [filteredResources, setFilteredResources] = useState<Resource[]>([]);
+  const [activeCategory, setActiveCategory] = useState('전체');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isProposalModalOpen, setIsProposalModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchResources = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch('/api/resources');
+      const data = await res.json() as { success: boolean, data: Resource[], message?: string };
+      
+      if (data.success) {
+        let allResources = data.data;
+        if (data.message?.includes('Mock')) {
+          const localData = localStorage.getItem('local_vibe_resources');
+          if (localData) {
+            allResources = JSON.parse(localData) as Resource[];
+          } else {
+            allResources = DEFAULT_RESOURCES;
+            localStorage.setItem('local_vibe_resources', JSON.stringify(DEFAULT_RESOURCES));
+          }
+        }
+        setResources(allResources);
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+      setResources(DEFAULT_RESOURCES);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchResources();
+  }, [fetchResources]);
+
+  useEffect(() => {
+    let result = resources;
+    if (activeCategory !== '전체') {
+      result = result.filter(r => r.category === activeCategory);
+    }
+    if (searchQuery) {
+      result = result.filter(r => 
+        r.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        r.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.tags.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    setFilteredResources(result);
+  }, [resources, activeCategory, searchQuery]);
+
+  const stats = {
+    total: resources.length,
+    docs: resources.filter(r => r.category === '문서/가이드').length,
+    web: resources.filter(r => r.category === '웹사이트' || r.category === '개발도구').length,
+    ai: resources.filter(r => r.category === 'AI도구').length
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans transition-colors">
 
-      {/* --- Header Area --- */}
-      <header className="bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-white py-12 transition-colors border-b border-slate-200 dark:border-white/5">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-8">
-          <div className="space-y-4">
-            <h1 className="text-3xl font-black">자료실</h1>
-            <p className="text-slate-400 max-w-md leading-relaxed text-sm">
-              스터디에 필요한 유용한 웹사이트와 자료들을 모아두었습니다.<br />
-              개발에 도움이 되는 도구, 학습 자료, 참고 사이트를 한 곳에서<br />
-              찾아보고 활용해보세요.
+      {/* --- Header Area (Hero) --- */}
+      <header className="relative py-16 md:py-24 px-6 overflow-hidden border-b border-slate-200 dark:border-white/5">
+        <div className="absolute inset-0 bg-slate-50 dark:bg-[#0b0f1a] -z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.08),transparent_50%)] -z-10" />
+        
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-12">
+          <div className="space-y-6 flex-1 text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-widest animate-in fade-in slide-in-from-left-4 duration-700">
+              <Plus className="w-3 h-3" /> Knowledge Hub
+            </div>
+            <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tighter">
+              기술의 정수를 모은<br />
+              <span className="text-indigo-600">스마트 자료실</span>
+            </h1>
+            <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto lg:mx-0 leading-relaxed text-sm md:text-base font-medium">
+              실무 개발과 스터디에 즉시 활용 가능한 검증된 기술 자료와 도구들을 확인해보세요.
             </p>
-            <div className="flex flex-wrap gap-3 pt-2">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 justify-center lg:justify-start">
+              <div className="relative group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
                 <input 
                   type="text" 
-                  placeholder="자료 검색 (예: React, 디자인, API...)" 
-                  className="bg-white/10 border border-white/10 rounded-lg py-2 pl-10 pr-4 text-sm w-full md:w-80 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="무엇을 찾으시나요?" 
+                  className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 rounded-xl py-3 pl-12 pr-6 text-sm w-full sm:w-80 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all dark:text-white"
                 />
               </div>
-              <button className="bg-white/10 hover:bg-white/20 border border-white/10 px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all">
-                <Star className="w-4 h-4" /> 즐겨찾기 모아보기
-              </button>
             </div>
           </div>
           
-          <div className="bg-slate-800/50 backdrop-blur-md border border-border rounded-2xl p-6 w-full max-w-lg grid grid-cols-4 gap-4 text-center">
-            <header className="col-span-4 hidden invisible">Statistics</header>
-            <StatusCard icon={Folder} label="전체 자료" count="128" color="text-purple-400" />
-            <StatusCard icon={Globe} label="웹사이트" count="86" color="text-blue-400" />
-            <StatusCard icon={FileText} label="문서/가이드" count="28" color="text-green-400" />
-            <StatusCard icon={Video} label="동영상" count="14" color="text-orange-400" />
+          <div className="flex-1 w-full max-w-lg">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 bg-white/50 dark:bg-slate-900/40 backdrop-blur-xl rounded-3xl border border-white dark:border-white/5 shadow-2xl shadow-indigo-500/5">
+              <StatusCard icon={Folder} label="전체 자료" count={stats.total.toString()} color="text-indigo-500" />
+              <StatusCard icon={Terminal} label="도구/개발" count={stats.web.toString()} color="text-blue-500" />
+              <StatusCard icon={FileText} label="문서/가이드" count={stats.docs.toString()} color="text-emerald-500" />
+              <StatusCard icon={Zap} label="AI 도구" count={stats.ai.toString()} color="text-amber-500" />
+            </div>
           </div>
         </div>
       </header>
 
       {/* --- Main Content --- */}
-      <main className="max-w-7xl mx-auto w-full px-6 py-10 flex flex-col lg:flex-row gap-8">
+      <main className="max-w-7xl mx-auto w-full px-6 py-12 flex flex-col lg:flex-row gap-10">
         
-        {/* Left Sidebar */}
+        {/* Sidebar */}
         <aside className="lg:w-64 space-y-8 shrink-0">
-          <div className="bg-card rounded-2xl border border-border p-6 space-y-6 shadow-sm transition-colors">
-            <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">카테고리</h3>
+          <div className="bg-white dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-white/10 p-6 space-y-6 shadow-sm transition-colors">
+            <h3 className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Categories</h3>
             <div className="space-y-1">
-              <CategoryItem label="전체" count="128" active />
-              <CategoryItem label="개발 도구" count="24" icon={Terminal} />
-              <CategoryItem label="프론트엔드" count="32" icon={LayoutIcon} />
-              <CategoryItem label="백엔드" count="18" icon={Database} />
-              <CategoryItem label="데이터베이스" count="12" icon={Cloud} />
-              <CategoryItem label="디자인/UX" count="15" icon={Palette} />
-              <CategoryItem label="배포/인프라" count="10" icon={Cpu} />
-              <CategoryItem label="AI/Automation" count="8" icon={Zap} />
-              <CategoryItem label="기타" count="9" icon={MoreHorizontal} />
-            </div>
-          </div>
-
-          <div className="bg-card rounded-2xl border border-border p-6 space-y-4 shadow-sm transition-colors">
-            <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">자료 제안하기</h3>
-            <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed">
-              스터디에 도움이 되는 자료를 공유해주세요!
-            </p>
-            <button className="w-full bg-slate-50 dark:bg-white/5 py-2.5 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition-all border border-border flex items-center justify-center gap-2">
-              자료 제안하기 <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">인기 검색어</h3>
-            <div className="flex flex-wrap gap-2">
-              {['React', 'Next.js', 'Tailwind CSS', 'API', 'JavaScript', '디자인 시스템', 'Supabase', 'Figma', 'Git', 'Docker'].map((tag) => (
-                <span key={tag} className="px-3 py-1.5 bg-card border border-border rounded-lg text-[10px] font-bold text-slate-600 dark:text-slate-400 hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer transition-all">
-                  {tag}
-                </span>
+              {CATEGORIES.map((cat) => (
+                <CategoryItem 
+                  key={cat.label}
+                  label={cat.label} 
+                  count={resources.filter(r => cat.label === '전체' ? true : r.category === cat.label).length.toString()} 
+                  icon={cat.icon} 
+                  active={activeCategory === cat.label}
+                  onClick={() => setActiveCategory(cat.label)}
+                />
               ))}
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">최근 추가된 자료</h3>
-            <div className="space-y-3">
-              <RecentResource title="ChatGPT 프롬프트 가이드" category="AI/Automation" date="2024.05.20" icon={Zap} />
-              <RecentResource title="Vercel 배포 가이드" category="배포/인프라" date="2024.05.18" icon={Cloud} />
-              <RecentResource title="Zustand 상태관리 가이드" category="프론트엔드" date="2024.05.16" icon={LayoutIcon} />
+          <div className="bg-indigo-600 rounded-2xl p-6 space-y-4 shadow-xl shadow-indigo-600/20 text-white relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform">
+              <MessageSquare className="w-16 h-16" />
+            </div>
+            <div className="relative z-10">
+              <h3 className="text-sm font-black uppercase tracking-wider mb-2">자료 제안하기</h3>
+              <p className="text-[11px] text-indigo-100 leading-relaxed mb-4 font-medium">
+                더 많은 사람들이 도움을 받을 수 있도록 좋은 자료를 추천해주세요!
+              </p>
+              <button 
+                onClick={() => setIsProposalModalOpen(true)}
+                className="w-full bg-white text-indigo-600 py-3 rounded-xl text-xs font-black hover:bg-indigo-50 transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95"
+              >
+                추천하기 <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
           </div>
         </aside>
 
+        {/* Resource List */}
         <div className="flex-1 space-y-8">
-          {/* Top Recommendations */}
-          <div className="space-y-6">
-            <h2 className="text-xl font-black text-slate-800">카테고리별 추천 자료</h2>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 overflow-x-auto no-scrollbar">
-              <RecommendCard label="프론트엔드" desc="유용한 프론트엔드 관련 자료 모음" count="32" icon={LayoutIcon} color="bg-indigo-50 text-indigo-600" />
-              <RecommendCard label="백엔드" desc="서버, API, 백엔드 관련 자료 모음" count="18" icon={Database} color="bg-blue-50 text-blue-600" />
-              <RecommendCard label="디자인/UX" desc="UI 디자인과 UX 관련 자료 모음" count="15" icon={Palette} color="bg-pink-50 text-pink-600" />
-              <RecommendCard label="배포/인프라" desc="서비스 배포와 인프라 관련 자료 모음" count="10" icon={Cloud} color="bg-orange-50 text-orange-600" />
-              <RecommendCard label="AI/Automation" desc="AI 도구와 자동화 관련 자료 모음" count="8" icon={Zap} color="bg-purple-50 text-purple-600" />
+          <div className="flex flex-col sm:flex-row gap-4 justify-between items-center border-b border-slate-100 dark:border-white/5 pb-6">
+            <div className="flex items-center gap-3">
+              <h2 className="text-xl font-black text-slate-800 dark:text-white tracking-tight">{activeCategory}</h2>
+              <span className="text-[10px] font-black px-2 py-0.5 bg-slate-100 dark:bg-white/10 text-slate-400 rounded uppercase">{filteredResources.length} Items</span>
             </div>
-          </div>
-
-          {/* List Controls */}
-          <div className="flex flex-col md:flex-row gap-4 justify-between items-center border-b border-slate-200 pb-4">
-            <div className="flex gap-1 bg-slate-100 p-1 rounded-lg">
+            <div className="flex gap-1 bg-slate-100 dark:bg-white/5 p-1 rounded-xl">
               <TabItem label="최신순" active />
               <TabItem label="인기순" />
-              <TabItem label="즐겨찾기순" />
-            </div>
-            <div className="relative">
-              <select className="bg-white border border-slate-200 rounded-lg px-4 py-2 text-xs font-bold text-slate-600 appearance-none pr-8">
-                <option>전체 유형</option>
-                <option>웹사이트</option>
-                <option>문서/가이드</option>
-                <option>동영상</option>
-              </select>
-              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+              <TabItem label="즐겨찾기" />
             </div>
           </div>
 
-          {/* Resource List */}
-          <div className="space-y-4">
-            <ResourceItem 
-              icon="MDN" 
-              title="MDN Web Docs" 
-              desc="웹 개발을 위한 종합 문서. HTML, CSS, JavaScript 등 웹 기술에 대한 상세한 가이드와 레퍼런스를 제공합니다." 
-              tags={['웹사이트', '프론트엔드']} 
-              provider="모질라 개발자 네트워크"
-              rating="4.9"
-              date="2024.05.20"
-            />
-            <ResourceItem 
-              icon="React" 
-              title="React 공식 문서" 
-              desc="React 공식 문서 사이트. React의 모든 기능과 개념에 대한 상세한 가이드와 예제를 제공합니다." 
-              tags={['웹사이트', '프론트엔드']} 
-              provider="React Team"
-              rating="4.8"
-              date="2024.05.19"
-            />
-            <ResourceItem 
-              icon="Tailwind" 
-              title="Tailwind CSS 문서" 
-              desc="유틸리티 퍼스트 CSS 프레임워크인 Tailwind CSS의 공식 문서입니다. 빠른 UI 개발을 위한 다양한 유틸리티 클래스를 제공합니다." 
-              tags={['웹사이트', '프론트엔드', 'CSS']} 
-              provider="Tailwind Labs"
-              rating="4.7"
-              date="2024.05.18"
-            />
-            <ResourceItem 
-              icon="Git" 
-              title="Git 공식 문서" 
-              desc="Git의 모든 명령어와 개념에 대한 공식 문서입니다. 버전 관리 시스템을 완벽하게 이해할 수 있습니다." 
-              tags={['웹사이트', '개발 도구', '백엔드']} 
-              provider="Git"
-              rating="4.8"
-              date="2024.05.17"
-            />
-            <ResourceItem 
-              icon="Next" 
-              title="Next.js 공식 문서" 
-              desc="React 기반의 풀스택 웹 프레임워크 Next.js의 공식 문서입니다. App Router, Server Components 등 최신 기능을 다룹니다." 
-              tags={['웹사이트', '프론트엔드', '백엔드']} 
-              provider="Vercel"
-              rating="4.9"
-              date="2024.05.16"
-            />
-            <ResourceItem 
-              icon="Figma" 
-              title="Figma 디자인 시스템 가이드" 
-              desc="효과적인 디자인 시스템 구축을 위한 Figma 가이드입니다. 컴포넌트, 스타일, 라이브러리 관리 방법을 다룹니다." 
-              tags={['문서', '디자인/UX']} 
-              provider="Figma"
-              rating="4.6"
-              date="2024.05.15"
-            />
-          </div>
+          {isLoading ? (
+            <div className="py-20 flex flex-col items-center justify-center text-slate-400 gap-4">
+              <div className="w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin" />
+              <p className="text-sm font-black animate-pulse uppercase tracking-widest">Loading Resources...</p>
+            </div>
+          ) : filteredResources.length > 0 ? (
+            <div className="grid grid-cols-1 gap-6">
+              {filteredResources.map((resource) => (
+                <ResourceItem key={resource.id} resource={resource} />
+              ))}
+            </div>
+          ) : (
+            <div className="py-20 text-center bg-slate-50 dark:bg-white/5 rounded-3xl border border-dashed border-slate-200 dark:border-white/10">
+              <Folder className="w-12 h-12 text-slate-200 dark:text-white/10 mx-auto mb-4" />
+              <p className="text-slate-500 font-bold">해당 카테고리에 자료가 없습니다.</p>
+              <button onClick={() => {setActiveCategory('전체'); setSearchQuery('');}} className="mt-4 text-indigo-600 font-black text-xs hover:underline">모든 자료 보기</button>
+            </div>
+          )}
 
-          {/* Pagination */}
-          <div className="flex justify-center items-center gap-2 pt-8">
-            <button className="p-2 hover:bg-slate-100 rounded-lg text-slate-400"><ChevronLeft className="w-4 h-4" /></button>
-            <button className="w-8 h-8 rounded-lg bg-indigo-600 text-white text-xs font-bold">1</button>
-            <button className="w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-500 text-xs font-bold">2</button>
-            <button className="w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-500 text-xs font-bold">3</button>
-            <span className="text-slate-300">...</span>
-            <button className="w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-500 text-xs font-bold">11</button>
-            <button className="p-2 hover:bg-slate-100 rounded-lg text-slate-400"><ChevronRight className="w-4 h-4" /></button>
-          </div>
+          {/* Pagination (Visual Only) */}
+          {filteredResources.length > 5 && (
+            <div className="flex justify-center items-center gap-2 pt-10">
+              <button className="w-10 h-10 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-400 transition-all"><ChevronLeft className="w-5 h-5" /></button>
+              <button className="w-10 h-10 rounded-xl bg-indigo-600 text-white text-sm font-black shadow-lg shadow-indigo-600/20">1</button>
+              <button className="w-10 h-10 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-400 transition-all"><ChevronRight className="w-5 h-5" /></button>
+            </div>
+          )}
         </div>
       </main>
 
-      {/* --- Footer --- */}
+      {/* --- Proposal Modal --- */}
+      {isProposalModalOpen && (
+        <ResourceProposalModal 
+          onClose={() => setIsProposalModalOpen(false)} 
+          onSuccess={fetchResources}
+        />
+      )}
     </div>
   );
 }
 
-// Helper Components
+// Subcomponents
 function StatusCard({ icon: Icon, label, count, color }: { icon: React.ElementType, label: string, count: string, color: string }) {
   return (
-    <div className="space-y-2 group cursor-pointer">
-      <div className={`p-2 rounded-lg bg-white/5 border border-white/5 flex justify-center group-hover:bg-white/10 transition-colors`}>
+    <div className="space-y-3 group cursor-pointer p-2 rounded-2xl hover:bg-white dark:hover:bg-white/5 transition-all">
+      <div className={`w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-white/5 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform`}>
         <Icon className={`w-5 h-5 ${color}`} />
       </div>
-      <div>
-        <p className="text-[10px] text-slate-500 font-medium whitespace-nowrap">{label}</p>
-        <p className="text-xl font-bold">{count}</p>
+      <div className="text-center sm:text-left">
+        <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">{label}</p>
+        <p className="text-xl font-black text-slate-900 dark:text-white leading-none">{count}</p>
       </div>
     </div>
   );
 }
 
-function CategoryItem({ label, count, icon: Icon, active = false }: { label: string, count: string, icon?: React.ElementType, active?: boolean }) {
+function CategoryItem({ label, count, icon: Icon, active, onClick }: { label: string, count: string, icon: React.ElementType, active: boolean, onClick: () => void }) {
   return (
-    <div className={`flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all ${active ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'}`}>
+    <div 
+      onClick={onClick}
+      className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all ${active ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 scale-[1.02]' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900'}`}
+    >
       <div className="flex items-center gap-3">
-        {Icon ? <Icon className="w-4 h-4" /> : <div className="w-4 h-4" />}
-        <span className="text-xs font-bold">{label}</span>
-      </div>
-      <span className="text-[10px] font-medium opacity-50">{count}</span>
-    </div>
-  );
-}
-
-function RecentResource({ title, category, date, icon: Icon }: { title: string, category: string, date: string, icon: React.ElementType }) {
-  return (
-    <div className="flex items-center gap-3 group cursor-pointer">
-      <div className="p-2 bg-slate-50 text-slate-400 rounded-lg group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-all">
         <Icon className="w-4 h-4" />
+        <span className="text-xs font-black">{label}</span>
       </div>
-      <div className="overflow-hidden">
-        <p className="text-[10px] font-bold text-slate-700 truncate">{title}</p>
-        <p className="text-[9px] text-slate-400 mt-0.5">{category} · {date}</p>
-      </div>
+      <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${active ? 'bg-indigo-500/30' : 'bg-slate-100 dark:bg-white/10'}`}>{count}</span>
     </div>
   );
 }
 
-function RecommendCard({ label, desc, count, icon: Icon, color }: { label: string, desc: string, count: string, icon: React.ElementType, color: string }) {
+function ResourceItem({ resource }: { resource: Resource }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5 flex flex-col justify-between min-w-[160px] group hover:shadow-lg transition-all cursor-pointer">
-      <div className="space-y-3">
-        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${color} group-hover:rotate-12 transition-transform`}>
-          <Icon className="w-5 h-5" />
+    <a 
+      href={resource.url} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-white/10 p-6 flex flex-col md:flex-row gap-6 hover:shadow-xl hover:-translate-y-1 transition-all group"
+    >
+      <div className="w-14 h-14 bg-slate-900 dark:bg-indigo-600 rounded-2xl flex items-center justify-center text-xs font-black text-white shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-indigo-500/10">
+        {resource.icon_text}
+      </div>
+      <div className="flex-1 space-y-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-3">
+            <h4 className="text-lg font-black text-slate-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors tracking-tight">{resource.title}</h4>
+            <span className="text-[9px] font-black px-1.5 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-sm uppercase tracking-tighter">{resource.category}</span>
+          </div>
+          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 font-medium">{resource.description}</p>
         </div>
-        <div>
-          <h4 className="text-xs font-black text-slate-800 mb-1">{label}</h4>
-          <p className="text-[9px] text-slate-400 leading-tight">{desc}</p>
+        <div className="flex flex-wrap gap-2">
+          {resource.tags.split(',').map((tag, i) => (
+            <span key={i} className="text-[10px] font-black px-2.5 py-1 bg-slate-50 dark:bg-white/5 text-slate-400 dark:text-slate-500 rounded-lg border border-slate-100 dark:border-white/5 tracking-wider uppercase">{tag.trim()}</span>
+          ))}
         </div>
       </div>
-      <div className="mt-4 pt-4 border-t border-slate-50 flex items-center justify-between">
-        <span className="text-[9px] font-bold text-slate-400">{count}개 자료</span>
-        <ArrowRight className="w-3 h-3 text-slate-300 group-hover:translate-x-1 transition-all" />
+      <div className="md:w-48 space-y-3 text-right flex md:flex-col justify-between items-end md:justify-center border-t md:border-t-0 md:border-l border-slate-50 dark:border-white/5 pt-4 md:pt-0 md:pl-6">
+        <div className="space-y-1">
+          <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{resource.provider}</p>
+          <div className="flex items-center justify-end gap-1.5 text-sm text-yellow-500 font-black">
+            <Star className="w-3.5 h-3.5 fill-yellow-500" /> {resource.rating}
+          </div>
+          <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-2 transition-all" />
+        </div>
       </div>
-    </div>
+    </a>
   );
 }
 
-function TabItem({ label, active = false }: { label: string, active?: boolean }) {
+function TabItem({ label, active }: { label: string, active?: boolean }) {
   return (
-    <button className={`px-4 py-1.5 rounded-md text-[10px] font-black transition-all ${active ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}>
+    <button className={`px-5 py-2 rounded-lg text-[11px] font-black transition-all ${active ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-500 dark:text-slate-500 hover:text-slate-800'}`}>
       {label}
     </button>
   );
 }
 
-function ResourceItem({ icon, title, desc, tags, provider, rating, date }: { icon: string, title: string, desc: string, tags: string[], provider: string, rating: string, date: string }) {
+function ResourceProposalModal({ onClose, onSuccess }: { onClose: () => void, onSuccess: () => void }) {
+  const [formData, setFormData] = useState({ title: '', url: '', description: '', category: '개발도구', tags: '', provider: '', icon_text: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!formData.title || !formData.url) {
+      alert('자료 명칭과 URL은 필수입니다.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch('/api/resources', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          rating: 4.5,
+          icon_text: formData.title.substring(0, 3).toUpperCase()
+        })
+      });
+      const data = await res.json() as { success: boolean, message?: string, data?: any };
+      
+      if (data.success) {
+        if (data.message?.includes('Mock')) {
+          const localData = localStorage.getItem('local_vibe_resources');
+          const currentResources = localData ? JSON.parse(localData) as Resource[] : DEFAULT_RESOURCES;
+          const newResource = { ...formData, id: Date.now(), rating: 4.5, icon_text: formData.title.substring(0, 3).toUpperCase(), created_at: new Date().toISOString() };
+          localStorage.setItem('local_vibe_resources', JSON.stringify([newResource, ...currentResources]));
+        }
+        alert('소중한 자료 추천 감사합니다!');
+        onSuccess();
+        onClose();
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6 flex flex-col md:flex-row gap-6 hover:shadow-md transition-all cursor-pointer group">
-      <div className="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center text-[10px] font-black text-white shrink-0 group-hover:scale-110 transition-transform">
-        {icon}
-      </div>
-      <div className="flex-1 space-y-3">
-        <div className="space-y-1">
-          <h4 className="text-base font-black text-slate-800 group-hover:text-indigo-600 transition-colors">{title}</h4>
-          <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">{desc}</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag, i) => (
-            <span key={i} className="text-[9px] font-bold px-2 py-0.5 bg-slate-50 text-slate-400 rounded-md border border-slate-100">{tag}</span>
-          ))}
-        </div>
-      </div>
-      <div className="md:w-48 space-y-3 text-right">
-        <div className="space-y-1">
-          <p className="text-[10px] font-bold text-slate-500">{provider}</p>
-          <div className="flex items-center justify-end gap-1 text-[10px] text-yellow-500 font-bold">
-            <Star className="w-3 h-3 fill-yellow-500" /> {rating}
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300" onClick={onClose} />
+      <div className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-white/10 overflow-hidden animate-in zoom-in-95 duration-300">
+        <div className="p-8 space-y-6">
+          <div className="flex justify-between items-center">
+            <div className="bg-indigo-600/10 text-indigo-600 dark:text-indigo-400 px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase">Propose Asset</div>
+            <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-full transition-colors">
+              <X className="w-5 h-5 text-slate-400" />
+            </button>
           </div>
-          <p className="text-[10px] text-slate-300">{date}</p>
+          
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter">자료 제안하기</h3>
+              <p className="text-slate-500 dark:text-slate-400 text-xs font-medium leading-relaxed">
+                스터디원들과 함께 공유하고 싶은<br />훌륭한 기술 자료나 사이트를 알려주세요!
+              </p>
+            </div>
+            
+            <div className="space-y-4 pt-2 max-h-[400px] overflow-y-auto px-1 custom-scrollbar">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">자료 명칭</label>
+                  <input 
+                    type="text" 
+                    value={formData.title}
+                    onChange={(e) => setFormData({...formData, title: e.target.value})}
+                    placeholder="예: Tailwind UI" 
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all dark:text-white"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">카테고리</label>
+                  <select 
+                    value={formData.category}
+                    onChange={(e) => setFormData({...formData, category: e.target.value})}
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm outline-none transition-all dark:text-white"
+                  >
+                    {CATEGORIES.filter(c => c.label !== '전체').map(c => (
+                      <option key={c.label} value={c.label}>{c.label}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">참고 링크 (URL)</label>
+                <div className="relative">
+                  <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+                  <input 
+                    type="url" 
+                    value={formData.url}
+                    onChange={(e) => setFormData({...formData, url: e.target.value})}
+                    placeholder="https://example.com" 
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl px-10 py-3 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all dark:text-white"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">제공처</label>
+                  <input 
+                    type="text" 
+                    value={formData.provider}
+                    onChange={(e) => setFormData({...formData, provider: e.target.value})}
+                    placeholder="예: Meta, Google" 
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all dark:text-white"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">태그 (쉼표 구분)</label>
+                  <input 
+                    type="text" 
+                    value={formData.tags}
+                    onChange={(e) => setFormData({...formData, tags: e.target.value})}
+                    placeholder="React, Frontend" 
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all dark:text-white"
+                  />
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">추천 사유</label>
+                <textarea 
+                  rows={2}
+                  value={formData.description}
+                  onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  placeholder="이 자료가 왜 도움이 되는지 짧게 적어주세요." 
+                  className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all dark:text-white resize-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-2">
+            <button 
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-2xl font-black transition-all shadow-xl shadow-indigo-600/25 active:scale-[0.98] disabled:opacity-50"
+            >
+              {isSubmitting ? '제출 중...' : '추천 제안 제출하기'}
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
-}
-
-function LayoutIcon({ className }: { className: string }) {
-  return <Layout className={className} />;
 }

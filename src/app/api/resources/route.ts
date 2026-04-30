@@ -1,0 +1,66 @@
+import { getRequestContext } from '@cloudflare/next-on-pages';
+import { NextRequest, NextResponse } from 'next/server';
+
+export const runtime = 'edge';
+
+export async function GET(request: NextRequest) {
+  try {
+    const { env } = getRequestContext();
+    const db = env.DB;
+
+    if (!db) {
+      return NextResponse.json({ 
+        success: true, 
+        data: [], 
+        message: 'Mock response (Local Dev)' 
+      });
+    }
+
+    const { results } = await db.prepare('SELECT * FROM vibe_resources ORDER BY created_at DESC').all();
+    return NextResponse.json({ success: true, data: results });
+  } catch (error) {
+    console.error('Resources GET Error:', error);
+    return NextResponse.json({ success: false, error: 'Failed to fetch resources' }, { status: 500 });
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const { env } = getRequestContext();
+    const db = env.DB;
+    const body = await request.json() as { 
+      title: string; 
+      description: string; 
+      url: string; 
+      category: string; 
+      tags: string; 
+      provider: string; 
+      icon_text: string;
+    };
+
+    if (!db) {
+      return NextResponse.json({ 
+        success: true, 
+        data: body, 
+        message: 'Mock response (Local Dev)' 
+      });
+    }
+
+    await db.prepare(
+      'INSERT INTO vibe_resources (title, description, url, category, tags, provider, icon_text) VALUES (?, ?, ?, ?, ?, ?, ?)'
+    ).bind(
+      body.title, 
+      body.description, 
+      body.url, 
+      body.category, 
+      body.tags, 
+      body.provider, 
+      body.icon_text
+    ).run();
+
+    return NextResponse.json({ success: true, message: 'Resource added successfully' });
+  } catch (error) {
+    console.error('Resources POST Error:', error);
+    return NextResponse.json({ success: false, error: 'Failed to add resource' }, { status: 500 });
+  }
+}

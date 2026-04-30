@@ -28,6 +28,8 @@
    - **Runtime Selective Use**: `export const runtime = 'edge';`는 API Route나 실시간 DB 접근이 필요한 페이지에만 제한적으로 사용합니다. 일반 정적/홍보 페이지에는 사용을 지양하여 500 Internal Server Error를 방지합니다.
    - **Build Output Dir**: `next-on-pages` 결과물 경로는 반드시 `.vercel/output`이어야 하며, 대시보드 설정에서 `.vercel/output/static`으로 고정되어 Worker가 누락되지 않는지 상시 확인합니다.
    - **Build Resilience**: 사소한 린트/타입 에러가 배포를 막지 않도록 `next.config.ts`의 `ignoreDuringBuilds` 설정을 활성화 상태로 유지합니다.
+9. **React Directives (CRITICAL)**: `useState`, `useEffect`, `useContext` 등 리액트 훅을 사용하는 모든 페이지나 컴포넌트 파일 최상단에는 반드시 **`'use client';`** 지시어를 명시하여 `ModuleBuildError`를 원천 방지합니다.
+10. **File Encoding & CLI Safety (CRITICAL)**: 모든 소스코드 파일은 반드시 **BOM 없는 UTF-8** 인코딩으로 저장되어야 합니다. 특히 Windows PowerShell의 `Set-Content`나 `Out-File` 등을 사용하여 텍스트를 수정할 경우, 기본 인코딩이 UTF-16으로 변경되어 `ModuleBuildError (Invalid UTF-8 stream)`를 유발할 수 있으므로 절대 주의합니다. 파일 수정 시에는 가급적 인코딩이 보장되는 전용 에디터 도구를 사용합니다.
 
 ## 🚀 CI/CD Flow
 - 빌드 결과물: `.next` 디렉토리를 `next-on-pages`로 변환하여 배포.

@@ -349,7 +349,7 @@ function StepCard({ step, title, color, items, projects }: { step: string, title
         ))}
       </ul>
       <div className="pt-6 border-t border-slate-100 dark:border-slate-800 space-y-3">
-        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">실습 프로젝트 (2건)</p>
+        <p className="text-[12px] font-black text-slate-400 uppercase tracking-widest mb-1">실습 프로젝트 (2건)</p>
         {projects.map((p, i) => (
           <div key={i} className="flex items-center gap-2 group/item">
             <div className={`w-1.5 h-1.5 rounded-full ${color} opacity-40 group-hover/item:opacity-100 transition-opacity`} />
