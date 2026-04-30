@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '@/components/Footer';
 import { 
   Code2, ArrowRight, 
   BookOpen, 
@@ -7,7 +6,6 @@ import {
   Mail, MessageSquare, Send, Paperclip,
   CheckCircle2, Clock, ExternalLink
 } from 'lucide-react';
-import Navbar from '@/components/Navbar';
 
 // Custom Icons to avoid lucide-react import issues
 function GithubIcon({ className }: { className?: string }) {
@@ -30,12 +28,11 @@ function DiscordIcon({ className }: { className?: string }) {
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans transition-colors">
-      <Navbar />
 
       {/* --- Header Area --- */}
-      <header className="bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-white px-6 py-16 relative overflow-hidden transition-colors border-b border-slate-200 dark:border-white/5">
+      <header className="bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-white py-16 relative overflow-hidden transition-colors border-b border-slate-200 dark:border-white/5">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.15),transparent)] pointer-events-none" />
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-8 relative z-10">
           <div className="space-y-4">
             <h1 className="text-3xl font-black tracking-tight">교육 · 스터디 문의</h1>
             <p className="text-indigo-400 font-bold text-xl">함께 성장하는 학습 여정을 시작하세요</p>
@@ -47,11 +44,11 @@ export default function ContactPage() {
           
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-            <div className="relative bg-slate-900 border border-white/10 rounded-3xl p-8 w-64 h-64 flex flex-col items-center justify-center text-center space-y-4 overflow-hidden">
+            <div className="relative bg-slate-900 border border-white/10 rounded-2xl p-8 w-64 h-64 flex flex-col items-center justify-center text-center space-y-4 overflow-hidden">
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl" />
               <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl" />
               
-              <div className="w-16 h-16 bg-white/5 backdrop-blur-md rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 bg-white/5 backdrop-blur-md rounded-xl flex items-center justify-center">
                 <MessageSquare className="w-8 h-8 text-indigo-400" />
               </div>
               <div className="space-y-1">
@@ -80,7 +77,7 @@ export default function ContactPage() {
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Inquiry Form */}
           <div className="flex-1 space-y-8">
-            <div className="bg-card rounded-[32px] border border-border p-10 shadow-sm space-y-8 transition-colors">
+            <div className="bg-card rounded-2xl border border-border p-10 shadow-sm space-y-8 transition-colors">
               <h3 className="text-lg font-black text-slate-800 dark:text-white">문의 내용 입력</h3>
               
               <form className="space-y-6">
@@ -90,7 +87,7 @@ export default function ContactPage() {
                     <input 
                       type="text" 
                       placeholder="이름을 입력해주세요" 
-                      className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white"
+                      className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white"
                     />
                   </div>
                   <div className="space-y-2">
@@ -98,7 +95,7 @@ export default function ContactPage() {
                     <input 
                       type="email" 
                       placeholder="이메일을 입력해주세요" 
-                      className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white"
+                      className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white"
                     />
                   </div>
                 </div>
@@ -108,7 +105,7 @@ export default function ContactPage() {
                   <input 
                     type="text" 
                     placeholder="제목을 입력해주세요" 
-                    className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white"
+                    className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white"
                   />
                 </div>
 
@@ -117,17 +114,17 @@ export default function ContactPage() {
                   <textarea 
                     rows={6}
                     placeholder="내용을 상세히 입력해주세요" 
-                    className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white resize-none"
+                    className="w-full bg-slate-50 dark:bg-white/5 border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white resize-none"
                   ></textarea>
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-4">
-                  <div className="flex items-center gap-3 bg-slate-50 dark:bg-white/5 border border-border px-4 py-2 rounded-xl transition-colors">
+                  <div className="flex items-center gap-3 bg-slate-50 dark:bg-white/5 border border-border px-4 py-2 rounded-lg transition-colors">
                     <Paperclip className="w-4 h-4 text-slate-400" />
                     <span className="text-xs font-bold text-slate-500 dark:text-slate-400">파일 첨부하기</span>
                     <span className="text-[10px] text-slate-300">(최대 10MB)</span>
                   </div>
-                  <button className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-500 px-8 py-3 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all hover:-translate-y-1 shadow-lg shadow-indigo-600/20 text-white">
+                  <button className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-500 px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all hover:-translate-y-1 shadow-lg shadow-indigo-600/20 text-white">
                     문의 전송하기 <Send className="w-4 h-4" />
                   </button>
                 </div>
@@ -137,7 +134,7 @@ export default function ContactPage() {
 
           {/* Right Sidebar Info */}
           <aside className="lg:w-80 space-y-8">
-            <div className="bg-card rounded-3xl border border-border p-8 space-y-6 shadow-sm transition-colors">
+            <div className="bg-card rounded-2xl border border-border p-8 space-y-6 shadow-sm transition-colors">
               <h3 className="text-sm font-black text-slate-800 dark:text-white tracking-tight">빠른 답변을 약속드려요</h3>
               <div className="space-y-6">
                 <InfoItem icon={Clock} title="평일 기준 24시간 내 답변" desc="최대한 빠르게 답변드리겠습니다." />
@@ -146,7 +143,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="bg-indigo-50 dark:bg-indigo-500/10 rounded-3xl p-8 space-y-4 border border-indigo-100 dark:border-indigo-500/20 transition-colors">
+            <div className="bg-indigo-50 dark:bg-indigo-500/10 rounded-2xl p-8 space-y-4 border border-indigo-100 dark:border-indigo-500/20 transition-colors">
               <h3 className="text-sm font-black text-indigo-900 dark:text-indigo-400">스터디 참가 안내</h3>
               <p className="text-xs text-indigo-700 dark:text-indigo-300/80 leading-relaxed">
                 바이브 코딩 스터디는 함께 학습하고 성장하는 커뮤니티입니다.
@@ -157,12 +154,12 @@ export default function ContactPage() {
                 <CheckItem label="질문 & 피드백 지원" />
                 <CheckItem label="프로젝트 협업 기회" />
               </ul>
-              <button className="w-full bg-white dark:bg-white/10 py-2.5 rounded-xl text-xs font-black text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition-all border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-center gap-2 shadow-sm">
+              <button className="w-full bg-white dark:bg-white/10 py-2.5 rounded-lg text-xs font-black text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition-all border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-center gap-2 shadow-sm">
                 스터디 자세히 보기 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
-            <div className="bg-card rounded-3xl border border-border p-8 space-y-6 shadow-sm transition-colors">
+            <div className="bg-card rounded-2xl border border-border p-8 space-y-6 shadow-sm transition-colors">
               <h3 className="text-sm font-black text-slate-800 dark:text-white tracking-tight">다른 방법으로 문의하기</h3>
               <div className="space-y-4">
                 <ContactLink icon={GithubIcon} title="GitHub Discussions" value="커뮤니티를 통해 질문하기" />
@@ -175,7 +172,6 @@ export default function ContactPage() {
       </main>
 
       {/* --- Footer --- */}
-      <Footer />
     </div>
   );
 }
@@ -183,10 +179,10 @@ export default function ContactPage() {
 // Helper Components
 function TypeCard({ icon: Icon, title, desc, active = false }: { icon: React.ElementType, title: string, desc: string, active?: boolean }) {
   return (
-    <div className={`bg-card rounded-2xl border-2 p-6 space-y-4 group cursor-pointer transition-all ${
+    <div className={`bg-card rounded-xl border-2 p-6 space-y-4 group cursor-pointer transition-all ${
       active ? 'border-indigo-600 shadow-lg shadow-indigo-600/5' : 'border-border hover:border-indigo-200 dark:hover:border-indigo-500/50'
     }`}>
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${
+      <div className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all ${
         active ? 'bg-indigo-600 text-white' : 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-500/20 transition-colors'
       }`}>
         {active && <div className="absolute -top-2 -left-2 w-5 h-5 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-md">
@@ -230,7 +226,7 @@ function CheckItem({ label }: { label: string }) {
 function ContactLink({ icon: Icon, title, value }: { icon: React.ElementType, title: string, value: string }) {
   return (
     <div className="flex items-center gap-4 group cursor-pointer">
-      <div className="p-2.5 bg-slate-50 dark:bg-white/5 text-slate-400 rounded-xl group-hover:bg-indigo-50 dark:group-hover:bg-indigo-500/10 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors shrink-0">
+      <div className="p-2.5 bg-slate-50 dark:bg-white/5 text-slate-400 rounded-lg group-hover:bg-indigo-50 dark:group-hover:bg-indigo-500/10 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors shrink-0">
         <Icon className="w-5 h-5" />
       </div>
       <div className="overflow-hidden">

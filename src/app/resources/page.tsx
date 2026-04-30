@@ -7,17 +7,14 @@ import {
   Cpu, Palette, Cloud, Database,
   ChevronLeft, ChevronRight, Layout, Search
 } from 'lucide-react';
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
 
 export default function ResourcesPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans transition-colors">
-      <Navbar />
 
       {/* --- Header Area --- */}
-      <header className="bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-white px-6 py-12 transition-colors border-b border-slate-200 dark:border-white/5">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+      <header className="bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-white py-12 transition-colors border-b border-slate-200 dark:border-white/5">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-8">
           <div className="space-y-4">
             <h1 className="text-3xl font-black">자료실</h1>
             <p className="text-slate-400 max-w-md leading-relaxed text-sm">
@@ -31,16 +28,16 @@ export default function ResourcesPage() {
                 <input 
                   type="text" 
                   placeholder="자료 검색 (예: React, 디자인, API...)" 
-                  className="bg-white/10 border border-white/10 rounded-xl py-2 pl-10 pr-4 text-sm w-full md:w-80 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                  className="bg-white/10 border border-white/10 rounded-lg py-2 pl-10 pr-4 text-sm w-full md:w-80 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                 />
               </div>
-              <button className="bg-white/10 hover:bg-white/20 border border-white/10 px-5 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+              <button className="bg-white/10 hover:bg-white/20 border border-white/10 px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all">
                 <Star className="w-4 h-4" /> 즐겨찾기 모아보기
               </button>
             </div>
           </div>
           
-          <div className="bg-slate-800/50 backdrop-blur-md border border-border rounded-3xl p-6 w-full max-w-lg grid grid-cols-4 gap-4 text-center">
+          <div className="bg-slate-800/50 backdrop-blur-md border border-border rounded-2xl p-6 w-full max-w-lg grid grid-cols-4 gap-4 text-center">
             <header className="col-span-4 hidden invisible">Statistics</header>
             <StatusCard icon={Folder} label="전체 자료" count="128" color="text-purple-400" />
             <StatusCard icon={Globe} label="웹사이트" count="86" color="text-blue-400" />
@@ -55,7 +52,7 @@ export default function ResourcesPage() {
         
         {/* Left Sidebar */}
         <aside className="lg:w-64 space-y-8 shrink-0">
-          <div className="bg-card rounded-3xl border border-border p-6 space-y-6 shadow-sm transition-colors">
+          <div className="bg-card rounded-2xl border border-border p-6 space-y-6 shadow-sm transition-colors">
             <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">카테고리</h3>
             <div className="space-y-1">
               <CategoryItem label="전체" count="128" active />
@@ -70,12 +67,12 @@ export default function ResourcesPage() {
             </div>
           </div>
 
-          <div className="bg-card rounded-3xl border border-border p-6 space-y-4 shadow-sm transition-colors">
+          <div className="bg-card rounded-2xl border border-border p-6 space-y-4 shadow-sm transition-colors">
             <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">자료 제안하기</h3>
             <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed">
               스터디에 도움이 되는 자료를 공유해주세요!
             </p>
-            <button className="w-full bg-slate-50 dark:bg-white/5 py-2.5 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition-all border border-border flex items-center justify-center gap-2">
+            <button className="w-full bg-slate-50 dark:bg-white/5 py-2.5 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition-all border border-border flex items-center justify-center gap-2">
               자료 제안하기 <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -116,13 +113,13 @@ export default function ResourcesPage() {
 
           {/* List Controls */}
           <div className="flex flex-col md:flex-row gap-4 justify-between items-center border-b border-slate-200 pb-4">
-            <div className="flex gap-1 bg-slate-100 p-1 rounded-xl">
+            <div className="flex gap-1 bg-slate-100 p-1 rounded-lg">
               <TabItem label="최신순" active />
               <TabItem label="인기순" />
               <TabItem label="즐겨찾기순" />
             </div>
             <div className="relative">
-              <select className="bg-white border border-slate-200 rounded-xl px-4 py-2 text-xs font-bold text-slate-600 appearance-none pr-8">
+              <select className="bg-white border border-slate-200 rounded-lg px-4 py-2 text-xs font-bold text-slate-600 appearance-none pr-8">
                 <option>전체 유형</option>
                 <option>웹사이트</option>
                 <option>문서/가이드</option>
@@ -204,7 +201,6 @@ export default function ResourcesPage() {
       </main>
 
       {/* --- Footer --- */}
-      <Footer />
     </div>
   );
 }
@@ -213,7 +209,7 @@ export default function ResourcesPage() {
 function StatusCard({ icon: Icon, label, count, color }: { icon: React.ElementType, label: string, count: string, color: string }) {
   return (
     <div className="space-y-2 group cursor-pointer">
-      <div className={`p-2 rounded-xl bg-white/5 border border-white/5 flex justify-center group-hover:bg-white/10 transition-colors`}>
+      <div className={`p-2 rounded-lg bg-white/5 border border-white/5 flex justify-center group-hover:bg-white/10 transition-colors`}>
         <Icon className={`w-5 h-5 ${color}`} />
       </div>
       <div>
@@ -226,7 +222,7 @@ function StatusCard({ icon: Icon, label, count, color }: { icon: React.ElementTy
 
 function CategoryItem({ label, count, icon: Icon, active = false }: { label: string, count: string, icon?: React.ElementType, active?: boolean }) {
   return (
-    <div className={`flex items-center justify-between p-2 rounded-xl cursor-pointer transition-all ${active ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'}`}>
+    <div className={`flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all ${active ? 'bg-indigo-50 text-indigo-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'}`}>
       <div className="flex items-center gap-3">
         {Icon ? <Icon className="w-4 h-4" /> : <div className="w-4 h-4" />}
         <span className="text-xs font-bold">{label}</span>
@@ -252,9 +248,9 @@ function RecentResource({ title, category, date, icon: Icon }: { title: string, 
 
 function RecommendCard({ label, desc, count, icon: Icon, color }: { label: string, desc: string, count: string, icon: React.ElementType, color: string }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 flex flex-col justify-between min-w-[160px] group hover:shadow-lg transition-all cursor-pointer">
+    <div className="bg-white rounded-xl border border-slate-200 p-5 flex flex-col justify-between min-w-[160px] group hover:shadow-lg transition-all cursor-pointer">
       <div className="space-y-3">
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color} group-hover:rotate-12 transition-transform`}>
+        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${color} group-hover:rotate-12 transition-transform`}>
           <Icon className="w-5 h-5" />
         </div>
         <div>
@@ -272,7 +268,7 @@ function RecommendCard({ label, desc, count, icon: Icon, color }: { label: strin
 
 function TabItem({ label, active = false }: { label: string, active?: boolean }) {
   return (
-    <button className={`px-4 py-1.5 rounded-lg text-[10px] font-black transition-all ${active ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}>
+    <button className={`px-4 py-1.5 rounded-md text-[10px] font-black transition-all ${active ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}>
       {label}
     </button>
   );
@@ -280,8 +276,8 @@ function TabItem({ label, active = false }: { label: string, active?: boolean })
 
 function ResourceItem({ icon, title, desc, tags, provider, rating, date }: { icon: string, title: string, desc: string, tags: string[], provider: string, rating: string, date: string }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col md:flex-row gap-6 hover:shadow-md transition-all cursor-pointer group">
-      <div className="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center text-[10px] font-black text-white shrink-0 group-hover:scale-110 transition-transform">
+    <div className="bg-white rounded-xl border border-slate-200 p-6 flex flex-col md:flex-row gap-6 hover:shadow-md transition-all cursor-pointer group">
+      <div className="w-12 h-12 bg-slate-900 rounded-lg flex items-center justify-center text-[10px] font-black text-white shrink-0 group-hover:scale-110 transition-transform">
         {icon}
       </div>
       <div className="flex-1 space-y-3">

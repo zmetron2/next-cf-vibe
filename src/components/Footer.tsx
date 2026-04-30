@@ -13,9 +13,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
           <div className="footer-brand">
-            <Link href="/" className="flex items-center gap-2 font-black text-lg mb-4 hover:text-primary transition-colors text-foreground">
+            <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-4 hover:text-primary transition-colors text-foreground">
               <Logo size={22} />
-              <span>바이브코딩</span>
+              <span>엘쯔의 바이브코딩</span>
             </Link>
             <p className="text-sm opacity-60 leading-relaxed max-w-sm text-foreground">
               UX디자인, 퍼블리싱, 프런트엔드 개발 지식을 공유하고<br />
@@ -39,7 +39,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-6">
-          <p className="text-xs opacity-40 font-medium text-foreground">© {currentYear} 바이브코딩. All rights reserved.</p>
+          <p className="text-xs opacity-40 font-medium text-foreground">© {currentYear} 엘쯔의 바이브코딩. All rights reserved.</p>
           <button
             className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-border shadow-sm flex items-center justify-center text-foreground hover:border-primary hover:text-primary transition-all group"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

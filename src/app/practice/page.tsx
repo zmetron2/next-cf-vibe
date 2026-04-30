@@ -6,17 +6,14 @@ import {
   ShieldCheck, MoreHorizontal, Lightbulb, Search, ChevronDown
 } from 'lucide-react';
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 
 export default function PracticePage() {
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans transition-colors">
-      <Navbar />
 
       {/* --- Header Area --- */}
-      <header className="bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-white px-6 py-12 transition-colors border-b border-slate-200 dark:border-white/5">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+      <header className="bg-slate-50 dark:bg-[#0f172a] text-slate-900 dark:text-white py-12 transition-colors border-b border-slate-200 dark:border-white/5">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-8">
           <div className="space-y-4">
             <h1 className="text-3xl font-black">기능 실습</h1>
             <p className="text-slate-400 max-w-md leading-relaxed text-sm">
@@ -25,16 +22,16 @@ export default function PracticePage() {
               코딩 감각을 익히고 응용력을 키워보세요.
             </p>
             <div className="flex gap-3 pt-2">
-              <button className="bg-indigo-600 hover:bg-indigo-500 px-5 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+              <button className="bg-indigo-600 hover:bg-indigo-500 px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all">
                 <PlusCircle className="w-4 h-4" /> 실습 프로젝트 추가 제안
               </button>
-              <button className="bg-white/10 hover:bg-white/20 border border-white/10 px-5 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+              <button className="bg-white/10 hover:bg-white/20 border border-white/10 px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all">
                 <Bookmark className="w-4 h-4" /> 내 실습 모아보기
               </button>
             </div>
           </div>
           
-          <div className="bg-slate-800/50 backdrop-blur-md border border-white/10 rounded-3xl p-6 w-full max-w-lg grid grid-cols-4 gap-4 text-center">
+          <div className="bg-slate-800/50 backdrop-blur-md border border-white/10 rounded-2xl p-6 w-full max-w-lg grid grid-cols-4 gap-4 text-center">
             <header className="col-span-4 hidden invisible">Status</header>
             <StatusCard icon={Layers} label="전체 실습" count="24" unit="개" color="text-purple-400" />
             <StatusCard icon={CheckCircle2} label="완료한 실습" count="8" unit="개" color="text-green-400" />
@@ -73,7 +70,7 @@ export default function PracticePage() {
             <div className="space-y-3">
               <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">연계 커리큘럼</h3>
               <div className="relative">
-                <select className="w-full bg-card dark:bg-slate-800/50 border border-border rounded-xl px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer">
+                <select className="w-full bg-card dark:bg-slate-800/50 border border-border rounded-lg px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer">
                   <option>전체 단계</option>
                   <option>1단계 - 기본 기초</option>
                   <option>2단계 - 상태 관리</option>
@@ -85,7 +82,7 @@ export default function PracticePage() {
             <div className="space-y-3">
               <h3 className="text-xs font-black text-slate-800 dark:text-white uppercase tracking-widest">기술 스택</h3>
               <div className="relative">
-                <select className="w-full bg-card dark:bg-slate-800/50 border border-border rounded-xl px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer">
+                <select className="w-full bg-card dark:bg-slate-800/50 border border-border rounded-lg px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors cursor-pointer">
                   <option>전체</option>
                   <option>React</option>
                   <option>TypeScript</option>
@@ -97,7 +94,7 @@ export default function PracticePage() {
           </div>
 
           {/* Suggestion Box */}
-          <div className="bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-2xl p-5 space-y-3 transition-colors">
+          <div className="bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-xl p-5 space-y-3 transition-colors">
             <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
                <Lightbulb className="w-4 h-4" />
                <h4 className="text-xs font-black">실습 아이디어</h4>
@@ -105,7 +102,7 @@ export default function PracticePage() {
             <p className="text-[10px] text-indigo-700/70 dark:text-indigo-300/60 leading-relaxed font-medium">
               직접 만들어보고 싶은 기능이 있나요? 아이디어를 제안해주시면 실습 리스트에 추가됩니다!
             </p>
-            <button className="w-full bg-white dark:bg-white/10 py-2 rounded-xl text-[10px] font-black text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
+            <button className="w-full bg-white dark:bg-white/10 py-2 rounded-lg text-[10px] font-black text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
               아이디어 제안하기
             </button>
           </div>
@@ -215,7 +212,7 @@ export default function PracticePage() {
 
           {/* More Button */}
           <div className="flex justify-center pt-8">
-            <button className="bg-white border border-slate-200 px-8 py-3 rounded-2xl font-bold text-slate-600 hover:shadow-md transition-all flex items-center gap-2">
+            <button className="bg-white border border-slate-200 px-8 py-3 rounded-xl font-bold text-slate-600 hover:shadow-md transition-all flex items-center gap-2">
               더 많은 실습 보기 <ChevronDown className="w-4 h-4" />
             </button>
           </div>
@@ -223,8 +220,8 @@ export default function PracticePage() {
       </main>
 
       {/* --- Connection Footer --- */}
-      <section className="bg-white border-t border-slate-100 py-16 px-6">
-        <div className="max-w-7xl mx-auto space-y-12">
+      <section className="bg-white border-t border-slate-100 py-16">
+        <div className="max-w-7xl mx-auto px-6 space-y-12">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-black text-slate-800">커리큘럼과 연계된 실습</h2>
             <Link href="/curriculum" className="text-xs font-bold text-indigo-600 hover:underline">커리큘럼 전체 보기 →</Link>
@@ -241,9 +238,9 @@ export default function PracticePage() {
             <StepItem step="5단계" title="실전 프로젝트" count="2" />
           </div>
           
-          <div className="bg-indigo-50 rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 border border-indigo-100 shadow-sm">
+          <div className="bg-indigo-50 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 border border-indigo-100 shadow-sm">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-indigo-600 text-white rounded-2xl">
+              <div className="p-3 bg-indigo-600 text-white rounded-xl">
                 <Zap className="w-6 h-6" />
               </div>
               <div>
@@ -252,7 +249,7 @@ export default function PracticePage() {
                 <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">학습 기록을 남기면 나중에 복습하기에도 좋아요.</p>
               </div>
             </div>
-            <Link href="/curriculum" className="bg-white dark:bg-white/10 px-6 py-3 rounded-xl text-indigo-600 dark:text-indigo-400 font-bold text-sm shadow-sm hover:shadow-md transition-all border border-indigo-50 dark:border-white/10">
+            <Link href="/curriculum" className="bg-white dark:bg-white/10 px-6 py-3 rounded-lg text-indigo-600 dark:text-indigo-400 font-bold text-sm shadow-sm hover:shadow-md transition-all border border-indigo-50 dark:border-white/10">
               커리큘럼으로 기록하기 →
             </Link>
           </div>
@@ -260,7 +257,6 @@ export default function PracticePage() {
       </section>
 
       {/* --- Footer --- */}
-      <Footer />
     </div>
   );
 }
@@ -269,7 +265,7 @@ export default function PracticePage() {
 function StatusCard({ icon: Icon, label, count, unit, color }: { icon: React.ElementType, label: string, count: string, unit: string, color: string }) {
   return (
     <div className="space-y-2 group cursor-pointer">
-      <div className={`p-2 rounded-xl bg-white/5 border border-white/5 flex justify-center group-hover:bg-white/10 transition-colors`}>
+      <div className={`p-2 rounded-lg bg-white/5 border border-white/5 flex justify-center group-hover:bg-white/10 transition-colors`}>
         <Icon className={`w-5 h-5 ${color}`} />
       </div>
       <div>
@@ -314,10 +310,10 @@ function ProjectCard({ icon: Icon, level, title, desc, tags, link, views, rate }
   };
 
   return (
-    <div className="bg-card rounded-3xl border border-border p-6 flex flex-col justify-between group hover:shadow-xl hover:border-indigo-200 dark:hover:border-indigo-500/50 transition-all duration-500 cursor-pointer overflow-hidden relative">
+    <div className="bg-card rounded-2xl border border-border p-6 flex flex-col justify-between group hover:shadow-xl hover:border-indigo-200 dark:hover:border-indigo-500/50 transition-all duration-500 cursor-pointer overflow-hidden relative">
       <div className="space-y-4">
         <div className="flex items-start justify-between">
-          <div className="p-3 bg-slate-50 dark:bg-white/5 rounded-2xl text-slate-700 dark:text-slate-300 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-500/10 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+          <div className="p-3 bg-slate-50 dark:bg-white/5 rounded-xl text-slate-700 dark:text-slate-300 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-500/10 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
             <Icon className="w-6 h-6" />
           </div>
           <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${levelColors[level]}`}>{level}</span>
@@ -358,7 +354,7 @@ function ProjectCard({ icon: Icon, level, title, desc, tags, link, views, rate }
 
 function StepItem({ step, title, count, active = false }: { step: string, title: string, count: string, active?: boolean }) {
   return (
-    <div className={`flex-1 min-w-[140px] p-5 rounded-2xl border text-center transition-all ${active ? 'bg-indigo-50 border-indigo-200 shadow-sm' : 'bg-white border-slate-100'}`}>
+    <div className={`flex-1 min-w-[140px] p-5 rounded-xl border text-center transition-all ${active ? 'bg-indigo-50 border-indigo-200 shadow-sm' : 'bg-white border-slate-100'}`}>
       <p className="text-[10px] font-black text-slate-400 mb-1">{step}</p>
       <h5 className="text-sm font-black text-slate-800 mb-3">{title}</h5>
       <span className={`text-[10px] px-3 py-1 rounded-full font-bold ${active ? 'bg-indigo-600 text-white' : 'bg-slate-50 text-slate-400'}`}>추천 실습 {count}계</span>

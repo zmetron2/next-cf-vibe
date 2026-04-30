@@ -1,0 +1,26 @@
+---
+description: Local server troubleshooting for ports 3000 and 8788
+alwaysApply: true
+---
+
+# Local Server Troubleshooting (3000 / 8788)
+
+## Known issue
+- `wrangler pages dev ... --proxy ...` can return `404` on `/` in this project, even when startup logs show `Ready`.
+- On Windows, lingering Node/Miniflare processes can keep old ports occupied and cause misleading browser errors.
+
+## Default local run strategy
+- Use `npm run dev` for `3000`.
+- Use `npm run pages:dev` for `8788` (mapped to `next dev -p 8788`).
+- Keep Cloudflare proxy mode separate as `npm run pages:dev:cf` for optional checks only.
+
+## Recovery steps when 8788 fails
+1. Check current health: `http://127.0.0.1:3000` and `http://127.0.0.1:8788`.
+2. Kill stale Node processes: `Get-Process node | Stop-Process -Force`.
+3. Restart both servers:
+   - `npm run dev`
+   - `npm run pages:dev`
+4. Re-verify both endpoints return `200`.
+
+## Notes
+- If a previous background task reports a non-zero exit after manual stop/restart, treat it as expected unless current health checks fail.

@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { 
   ArrowRight, Zap, CheckCircle2, 
   PlayCircle, Edit3, 
-  Clock, ChevronDown, ChevronRight, LayoutGrid, Timer, Target
+  Clock, ChevronDown, ChevronRight, LayoutGrid, Timer, Target, Database, Cpu, Globe
 } from 'lucide-react';
 import Link from 'next/link';
 
-export default function CurriculumPage() {
+export default function BasicCurriculumPage() {
   const [activeSection, setActiveSection] = useState('core');
 
   // ScrollSpy Logic
@@ -62,8 +62,8 @@ export default function CurriculumPage() {
           <div className="space-y-4">
             <h1 className="text-3xl font-black">커리큘럼</h1>
             <p className="text-slate-400 max-w-md leading-relaxed text-sm">
-              스터디를 진행하며 회차별 내용을 기록하고 정리합니다.<br />
-              단계별 미션을 해결하며 실전 감각을 익혀보세요.
+              시스템의 동작 원리를 이해하고 구조화된 개발 사고를 기릅니다.<br />
+              단순한 호출을 넘어 데이터가 흐르는 지도를 그려보세요.
             </p>
             <div className="flex gap-3 pt-2">
               <button className="bg-indigo-600 hover:bg-indigo-500 px-5 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all text-white">
@@ -77,23 +77,23 @@ export default function CurriculumPage() {
           
           <div className="bg-slate-800/50 backdrop-blur-md border border-white/10 rounded-2xl p-6 w-full max-w-md">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-bold text-slate-300">전체 진행률</span>
-              <span className="text-lg font-black text-indigo-400">35%</span>
+              <span className="text-sm font-bold text-slate-300">기초 단계 진행률</span>
+              <span className="text-lg font-black text-indigo-400">12%</span>
             </div>
             <div className="w-full bg-white/10 h-3 rounded-full overflow-hidden mb-6">
-              <div className="bg-gradient-to-r from-indigo-500 to-purple-500 h-full w-[35%] rounded-full shadow-[0_0_15px_rgba(99,102,241,0.5)]" />
+              <div className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full w-[12%] rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
             </div>
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">전체 회차</p>
-                <p className="text-xl font-bold">16</p>
+                <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">전체 미션</p>
+                <p className="text-xl font-bold">12</p>
               </div>
               <div className="border-x border-white/10">
-                <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">완료 회차</p>
-                <p className="text-xl font-bold text-green-400">5</p>
+                <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">완료 미션</p>
+                <p className="text-xl font-bold text-blue-400">1</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">남은 회차</p>
+                <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">남은 미션</p>
                 <p className="text-xl font-bold text-orange-400">11</p>
               </div>
             </div>
@@ -111,9 +111,9 @@ export default function CurriculumPage() {
             <span className="text-sm font-bold text-slate-500 dark:text-slate-400">커리큘럼 로드맵</span>
           </div>
           <div className="h-6 w-[1px] bg-slate-100 dark:bg-white/10 mx-2" />
-          <RoadmapItem label="1. 입문" rounds="Mindset & Comm." href="/curriculum" active />
+          <RoadmapItem label="1. 입문" rounds="Mindset & Comm." href="/curriculum" />
           <RoadmapArrow />
-          <RoadmapItem label="2. 기초" rounds="System & Structure" href="/curriculum/basic" />
+          <RoadmapItem label="2. 기초" rounds="System & Structure" href="/curriculum/basic" active />
           <RoadmapArrow />
           <RoadmapItem label="3. 실전" rounds="Execution & Build" href="/curriculum/practice" />
           <RoadmapArrow />
@@ -127,10 +127,10 @@ export default function CurriculumPage() {
             <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-sm transition-colors text-left">
               <div className="p-5 border-b border-border bg-slate-50/50 dark:bg-slate-800/50 flex flex-col gap-1 transition-colors">
                 <h3 className="text-sm font-black text-slate-800 dark:text-white flex items-center gap-2">
-                  <span className="bg-primary text-white w-5 h-5 rounded flex items-center justify-center text-[10px]">1</span> 
-                  입문 단계
+                  <span className="bg-blue-600 text-white w-5 h-5 rounded flex items-center justify-center text-[10px]">2</span> 
+                  기초 단계
                 </h3>
-                <p className="text-[10px] text-primary font-bold">"AI를 제대로 쓰기 시작하는 단계"</p>
+                <p className="text-[10px] text-blue-500 font-bold">"왜 결과가 달라지는지 이해하는 단계"</p>
               </div>
               <div className="divide-y divide-border">
                 <SidebarItem 
@@ -140,29 +140,27 @@ export default function CurriculumPage() {
                 />
                 
                 <div className="flex flex-col">
-                  {/* Main Track Menu */}
                   <SidebarItem 
                     title="선택형 실습 트랙" 
                     active={['track-a', 'track-b', 'track-c'].includes(activeSection)}
-                    onClick={() => scrollToSection('track-a')} // Scroll to first track
+                    onClick={() => scrollToSection('track-a')}
                   />
                   
-                  {/* Sub-menu Tracks with Indentation */}
                   <div className="bg-slate-50/50 dark:bg-white/5 py-1">
                     <SidebarItem 
-                      title="트랙 A: 웹 기초 체험" 
+                      title="트랙 A: 웹 구조 이해" 
                       active={activeSection === 'track-a'} 
                       onClick={() => scrollToSection('track-a')}
                       isSubItem
                     />
                     <SidebarItem 
-                      title="트랙 B: 콘텐츠 생성" 
+                      title="트랙 B: 데이터 흐름" 
                       active={activeSection === 'track-b'} 
                       onClick={() => scrollToSection('track-b')}
                       isSubItem
                     />
                     <SidebarItem 
-                      title="트랙 C: 업무 자동화" 
+                      title="트랙 C: AI 구조 이해" 
                       active={activeSection === 'track-c'} 
                       onClick={() => scrollToSection('track-c')}
                       isSubItem
@@ -172,7 +170,7 @@ export default function CurriculumPage() {
               </div>
             </div>
 
-            {/* Practice Selection Guide */}
+            {/* Selection Guide */}
             <div className="bg-card rounded-2xl border border-border p-6 space-y-6 shadow-sm transition-colors text-left">
               <div className="flex justify-between items-center">
                 <h3 className="font-bold text-sm text-slate-800 dark:text-white flex items-center gap-2">
@@ -180,34 +178,27 @@ export default function CurriculumPage() {
                 </h3>
               </div>
               <div className="space-y-5">
-                {/* Track A */}
                 <div className="space-y-2">
                   <p className="text-[10px] font-black text-indigo-500 uppercase tracking-widest">트랙 A 선택 시</p>
                   <ul className="space-y-1.5">
-                    <BenefitItem text="내가 만든 첫 웹페이지 완성" />
-                    <BenefitItem text="UI 요청하는 감각 습득" />
+                    <BenefitItem text="프론트/백엔드 연결 흐름 이해" />
+                    <BenefitItem text="API 통신의 기본 원리 습득" />
                   </ul>
                 </div>
-                
                 <div className="h-[1px] bg-border" />
-                
-                {/* Track B */}
                 <div className="space-y-2">
                   <p className="text-[10px] font-black text-teal-500 uppercase tracking-widest">트랙 B 선택 시</p>
                   <ul className="space-y-1.5">
-                    <BenefitItem text="콘텐츠 자동 생성 구조 이해" />
-                    <BenefitItem text="AI 활용 루틴 구축" />
+                    <BenefitItem text="데이터베이스(DB) 핵심 개념" />
+                    <BenefitItem text="CRUD 데이터 수명 주기 설계" />
                   </ul>
                 </div>
-
                 <div className="h-[1px] bg-border" />
-
-                {/* Track C */}
                 <div className="space-y-2">
                   <p className="text-[10px] font-black text-orange-500 uppercase tracking-widest">트랙 C 선택 시</p>
                   <ul className="space-y-1.5">
-                    <BenefitItem text="반복 작업 자동화 경험" />
-                    <BenefitItem text="실무 생산성 향상" />
+                    <BenefitItem text="LLM 호출 아키텍처 파악" />
+                    <BenefitItem text="API 기반 지능형 서비스 설계" />
                   </ul>
                 </div>
               </div>
@@ -221,41 +212,40 @@ export default function CurriculumPage() {
               <div className="flex flex-col md:flex-row justify-between items-start gap-4 pb-8 border-b border-border text-left">
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
-                    <span className="bg-primary/10 text-primary text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest">Mindset & Communication</span>
+                    <span className="bg-blue-100 text-blue-600 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest">System & Structure</span>
                   </div>
-                  <h2 className="text-3xl font-black text-slate-800 dark:text-white tracking-tight">1. 입문: AI 바이브 잡기</h2>
-                  <p className="text-primary font-bold text-lg leading-relaxed max-w-2xl">
-                    "AI를 제대로 쓰기 시작하는 단계"
+                  <h2 className="text-3xl font-black text-slate-800 dark:text-white tracking-tight">2. 기초: 시스템 사고의 시작</h2>
+                  <p className="text-blue-600 font-bold text-lg leading-relaxed max-w-2xl">
+                    "왜 결과가 달라지는지 이해하는 단계"
                   </p>
                   <p className="text-slate-500 dark:text-slate-400 text-sm">
-                    코딩 실력 이전에 AI와 소통하는 법(Mindset)을 먼저 익힙니다.<br />
-                    명확한 지시가 어떻게 드라마틱한 결과의 차이를 만드는지 직접 경험해보세요.
+                    AI가 결과를 만들어내는 기술적 배경과 데이터의 흐름을 학습합니다.<br />
+                    구조를 이해하면 더 복잡하고 안정적인 서비스를 설계할 수 있습니다.
                   </p>
                 </div>
               </div>
 
-              {/* Core Topics (Common Core) */}
+              {/* Core Topics */}
               <div id="core" className="scroll-mt-32 space-y-6 text-left">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-                    <Edit3 size={24} />
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                    <Database size={24} />
                   </div>
                   <h3 className="text-xl font-black text-slate-800 dark:text-white">핵심 주제 (Common Core)</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {[
-                    { title: "웹페이지 작동원리 이해하기", desc: "브라우저와 서버가 어떻게 대화하는지 웹의 기본 흐름 파악" },
-                    { title: "바이브 코딩 개념 이해", desc: "코딩을 넘어 AI에게 지시하는 새로운 개발 패러다임 이해" },
-                    { title: "바이브코딩 툴 종류와 설치하기", desc: "효율적인 개발을 위한 최적의 AI 도구 세팅 및 환경 구축" },
-                    { title: "프롬프트 구조 설계", desc: "역할(Role) / 목표(Goal) / 제약(Constraints)의 3요소 마스터" },
-                    { title: "명시도(구체성) 훈련", desc: "AI가 오해하지 않도록 정확하게 의도를 기술하는 연습" },
-                    { title: "실패 vs 성공 요청 분석", desc: "왜 AI가 엉뚱한 대답을 하는지 케이스 스터디" },
-                    { title: "일반 vs 특수 요청 구분", desc: "상황에 맞는 최적의 소통 방식(One-shot, Few-shot 등) 선택" },
+                    { title: "서버 / 클라이언트 구조", desc: "요청(Request)과 응답(Response)의 기본 메커니즘 이해" },
+                    { title: "실행 환경 (로컬 vs 클라우드)", desc: "개발 환경과 배포 환경의 차이 및 에지 런타임 개념" },
+                    { title: "도메인 / DNS 설정", desc: "웹 사이트 주소의 원리와 도메인 네임 서버 연결 방법" },
+                    { title: "컨텍스트 & 기억 구조", desc: "AI가 정보를 유지하는 방식(Window Context)과 한계" },
+                    { title: "에이전트 한계 (일관성 문제)", desc: "할루시네이션 및 비결정적 응답에 대응하는 전략" },
+                    { title: "아키텍처 다이어그램 기초", desc: "복잡한 시스템 구성을 한눈에 그리는 설계 기법" },
                   ].map((item, idx) => (
-                    <div key={idx} className="bg-slate-50 dark:bg-white/5 p-5 rounded-2xl border border-slate-100 dark:border-white/5 hover:border-primary/30 transition-all flex items-start gap-4 group">
-                      <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                    <div key={idx} className="bg-slate-50 dark:bg-white/5 p-5 rounded-2xl border border-slate-100 dark:border-white/5 hover:border-blue-500/30 transition-all flex items-start gap-4 group">
+                      <CheckCircle2 className="w-5 h-5 text-blue-500 mt-0.5 shrink-0" />
                       <div>
-                        <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-1 group-hover:text-primary transition-colors">{item.title}</h4>
+                        <h4 className="text-sm font-bold text-slate-800 dark:text-white mb-1 group-hover:text-blue-600 transition-colors">{item.title}</h4>
                         <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">{item.desc}</p>
                       </div>
                     </div>
@@ -263,99 +253,103 @@ export default function CurriculumPage() {
                 </div>
               </div>
 
-              {/* Optional Tracks Section Header */}
+              {/* Optional Tracks */}
               <div className="pt-4 border-t border-border text-left">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-500/10 flex items-center justify-center text-teal-600 dark:text-teal-400">
-                    <Zap size={24} />
+                    <Globe size={24} />
                   </div>
                   <h3 className="text-xl font-black text-slate-800 dark:text-white">선택형 실습 트랙 (Optional Tracks)</h3>
                 </div>
-                <p className="text-sm text-slate-500 mb-10">본인의 목표에 맞는 트랙을 선택하여 실습을 진행하세요. (중복 선택 가능)</p>
                 
                 <div className="space-y-12">
                   {/* Track A */}
-                  <div id="track-a" className="scroll-mt-32 bg-white dark:bg-slate-900 rounded-3xl border-2 border-indigo-100 dark:border-indigo-500/20 p-8 space-y-6 hover:border-primary transition-all group shadow-sm">
+                  <div id="track-a" className="scroll-mt-32 bg-white dark:bg-slate-900 rounded-3xl border-2 border-blue-100 dark:border-blue-500/20 p-8 space-y-6 hover:border-blue-500 transition-all group shadow-sm">
                     <div className="flex justify-between items-center">
-                      <div className="inline-flex bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Track A</div>
+                      <div className="inline-flex bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Track A</div>
                       <div className="flex items-center gap-2 text-xs font-bold text-slate-400">
-                        <Clock size={14} className="text-indigo-400" /> 예상 60분
+                        <Clock size={14} className="text-blue-400" /> 예상 70분
                       </div>
                     </div>
                     <div>
-                      <h4 className="text-2xl font-black text-slate-800 dark:text-white mb-2">웹 기초 체험</h4>
-                      <p className="text-sm text-slate-500 leading-relaxed">직접 눈에 보이는 화면을 설계하며 AI와의 소통 결과를 즉각적으로 확인합니다.</p>
+                      <h4 className="text-2xl font-black text-slate-800 dark:text-white mb-2">웹 구조 이해</h4>
+                      <p className="text-sm text-slate-500 leading-relaxed">프론트엔드와 백엔드가 어떻게 데이터를 주고받는지 실습합니다.</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                       <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-100 dark:border-white/5">
-                        <p className="text-xs font-bold mb-2">실습 01. 랜딩페이지</p>
-                        <p className="text-[11px] text-slate-500 leading-relaxed">AI에게 지시하여 10분 만에 근사한 웹사이트 뼈대를 구축합니다.</p>
+                        <p className="text-xs font-bold mb-2">실습 01. 연결 흐름 분석</p>
+                        <p className="text-[11px] text-slate-500 leading-relaxed">네트워크 탭을 통해 데이터가 오가는 전 과정을 모니터링합니다.</p>
                       </div>
                       <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-100 dark:border-white/5">
-                        <p className="text-xs font-bold mb-2">실습 02. UI 요청 최적화</p>
-                        <p className="text-[11px] text-slate-500 leading-relaxed">추상적인 요청이 아닌 정교한 지시어로 UI 레이아웃을 수정합니다.</p>
+                        <p className="text-xs font-bold mb-2">실습 02. API 호출 미션</p>
+                        <p className="text-[11px] text-slate-500 leading-relaxed">외부 API를 연동하여 실시간 데이터를 화면에 출력해봅니다.</p>
                       </div>
                     </div>
-                    <button className="w-full py-4 bg-slate-900 dark:bg-white/10 text-white font-black rounded-2xl hover:bg-primary transition-all shadow-xl shadow-slate-900/10 hover:shadow-primary/25">웹 트랙 실습 시작하기</button>
+                    <button className="w-full py-4 bg-slate-900 dark:bg-white/10 text-white font-black rounded-2xl hover:bg-blue-600 transition-all">웹 구조 실습 시작</button>
                   </div>
 
                   {/* Track B */}
-                  <div id="track-b" className="scroll-mt-32 bg-white dark:bg-slate-900 rounded-3xl border-2 border-teal-100 dark:border-teal-500/20 p-8 space-y-6 hover:border-primary transition-all group shadow-sm">
+                  <div id="track-b" className="scroll-mt-32 bg-white dark:bg-slate-900 rounded-3xl border-2 border-teal-100 dark:border-teal-500/20 p-8 space-y-6 hover:border-teal-500 transition-all group shadow-sm">
                     <div className="flex justify-between items-center">
                       <div className="inline-flex bg-teal-50 dark:bg-teal-500/10 text-teal-600 dark:text-teal-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Track B</div>
                       <div className="flex items-center gap-2 text-xs font-bold text-slate-400">
-                        <Clock size={14} className="text-teal-400" /> 예상 40분
+                        <Clock size={14} className="text-teal-400" /> 예상 90분
                       </div>
                     </div>
                     <div>
-                      <h4 className="text-2xl font-black text-slate-800 dark:text-white mb-2">콘텐츠 생성</h4>
-                      <p className="text-sm text-slate-500 leading-relaxed">마케터나 기획자처럼 AI를 활용하여 고품질의 콘텐츠 생산 체계를 구축합니다.</p>
+                      <h4 className="text-2xl font-black text-slate-800 dark:text-white mb-2">데이터 흐름</h4>
+                      <p className="text-sm text-slate-500 leading-relaxed">데이터의 저장, 수정, 삭제(CRUD) 과정을 설계하고 직접 구현합니다.</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                       <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-100 dark:border-white/5">
-                        <p className="text-xs font-bold mb-2">실습 01. 블로그 자동화</p>
-                        <p className="text-[11px] text-slate-500 leading-relaxed">특정 주제에 대해 AI가 논리적이고 풍부한 글을 쓰도록 지시합니다.</p>
+                        <p className="text-xs font-bold mb-2">실습 01. DB 스키마 설계</p>
+                        <p className="text-[11px] text-slate-500 leading-relaxed">효율적인 데이터 보관을 위한 테이블 구조를 AI와 함께 설계합니다.</p>
                       </div>
                       <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-100 dark:border-white/5">
-                        <p className="text-xs font-bold mb-2">실습 02. 이미지 & 카피</p>
-                        <p className="text-[11px] text-slate-500 leading-relaxed">시선을 끄는 썸네일 설명과 광고 카피를 생성하는 프롬프트를 만듭니다.</p>
+                        <p className="text-xs font-bold mb-2">실습 02. CRUD 로직 구현</p>
+                        <p className="text-[11px] text-slate-500 leading-relaxed">데이터베이스에 직접 접근하여 정보를 다루는 API를 제작합니다.</p>
                       </div>
                     </div>
-                    <button className="w-full py-4 bg-slate-900 dark:bg-white/10 text-white font-black rounded-2xl hover:bg-primary transition-all shadow-xl shadow-slate-900/10 hover:shadow-primary/25">콘텐츠 트랙 실습 시작하기</button>
+                    <button className="w-full py-4 bg-slate-900 dark:bg-white/10 text-white font-black rounded-2xl hover:bg-teal-600 transition-all">데이터 실습 시작</button>
                   </div>
 
                   {/* Track C */}
-                  <div id="track-c" className="scroll-mt-32 bg-white dark:bg-slate-900 rounded-3xl border-2 border-orange-100 dark:border-orange-500/20 p-8 space-y-6 hover:border-primary transition-all group shadow-sm text-left">
+                  <div id="track-c" className="scroll-mt-32 bg-white dark:bg-slate-900 rounded-3xl border-2 border-orange-100 dark:border-orange-500/20 p-8 space-y-6 hover:border-orange-500 transition-all group shadow-sm">
                     <div className="flex justify-between items-center">
                       <div className="inline-flex bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Track C</div>
                       <div className="flex items-center gap-2 text-xs font-bold text-slate-400">
-                        <Clock size={14} className="text-orange-400" /> 예상 50분
+                        <Clock size={14} className="text-orange-400" /> 예상 80분
                       </div>
                     </div>
                     <div>
-                      <h4 className="text-2xl font-black text-slate-800 dark:text-white mb-2">업무 자동화</h4>
-                      <p className="text-sm text-slate-500 leading-relaxed">단순 반복 업무를 AI에게 맡기고 생산성을 극대화하는 방법을 실습합니다.</p>
+                      <h4 className="text-2xl font-black text-slate-800 dark:text-white mb-2">AI 구조 이해</h4>
+                      <p className="text-sm text-slate-500 leading-relaxed">LLM API가 어떻게 작동하며 서비스와 어떻게 결합되는지 파악합니다.</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                       <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-100 dark:border-white/5">
-                        <p className="text-xs font-bold mb-2">실습 01. 업무 템플릿</p>
-                        <p className="text-[11px] text-slate-500 leading-relaxed">주간 보고, 이메일 답장 등 반복되는 문서의 표준 프롬프트를 제작합니다.</p>
+                        <p className="text-xs font-bold mb-2">실습 01. LLM API 핸들링</p>
+                        <p className="text-[11px] text-slate-500 leading-relaxed">프롬프트를 API 파라미터로 전송하고 응답을 받는 구조를 실습합니다.</p>
                       </div>
                       <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-100 dark:border-white/5">
-                        <p className="text-xs font-bold mb-2">실습 02. 문서 자동 요약</p>
-                        <p className="text-[11px] text-slate-500 leading-relaxed">긴 회의록이나 보고서를 핵심 위주로 요약하고 Action Item을 추출합니다.</p>
+                        <p className="text-xs font-bold mb-2">실습 02. 서비스 파이프라인</p>
+                        <p className="text-[11px] text-slate-500 leading-relaxed">사용자 입력부터 AI 처리, 최종 출력까지의 전체 흐름을 완성합니다.</p>
                       </div>
                     </div>
-                    <button className="w-full py-4 bg-slate-900 dark:bg-white/10 text-white font-black rounded-2xl hover:bg-primary transition-all shadow-xl shadow-slate-900/10 hover:shadow-primary/25">자동화 트랙 실습 시작하기</button>
+                    <button className="w-full py-4 bg-slate-900 dark:bg-white/10 text-white font-black rounded-2xl hover:bg-orange-600 transition-all">AI 구조 실습 시작</button>
                   </div>
                 </div>
               </div>
 
-              {/* Next Step Placeholder */}
-              <div className="pt-8 border-t border-border flex justify-end">
-                <Link href="/curriculum/basic">
-                  <button className="bg-primary text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-indigo-500 transition-all hover:scale-105 shadow-lg shadow-primary/20">
-                    2. 기초 단계: 시스템 사고 <ChevronRight className="w-4 h-4" />
+              {/* Navigation */}
+              <div className="pt-8 border-t border-border flex justify-between">
+                <Link href="/curriculum">
+                  <button className="bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-slate-200 transition-all">
+                    <ArrowRight className="w-4 h-4 rotate-180" /> 1. 입문 단계로
+                  </button>
+                </Link>
+                <Link href="/curriculum/practice">
+                  <button className="bg-slate-900 dark:bg-white/20 text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-emerald-600 transition-all shadow-lg hover:shadow-emerald-500/20">
+                    3. 실전 단계: 프로덕트 빌딩 <ChevronRight className="w-4 h-4" />
                   </button>
                 </Link>
               </div>
@@ -382,10 +376,10 @@ function RoadmapItem({ label, rounds, href, active = false }: { label: string, r
   return (
     <Link href={href} className="block shrink-0">
       <div className={`flex flex-col items-center gap-0.5 px-6 py-2 rounded-xl transition-all cursor-pointer ${
-        active ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 scale-105' : 'hover:bg-slate-50 dark:hover:bg-white/5 text-slate-400'
+        active ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20 scale-105' : 'hover:bg-slate-50 dark:hover:bg-white/5 text-slate-400'
       }`}>
         <span className={`text-xs font-black ${active ? 'text-white' : 'text-slate-400'}`}>{label}</span>
-        <span className={`text-[10px] whitespace-nowrap ${active ? 'text-indigo-200' : 'text-slate-400'}`}>{rounds}</span>
+        <span className={`text-[10px] whitespace-nowrap ${active ? 'text-blue-200' : 'text-slate-400'}`}>{rounds}</span>
       </div>
     </Link>
   );
@@ -401,19 +395,19 @@ function SidebarItem({ title, active = false, onClick, isSubItem = false }: { ti
       onClick={onClick}
       className={`p-4 flex items-center justify-between cursor-pointer transition-all ${
         active 
-          ? 'bg-primary/10 border-r-4 border-primary' 
+          ? 'bg-blue-600/10 border-r-4 border-blue-600' 
           : 'hover:bg-slate-50 dark:hover:bg-white/5'
       } ${isSubItem ? 'pl-9 py-2.5' : ''}`}
     >
       <span className={`font-bold transition-colors ${
         isSubItem ? 'text-[11px]' : 'text-xs'
       } ${
-        active ? 'text-primary' : 'text-slate-600 dark:text-slate-400'
+        active ? 'text-blue-600' : 'text-slate-600 dark:text-slate-400'
       }`}>
         {title}
       </span>
-      {active && !isSubItem && <div className="w-1.5 h-1.5 rounded-full bg-primary" />}
-      {active && isSubItem && <div className="w-1 h-1 rounded-full bg-primary/60" />}
+      {active && !isSubItem && <div className="w-1.5 h-1.5 rounded-full bg-blue-600" />}
+      {active && isSubItem && <div className="w-1 h-1 rounded-full bg-blue-600/60" />}
     </div>
   );
 }
