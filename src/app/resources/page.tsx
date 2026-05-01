@@ -8,8 +8,9 @@ import {
   FileText, Globe, Video, Folder, Terminal, 
   Cpu, Palette, Cloud, Database,
   ChevronLeft, ChevronRight, Layout, Search, X, MessageSquare, Plus, Link as LinkIcon,
-  Server, Globe2, Shield
+  Server, Globe2, Shield, ExternalLink, ChevronUp
 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 interface Resource {
   id: number;
@@ -289,40 +290,85 @@ function CategoryItem({ label, count, icon: Icon, active, onClick }: { label: st
 }
 
 function ResourceItem({ resource }: { resource: Resource }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <a 
-      href={resource.url} 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-white/10 p-6 flex flex-col md:flex-row gap-6 hover:shadow-xl hover:-translate-y-1 transition-all group"
+    <div 
+      className={`bg-white dark:bg-slate-900 rounded-2xl border ${isOpen ? 'border-indigo-500/50 shadow-xl' : 'border-slate-200 dark:border-white/10'} flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all group overflow-hidden`}
     >
-      <div className="w-14 h-14 bg-slate-900 dark:bg-indigo-600 rounded-2xl flex items-center justify-center text-xs font-black text-white shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-indigo-500/10">
-        {resource.icon_text}
-      </div>
-      <div className="flex-1 space-y-4">
-        <div className="space-y-1">
-          <div className="flex items-center gap-3">
-            <h4 className="text-lg font-black text-slate-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors tracking-tight">{resource.title}</h4>
-            <span className="text-[9px] font-black px-1.5 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-sm uppercase tracking-tighter">{resource.category}</span>
+      <div 
+        onClick={() => setIsOpen(!isOpen)}
+        className="p-6 flex flex-col md:flex-row gap-6 cursor-pointer"
+      >
+        <div className="w-14 h-14 bg-slate-900 dark:bg-indigo-600 rounded-2xl flex items-center justify-center text-xs font-black text-white shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-indigo-500/10">
+          {resource.icon_text}
+        </div>
+        <div className="flex-1 space-y-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-3">
+              <h4 className="text-lg font-black text-slate-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors tracking-tight">{resource.title}</h4>
+              <span className="text-[9px] font-black px-1.5 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-sm uppercase tracking-tighter">{resource.category}</span>
+            </div>
+            {!isOpen && (
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 font-medium">{resource.description}</p>
+            )}
           </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 font-medium">{resource.description}</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {resource.tags.split(',').map((tag, i) => (
-            <span key={i} className="text-[10px] font-black px-2.5 py-1 bg-slate-50 dark:bg-white/5 text-slate-400 dark:text-slate-500 rounded-lg border border-slate-100 dark:border-white/5 tracking-wider uppercase">{tag.trim()}</span>
-          ))}
-        </div>
-      </div>
-      <div className="md:w-48 space-y-3 text-right flex md:flex-col justify-between items-end md:justify-center border-t md:border-t-0 md:border-l border-slate-50 dark:border-white/5 pt-4 md:pt-0 md:pl-6">
-        <div className="space-y-1">
-          <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{resource.provider}</p>
-          <div className="flex items-center justify-end gap-1.5 text-sm text-yellow-500 font-black">
-            <Star className="w-3.5 h-3.5 fill-yellow-500" /> {resource.rating}
+          <div className="flex flex-wrap gap-2">
+            {resource.tags.split(',').map((tag, i) => (
+              <span key={i} className="text-[10px] font-black px-2.5 py-1 bg-slate-50 dark:bg-white/5 text-slate-400 dark:text-slate-500 rounded-lg border border-slate-100 dark:border-white/5 tracking-wider uppercase">{tag.trim()}</span>
+            ))}
           </div>
-          <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-2 transition-all" />
+        </div>
+        <div className="md:w-48 space-y-3 text-right flex md:flex-col justify-between items-end md:justify-center border-t md:border-t-0 md:border-l border-slate-50 dark:border-white/5 pt-4 md:pt-0 md:pl-6">
+          <div className="space-y-1 flex flex-col items-end">
+            <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{resource.provider}</p>
+            <div className="flex items-center justify-end gap-1.5 text-sm text-yellow-500 font-black">
+              <Star className="w-3.5 h-3.5 fill-yellow-500" /> {resource.rating}
+            </div>
+            <div className="mt-2 text-slate-300 group-hover:text-indigo-500 transition-colors">
+              {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+            </div>
+          </div>
         </div>
       </div>
-    </a>
+
+      {isOpen && (
+        <div className="px-6 pb-6 pt-2 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-white/5">
+          <div className="py-4">
+            <ReactMarkdown
+              components={{
+                h1: ({node, ...props}) => <h1 className="text-xl font-black text-slate-900 dark:text-white mt-6 mb-3" {...props} />,
+                h2: ({node, ...props}) => <h2 className="text-lg font-black text-slate-800 dark:text-slate-100 mt-5 mb-2" {...props} />,
+                h3: ({node, ...props}) => <h3 className="text-md font-bold text-slate-800 dark:text-slate-200 mt-4 mb-2" {...props} />,
+                p: ({node, ...props}) => <p className="mb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400" {...props} />,
+                ul: ({node, ...props}) => <ul className="list-disc pl-5 mb-4 space-y-1 text-sm text-slate-600 dark:text-slate-400" {...props} />,
+                ol: ({node, ...props}) => <ol className="list-decimal pl-5 mb-4 space-y-1 text-sm text-slate-600 dark:text-slate-400" {...props} />,
+                a: ({node, ...props}) => <a className="text-indigo-600 hover:underline font-bold" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} {...props} />,
+                strong: ({node, ...props}) => <strong className="font-black text-slate-800 dark:text-slate-200" {...props} />,
+                code: ({node, ...props}) => <code className="bg-slate-200 dark:bg-white/10 px-1.5 py-0.5 rounded text-indigo-600 dark:text-indigo-400 font-mono text-[12px]" {...props} />
+              }}
+            >
+              {resource.description}
+            </ReactMarkdown>
+          </div>
+          
+          {resource.url && resource.url !== '#' && (
+            <div className="flex justify-end mt-4 pt-4 border-t border-slate-200 dark:border-white/10">
+              <a 
+                href={resource.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-xl transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+              >
+                <ExternalLink className="w-4 h-4" />
+                웹사이트 열기
+              </a>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
