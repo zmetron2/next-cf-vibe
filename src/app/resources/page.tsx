@@ -353,16 +353,16 @@ function ResourceItem({ resource }: { resource: Resource }) {
           </div>
           
           {resource.url && resource.url !== '#' && (
-            <div className="flex justify-end mt-4 pt-4 border-t border-slate-200 dark:border-white/10">
+            <div className="mt-4 pt-4 border-t border-slate-200 dark:border-white/10 text-sm font-medium text-slate-500 dark:text-slate-400">
+              <span className="font-black text-slate-700 dark:text-slate-300 mr-2">참고 :</span>
               <a 
                 href={resource.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-xl transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+                className="text-indigo-600 dark:text-indigo-400 hover:underline break-all"
               >
-                <ExternalLink className="w-4 h-4" />
-                웹사이트 열기
+                {resource.url}
               </a>
             </div>
           )}
