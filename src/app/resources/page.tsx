@@ -5,12 +5,12 @@ import {
   ArrowRight, Zap, 
   ChevronDown, Star, 
   MoreHorizontal, 
-  FileText, Globe, Video, Folder, Terminal, 
-  Cpu, Palette, Cloud, Database,
-  ChevronLeft, ChevronRight, Layout, Search, X, MessageSquare, Plus, Link as LinkIcon,
-  Server, Globe2, Shield, ExternalLink, ChevronUp
+  FileText, Globe, Video, ChevronLeft, ChevronRight, Layout, Search, X, MessageSquare, Plus, Link as LinkIcon,
+  Server, Globe2, Shield, ExternalLink, ChevronUp, Folder, Terminal, Database, Palette, Cloud
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
 
 interface Resource {
   id: number;
@@ -356,11 +356,12 @@ function ResourceItem({ resource }: { resource: Resource }) {
         <div className="px-6 pb-6 pt-2 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-white/5">
           <div className="py-4">
             <ReactMarkdown
+              remarkPlugins={[remarkGfm, remarkBreaks]}
               components={{
                 h1: ({node, ...props}) => <h1 className="text-xl font-black text-slate-900 dark:text-white mt-6 mb-3" {...props} />,
                 h2: ({node, ...props}) => <h2 className="text-lg font-black text-slate-800 dark:text-slate-100 mt-5 mb-2" {...props} />,
                 h3: ({node, ...props}) => <h3 className="text-md font-bold text-slate-800 dark:text-slate-200 mt-4 mb-2" {...props} />,
-                p: ({node, ...props}) => <p className="mb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400" {...props} />,
+                p: ({node, ...props}) => <p className="mb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400 whitespace-pre-wrap break-words" {...props} />,
                 ul: ({node, ...props}) => <ul className="list-disc pl-5 mb-4 space-y-1 text-sm text-slate-600 dark:text-slate-400" {...props} />,
                 ol: ({node, ...props}) => <ol className="list-decimal pl-5 mb-4 space-y-1 text-sm text-slate-600 dark:text-slate-400" {...props} />,
                 a: ({node, ...props}) => <a className="text-indigo-600 hover:underline font-bold" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} {...props} />,
