@@ -40,7 +40,7 @@ const CATEGORIES = [
 ];
 
 // 마크다운 문법 제거 후 의미있는 소제목과 문장 추출
-function parseMarkdownPreview(text: string, maxLength = 120): { badge: string | null, text: string } {
+function parseMarkdownPreview(text: string, maxLength = 400): { badge: string | null, text: string } {
   const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0 && !l.match(/^---+/));
   let badge: string | null = null;
   let textLines: string[] = [];
@@ -339,7 +339,7 @@ function ResourceItem({ resource }: { resource: Resource }) {
               <span className="text-[10px] font-black px-1.5 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-sm uppercase tracking-tighter whitespace-nowrap">{resource.category}</span>
             </div>
             {!isOpen && (
-              <div className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+              <div className="text-[13px] text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
                 <p className="line-clamp-2">
                   {preview.badge && (
                     <span className="inline-block mr-2 px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded text-[10px] font-bold uppercase tracking-wider">{preview.badge}</span>
