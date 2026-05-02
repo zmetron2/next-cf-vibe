@@ -6,7 +6,7 @@ import {
   ChevronDown, Star, 
   MoreHorizontal, 
   FileText, Globe, Video, ChevronLeft, ChevronRight, Layout, Search, X, MessageSquare, Plus, Link as LinkIcon,
-  Server, Globe2, Shield, ExternalLink, ChevronUp, Folder, Terminal, Database, Palette, Cloud
+  Server, Globe2, Shield, ExternalLink, ChevronUp, Folder, Terminal, Database, Palette, Cloud, Heart
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -39,21 +39,31 @@ const CATEGORIES = [
   { label: '기타', icon: MoreHorizontal }
 ];
 
-// 마크다운 문법 제거 후 첫 의미있는 문장 추출
-function stripMarkdownPreview(text: string, maxLength = 120): string {
-  return text
-    .replace(/#{1,6}\s+/g, '')      // ## 헤딩 제거
+// 마크다운 문법 제거 후 의미있는 소제목과 문장 추출
+function parseMarkdownPreview(text: string, maxLength = 120): { badge: string | null, text: string } {
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0 && !l.match(/^---+/));
+  let badge: string | null = null;
+  let textLines: string[] = [];
+
+  for (const line of lines) {
+    if (line.match(/^#{1,6}\s+/) && !badge) {
+      badge = line.replace(/^#{1,6}\s+/, '').trim();
+    } else if (!line.match(/^#{1,6}\s+/)) {
+      textLines.push(line);
+    }
+  }
+
+  let cleanText = textLines.join(' ')
     .replace(/\*\*(.*?)\*\*/g, '$1') // **bold** 제거
     .replace(/\*(.*?)\*/g, '$1')     // *italic* 제거
     .replace(/`([^`]+)`/g, '$1')     // `code` 제거
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // [링크](url) 제거
     .replace(/^[-*+]\s+/gm, '')      // 리스트 기호 제거
-    .replace(/^\d+\.\s+/gm, '')      // 번호 리스트 제거
-    .replace(/---+/g, '')            // 구분선 제거
-    .split('\n')
-    .map(l => l.trim())
-    .filter(l => l.length > 0)
-    [0]?.slice(0, maxLength) + (text.length > maxLength ? '...' : '') || text;
+    .replace(/^\d+\.\s+/gm, '');     // 번호 리스트 제거
+
+  const truncated = cleanText.length > maxLength ? cleanText.slice(0, maxLength) + '...' : cleanText;
+  
+  return { badge, text: truncated || cleanText || text };
 }
 
 const DEFAULT_RESOURCES: Resource[] = [
@@ -309,6 +319,7 @@ function CategoryItem({ label, count, icon: Icon, active, onClick }: { label: st
 
 function ResourceItem({ resource }: { resource: Resource }) {
   const [isOpen, setIsOpen] = useState(false);
+  const preview = parseMarkdownPreview(resource.description);
 
   return (
     <div 
@@ -316,21 +327,26 @@ function ResourceItem({ resource }: { resource: Resource }) {
     >
       <div 
         onClick={() => setIsOpen(!isOpen)}
-        className="p-6 flex flex-col md:flex-row gap-6 cursor-pointer"
+        className="p-6 flex flex-col md:flex-row gap-5 cursor-pointer"
       >
         <div className="w-14 h-14 bg-slate-900 dark:bg-indigo-600 rounded-2xl flex items-center justify-center text-xs font-black text-white shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-indigo-500/10">
           {resource.icon_text}
         </div>
-        <div className="flex-1 space-y-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-3">
+        <div className="flex-1 space-y-3">
+          <div className="space-y-1.5">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <h4 className="text-lg font-black text-slate-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors tracking-tight">{resource.title}</h4>
-              <span className="text-[9px] font-black px-1.5 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-sm uppercase tracking-tighter">{resource.category}</span>
+              <span className="text-[10px] font-black px-1.5 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-sm uppercase tracking-tighter whitespace-nowrap">{resource.category}</span>
             </div>
             {!isOpen && (
-              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 font-medium">
-                {stripMarkdownPreview(resource.description)}
-              </p>
+              <div className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                <p className="line-clamp-2">
+                  {preview.badge && (
+                    <span className="inline-block mr-2 px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded text-[10px] font-bold uppercase tracking-wider">{preview.badge}</span>
+                  )}
+                  {preview.text}
+                </p>
+              </div>
             )}
           </div>
           <div className="flex flex-wrap gap-2">
@@ -339,13 +355,20 @@ function ResourceItem({ resource }: { resource: Resource }) {
             ))}
           </div>
         </div>
-        <div className="md:w-48 space-y-3 text-right flex md:flex-col justify-between items-end md:justify-center border-t md:border-t-0 md:border-l border-slate-50 dark:border-white/5 pt-4 md:pt-0 md:pl-6">
-          <div className="space-y-1 flex flex-col items-end">
-            <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{resource.provider}</p>
-            <div className="flex items-center justify-end gap-1.5 text-sm text-yellow-500 font-black">
-              <Star className="w-3.5 h-3.5 fill-yellow-500" /> {resource.rating}
+        <div className="shrink-0 flex md:flex-col justify-between items-end md:justify-center border-t md:border-t-0 md:border-l border-slate-50 dark:border-white/5 pt-4 md:pt-0 md:pl-5 gap-3">
+          <div className="flex flex-col items-end gap-2 w-full">
+            <div className="flex items-center justify-between w-full md:w-auto md:justify-end gap-3">
+              <button 
+                onClick={(e) => { e.stopPropagation(); /* Favorite Toggle */ }}
+                className="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full transition-colors active:scale-95"
+              >
+                <Heart className="w-4 h-4" />
+              </button>
+              <div className="flex items-center gap-1.5 text-sm text-yellow-500 font-black">
+                <Star className="w-3.5 h-3.5 fill-yellow-500" /> {resource.rating}
+              </div>
             </div>
-            <div className="mt-2 text-slate-300 group-hover:text-indigo-500 transition-colors">
+            <div className="text-slate-300 group-hover:text-indigo-500 transition-colors mt-auto md:mt-2">
               {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
             </div>
           </div>
