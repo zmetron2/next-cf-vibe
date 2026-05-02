@@ -118,7 +118,7 @@ export default function AdminDashboard() {
         body: JSON.stringify(body)
       });
       
-      const result = await res.json();
+      const result = (await res.json()) as { success: boolean; message?: string };
       if (result.success) {
         setIsModalOpen(false);
         fetchStudents();
