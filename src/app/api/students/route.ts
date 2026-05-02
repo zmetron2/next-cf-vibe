@@ -43,11 +43,13 @@ export async function POST(request: NextRequest) {
       email: string;
       phone: string;
       course: string;
+      status?: string;
+      memo?: string;
     };
 
     await db.prepare(
-      'INSERT INTO vibe_students (name, email, phone, course) VALUES (?, ?, ?, ?)'
-    ).bind(body.name, body.email, body.phone, body.course).run();
+      'INSERT INTO vibe_students (name, email, phone, course, status, memo) VALUES (?, ?, ?, ?, ?, ?)'
+    ).bind(body.name, body.email, body.phone, body.course, body.status || 'active', body.memo || null).run();
 
     return NextResponse.json({ success: true, message: 'Student added' });
   } catch (error) {
@@ -69,7 +71,16 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ success: false, message: 'No DB binding' }, { status: 500 });
     }
 
-    const body = await request.json() as { id: number; progress?: number; status?: string };
+    const body = await request.json() as { 
+      id: number; 
+      name?: string;
+      email?: string;
+      phone?: string;
+      course?: string;
+      progress?: number; 
+      status?: string;
+      memo?: string;
+    };
 
     if (body.progress !== undefined) {
       await db.prepare('UPDATE vibe_students SET progress = ? WHERE id = ?')
@@ -77,10 +88,17 @@ export async function PATCH(request: NextRequest) {
         .run();
     }
 
-    if (body.status !== undefined) {
-      await db.prepare('UPDATE vibe_students SET status = ? WHERE id = ?')
-        .bind(body.status, body.id)
-        .run();
+    if (body.status !== undefined && !body.name) { // Legacy single update
+        await db.prepare('UPDATE vibe_students SET status = ? WHERE id = ?')
+          .bind(body.status, body.id)
+          .run();
+    }
+
+    // Full Update
+    if (body.name) {
+        await db.prepare('UPDATE vibe_students SET name = ?, email = ?, phone = ?, course = ?, status = ?, memo = ? WHERE id = ?')
+          .bind(body.name, body.email, body.phone, body.course, body.status, body.memo, body.id)
+          .run();
     }
 
     return NextResponse.json({ success: true, message: 'Student updated' });
