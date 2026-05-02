@@ -13,14 +13,28 @@ interface Inquiry {
   created_at: string;
 }
 
+interface Student {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  course: string;
+  progress: number;
+  status: string;
+  joined_at: string;
+}
+
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'inquiries' | 'students'>('inquiries');
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+  const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (activeTab === 'inquiries') {
       fetchInquiries();
+    } else {
+      fetchStudents();
     }
   }, [activeTab]);
 
@@ -31,6 +45,21 @@ export default function AdminDashboard() {
       const data = (await res.json()) as { success: boolean; data: Inquiry[] };
       if (data.success) {
         setInquiries(data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchStudents = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/students');
+      const data = (await res.json()) as { success: boolean; data: Student[] };
+      if (data.success) {
+        setStudents(data.data);
       }
     } catch (error) {
       console.error(error);
@@ -129,14 +158,81 @@ export default function AdminDashboard() {
         )}
 
         {activeTab === 'students' && (
-          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-white/5 shadow-xl shadow-indigo-500/5 p-16 text-center animate-in fade-in duration-300">
-            <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-3xl flex items-center justify-center mx-auto mb-6 text-slate-400 shadow-inner">
-              <Users size={40} />
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-white/5 shadow-xl shadow-indigo-500/5 overflow-hidden animate-in fade-in duration-300">
+            <div className="p-6 border-b border-slate-100 dark:border-white/5 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/30">
+              <h2 className="text-lg font-black text-slate-800 dark:text-white">교육생 명단</h2>
+              <span className="px-3 py-1 bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-full text-xs font-black">총 {students.length}명</span>
             </div>
-            <h3 className="text-xl font-black text-slate-800 dark:text-white mb-3">교육생 관리 기능 준비중</h3>
-            <p className="text-slate-500 text-sm font-medium max-w-md mx-auto leading-relaxed">다음 업데이트에서 교육생 진도율 관리, 포트폴리오 리뷰, 그리고 개별 과제 피드백 시스템이 추가될 예정입니다.</p>
+
+            {loading ? (
+              <div className="p-12 text-center text-slate-400 font-medium">데이터를 불러오는 중입니다...</div>
+            ) : students.length === 0 ? (
+              <div className="p-12 text-center text-slate-400 font-medium">등록된 교육생이 없습니다.</div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse min-w-[700px]">
+                  <thead>
+                    <tr className="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-white/5">
+                      <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">교육생 정보</th>
+                      <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">수강 코스</th>
+                      <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">학습 진도율</th>
+                      <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">상태</th>
+                      <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">관리</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+                    {students.map((student) => (
+                      <tr key={student.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                        <td className="px-6 py-5">
+                          <div className="flex flex-col">
+                            <span className="font-black text-slate-900 dark:text-white">{student.name}</span>
+                            <span className="text-[11px] font-medium text-slate-400">{student.email}</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-5">
+                          <span className="text-sm font-bold text-slate-600 dark:text-slate-300">{student.course}</span>
+                        </td>
+                        <td className="px-6 py-5">
+                          <div className="w-40">
+                            <div className="flex justify-between items-center mb-1.5">
+                              <span className="text-[10px] font-black text-indigo-600 dark:text-indigo-400">{student.progress}%</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+                              <div 
+                                className="h-full bg-indigo-600 transition-all duration-1000" 
+                                style={{ width: `${student.progress}%` }}
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-5">
+                          <span className={`text-[10px] font-black px-2 py-1 rounded-md uppercase tracking-wider ${
+                            student.status === 'active' ? 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600' :
+                            student.status === 'completed' ? 'bg-blue-100 dark:bg-blue-500/10 text-blue-600' :
+                            'bg-slate-100 dark:bg-white/5 text-slate-500'
+                          }`}>
+                            {student.status === 'active' ? '수강중' : 
+                             student.status === 'completed' ? '수료' : '일시정지'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-5 text-right">
+                          <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors text-slate-400">
+                            <MoreHorizontal size={18} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         )}
+
+      </div>
+    </div>
+  );
+}
 
       </div>
     </div>
