@@ -21,6 +21,11 @@ export default function Footer() {
               UX디자인, 퍼블리싱, 프런트엔드 개발 지식을 공유하고<br />
               함께 성장하는 바이브 코딩 스터디 공간입니다.
             </p>
+            {process.env.NEXT_PUBLIC_BUILD_TIME && (
+              <p className="mt-4 text-[10px] font-black text-indigo-600/60 dark:text-indigo-400/60 uppercase tracking-widest bg-indigo-50 dark:bg-indigo-500/5 inline-block px-2 py-1 rounded">
+                마지막 업데이트: {new Date(process.env.NEXT_PUBLIC_BUILD_TIME).toLocaleString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+              </p>
+            )}
           </div>
 
           <div className="flex gap-16 md:justify-end">
