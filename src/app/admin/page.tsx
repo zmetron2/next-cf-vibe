@@ -28,7 +28,7 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       const res = await fetch('/api/inquiries');
-      const data = await res.json();
+      const data = (await res.json()) as { success: boolean; data: Inquiry[] };
       if (data.success) {
         setInquiries(data.data);
       }
