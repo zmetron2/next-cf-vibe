@@ -358,12 +358,13 @@ function ResourceItem({ resource }: { resource: Resource }) {
             <ReactMarkdown
               remarkPlugins={[remarkGfm, remarkBreaks]}
               components={{
-                h1: ({node, ...props}) => <h1 className="text-xl font-black text-slate-900 dark:text-white mt-6 mb-3" {...props} />,
-                h2: ({node, ...props}) => <h2 className="text-lg font-black text-slate-800 dark:text-slate-100 mt-5 mb-2" {...props} />,
-                h3: ({node, ...props}) => <h3 className="text-md font-bold text-slate-800 dark:text-slate-200 mt-4 mb-2" {...props} />,
-                p: ({node, ...props}) => <p className="mb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400 whitespace-pre-wrap break-words" {...props} />,
-                ul: ({node, ...props}) => <ul className="list-disc pl-5 mb-4 space-y-1 text-sm text-slate-600 dark:text-slate-400" {...props} />,
-                ol: ({node, ...props}) => <ol className="list-decimal pl-5 mb-4 space-y-1 text-sm text-slate-600 dark:text-slate-400" {...props} />,
+                h1: ({node, ...props}) => <h1 className="text-xl font-black text-slate-900 dark:text-white mt-8 mb-4 pb-2 border-b border-slate-100 dark:border-white/5" {...props} />,
+                h2: ({node, ...props}) => <h2 className="text-lg font-black text-slate-800 dark:text-slate-100 mt-6 mb-3" {...props} />,
+                h3: ({node, ...props}) => <h3 className="text-md font-bold text-slate-800 dark:text-slate-200 mt-5 mb-2 ml-1 md:ml-2" {...props} />,
+                p: ({node, ...props}) => <p className="mb-5 text-sm leading-relaxed text-slate-600 dark:text-slate-400 whitespace-pre-wrap break-words ml-2 md:ml-4" {...props} />,
+                ul: ({node, ...props}) => <ul className="list-disc pl-5 mb-5 space-y-2 text-sm text-slate-600 dark:text-slate-400 ml-2 md:ml-4 marker:text-slate-400" {...props} />,
+                ol: ({node, ...props}) => <ol className="list-decimal pl-5 mb-5 space-y-2 text-sm text-slate-600 dark:text-slate-400 ml-2 md:ml-4 marker:text-slate-400 font-bold" {...props} />,
+                li: ({node, ...props}) => <li className="pl-1" {...props} />,
                 a: ({node, ...props}) => <a className="text-indigo-600 hover:underline font-bold" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} {...props} />,
                 strong: ({node, ...props}) => <strong className="font-black text-slate-800 dark:text-slate-200" {...props} />,
                 code: ({node, ...props}) => <code className="bg-slate-200 dark:bg-white/10 px-1.5 py-0.5 rounded text-indigo-600 dark:text-indigo-400 font-mono text-[12px]" {...props} />
