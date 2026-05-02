@@ -35,8 +35,26 @@ const CATEGORIES = [
   { label: 'AI도구', icon: Zap },
   { label: '배포/운영', icon: Cloud },
   { label: '도메인', icon: Shield },
+  { label: '이슈 기록', icon: Server },
   { label: '기타', icon: MoreHorizontal }
 ];
+
+// 마크다운 문법 제거 후 첫 의미있는 문장 추출
+function stripMarkdownPreview(text: string, maxLength = 120): string {
+  return text
+    .replace(/#{1,6}\s+/g, '')      // ## 헤딩 제거
+    .replace(/\*\*(.*?)\*\*/g, '$1') // **bold** 제거
+    .replace(/\*(.*?)\*/g, '$1')     // *italic* 제거
+    .replace(/`([^`]+)`/g, '$1')     // `code` 제거
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // [링크](url) 제거
+    .replace(/^[-*+]\s+/gm, '')      // 리스트 기호 제거
+    .replace(/^\d+\.\s+/gm, '')      // 번호 리스트 제거
+    .replace(/---+/g, '')            // 구분선 제거
+    .split('\n')
+    .map(l => l.trim())
+    .filter(l => l.length > 0)
+    [0]?.slice(0, maxLength) + (text.length > maxLength ? '...' : '') || text;
+}
 
 const DEFAULT_RESOURCES: Resource[] = [
   { id: 1, title: 'MDN Web Docs', description: '웹 개발을 위한 종합 문서. HTML, CSS, JS 가이드 제공', url: 'https://developer.mozilla.org', category: '문서/가이드', tags: 'HTML,CSS,JS', provider: 'Mozilla', rating: 4.9, icon_text: 'MDN', created_at: '' },
@@ -310,7 +328,9 @@ function ResourceItem({ resource }: { resource: Resource }) {
               <span className="text-[9px] font-black px-1.5 py-0.5 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-sm uppercase tracking-tighter">{resource.category}</span>
             </div>
             {!isOpen && (
-              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 font-medium">{resource.description}</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 font-medium">
+                {stripMarkdownPreview(resource.description)}
+              </p>
             )}
           </div>
           <div className="flex flex-wrap gap-2">
