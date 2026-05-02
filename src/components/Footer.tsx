@@ -22,8 +22,8 @@ export default function Footer() {
               함께 성장하는 바이브 코딩 스터디 공간입니다.
             </p>
             {process.env.NEXT_PUBLIC_BUILD_TIME && (
-              <p className="mt-4 text-[10px] font-black text-indigo-600/60 dark:text-indigo-400/60 uppercase tracking-widest bg-indigo-50 dark:bg-indigo-500/5 inline-block px-2 py-1 rounded">
-                마지막 업데이트: {new Date(process.env.NEXT_PUBLIC_BUILD_TIME).toLocaleString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+              <p className="mt-2 text-[10px] font-medium opacity-30 text-foreground tracking-wider">
+                Updated at {new Date(process.env.NEXT_PUBLIC_BUILD_TIME).toLocaleString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
               </p>
             )}
           </div>

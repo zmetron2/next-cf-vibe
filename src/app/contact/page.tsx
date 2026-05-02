@@ -13,6 +13,7 @@ export default function ContactPage() {
   const [responseType, setResponseType] = useState<'sms' | 'phone' | 'email'>('sms');
   const [isAgreed, setIsAgreed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [formData, setFormData] = useState({ type: '교육 문의', name: '', title: '', contact: '', message: '' });
 
   const handleSubmit = async () => {
@@ -38,7 +39,7 @@ export default function ContactPage() {
       
       const data = await res.json();
       if (data.success) {
-        alert('문의가 성공적으로 접수되었습니다. 빠르게 답변해 드리겠습니다!');
+        setShowSuccessModal(true);
         setFormData({ type: '교육 문의', name: '', title: '', contact: '', message: '' });
         setIsAgreed(false);
       } else {
@@ -202,6 +203,29 @@ export default function ContactPage() {
           </aside>
         </div>
       </main>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setShowSuccessModal(false)}></div>
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-3xl p-8 max-w-sm w-full shadow-2xl shadow-indigo-500/10 text-center animate-in zoom-in-95 duration-300">
+            <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 size={32} />
+            </div>
+            <h3 className="text-xl font-black text-slate-800 dark:text-white mb-2">접수 완료</h3>
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
+              성공적으로 문의가 접수되었습니다.<br/>
+              담당자가 확인 후 빠르게 답변해 드리겠습니다.
+            </p>
+            <button 
+              onClick={() => setShowSuccessModal(false)}
+              className="w-full py-3 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white rounded-xl font-bold transition-colors"
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
