@@ -12,6 +12,44 @@ import {
 export default function ContactPage() {
   const [responseType, setResponseType] = useState<'sms' | 'phone' | 'email'>('sms');
   const [isAgreed, setIsAgreed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({ type: '교육 문의', name: '', title: '', contact: '', message: '' });
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.title || !formData.contact || !formData.message) {
+      alert('모든 필수 항목을 입력해주세요.');
+      return;
+    }
+    
+    setIsSubmitting(true);
+    try {
+      const payload = {
+        name: formData.name,
+        email: responseType === 'email' ? formData.contact : 'no-email@provided.com',
+        phone: responseType !== 'email' ? formData.contact : null,
+        message: `[${formData.type} - ${responseType}]\n제목: ${formData.title}\n\n${formData.message}`
+      };
+
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      const data = await res.json();
+      if (data.success) {
+        alert('문의가 성공적으로 접수되었습니다. 빠르게 답변해 드리겠습니다!');
+        setFormData({ type: '교육 문의', name: '', title: '', contact: '', message: '' });
+        setIsAgreed(false);
+      } else {
+        alert('접수 중 오류가 발생했습니다: ' + data.message);
+      }
+    } catch (e) {
+      alert('접수 중 오류가 발생했습니다.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans transition-colors selection:bg-indigo-100 selection:text-indigo-900">
@@ -64,10 +102,10 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <label className="text-xs font-black text-slate-900 dark:text-slate-300 uppercase tracking-widest px-1">문의 유형 <span className="text-indigo-600">*</span></label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <TypeButton icon={BookOpen} label="교육 문의" active />
-                  <TypeButton icon={Code2} label="프로젝트 제안" />
-                  <TypeButton icon={Users} label="채용/제휴" />
-                  <TypeButton icon={MessageSquare} label="기타 문의" />
+                  <TypeButton icon={BookOpen} label="교육 문의" active={formData.type === '교육 문의'} onClick={() => setFormData({...formData, type: '교육 문의'})} />
+                  <TypeButton icon={Code2} label="프로젝트 제안" active={formData.type === '프로젝트 제안'} onClick={() => setFormData({...formData, type: '프로젝트 제안'})} />
+                  <TypeButton icon={Users} label="채용/제휴" active={formData.type === '채용/제휴'} onClick={() => setFormData({...formData, type: '채용/제휴'})} />
+                  <TypeButton icon={MessageSquare} label="기타 문의" active={formData.type === '기타 문의'} onClick={() => setFormData({...formData, type: '기타 문의'})} />
                 </div>
               </div>
 
@@ -75,11 +113,11 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-3">
                   <label className="text-xs font-black text-slate-900 dark:text-slate-300 uppercase tracking-widest px-1">성함/기업명 <span className="text-indigo-600">*</span></label>
-                  <input type="text" placeholder="성함을 입력해 주세요" className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white" />
+                  <input type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="성함을 입력해 주세요" className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white" />
                 </div>
                 <div className="space-y-3">
                   <label className="text-xs font-black text-slate-900 dark:text-slate-300 uppercase tracking-widest px-1">문의 제목 <span className="text-indigo-600">*</span></label>
-                  <input type="text" placeholder="제목을 입력해 주세요" className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white" />
+                  <input type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} placeholder="제목을 입력해 주세요" className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white" />
                 </div>
               </div>
 
@@ -87,9 +125,9 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <label className="text-xs font-black text-slate-900 dark:text-slate-300 uppercase tracking-widest px-1">답변받으실 방법 <span className="text-indigo-600">*</span></label>
                 <div className="flex flex-wrap gap-4">
-                  <ResponseOption icon={Smartphone} label="문자 답변" active={responseType === 'sms'} onClick={() => setResponseType('sms')} />
-                  <ResponseOption icon={Phone} label="전화 상담" active={responseType === 'phone'} onClick={() => setResponseType('phone')} />
-                  <ResponseOption icon={Mail} label="이메일 답변" active={responseType === 'email'} onClick={() => setResponseType('email')} />
+                  <ResponseOption icon={Smartphone} label="문자 답변" active={responseType === 'sms'} onClick={() => {setResponseType('sms'); setFormData({...formData, contact: ''})}} />
+                  <ResponseOption icon={Phone} label="전화 상담" active={responseType === 'phone'} onClick={() => {setResponseType('phone'); setFormData({...formData, contact: ''})}} />
+                  <ResponseOption icon={Mail} label="이메일 답변" active={responseType === 'email'} onClick={() => {setResponseType('email'); setFormData({...formData, contact: ''})}} />
                 </div>
               </div>
 
@@ -98,12 +136,12 @@ export default function ContactPage() {
                 {responseType === 'email' ? (
                   <div className="space-y-3">
                     <label className="text-xs font-black text-slate-900 dark:text-slate-300 uppercase tracking-widest px-1">이메일 주소 <span className="text-indigo-600">*</span></label>
-                    <input type="email" placeholder="example@email.com" className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white" />
+                    <input type="email" value={formData.contact} onChange={e => setFormData({...formData, contact: e.target.value})} placeholder="example@email.com" className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white" />
                   </div>
                 ) : (
                   <div className="space-y-3">
                     <label className="text-xs font-black text-slate-900 dark:text-slate-300 uppercase tracking-widest px-1">연락처 <span className="text-indigo-600">*</span></label>
-                    <input type="tel" placeholder="010-0000-0000" className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white" />
+                    <input type="tel" value={formData.contact} onChange={e => setFormData({...formData, contact: e.target.value})} placeholder="010-0000-0000" className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white" />
                   </div>
                 )}
               </div>
@@ -111,7 +149,7 @@ export default function ContactPage() {
               {/* Content Area */}
               <div className="space-y-3">
                 <label className="text-xs font-black text-slate-900 dark:text-slate-300 uppercase tracking-widest px-1">문의 내용 <span className="text-indigo-600">*</span></label>
-                <textarea rows={8} placeholder="내용을 상세히 입력해 주시면 더욱 정확한 답변이 가능합니다." className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white resize-none"></textarea>
+                <textarea rows={8} value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} placeholder="내용을 상세히 입력해 주시면 더욱 정확한 답변이 가능합니다." className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all dark:text-white resize-none"></textarea>
               </div>
 
               {/* Agreement */}
@@ -132,10 +170,11 @@ export default function ContactPage() {
               {/* Submit Button */}
               <button 
                 type="button" 
-                disabled={!isAgreed}
-                className={`w-full py-5 rounded-[1.5rem] font-black text-lg flex items-center justify-center gap-4 transition-all shadow-2xl ${isAgreed ? 'bg-indigo-600 text-white shadow-indigo-600/30 hover:-translate-y-1 hover:shadow-indigo-600/40 active:scale-95' : 'bg-slate-100 dark:bg-white/5 text-slate-400 cursor-not-allowed border border-slate-200 dark:border-white/5'}`}
+                onClick={handleSubmit}
+                disabled={!isAgreed || isSubmitting}
+                className={`w-full py-5 rounded-[1.5rem] font-black text-lg flex items-center justify-center gap-4 transition-all shadow-2xl ${isAgreed && !isSubmitting ? 'bg-indigo-600 text-white shadow-indigo-600/30 hover:-translate-y-1 hover:shadow-indigo-600/40 active:scale-95' : 'bg-slate-100 dark:bg-white/5 text-slate-400 cursor-not-allowed border border-slate-200 dark:border-white/5'}`}
               >
-                {isAgreed ? '상담 신청하기' : '개인정보 동의가 필요합니다'} <Send className={`w-5 h-5 ${isAgreed ? '' : 'opacity-20'}`} />
+                {isSubmitting ? '제출 중...' : isAgreed ? '상담 신청하기' : '개인정보 동의가 필요합니다'} <Send className={`w-5 h-5 ${isAgreed ? '' : 'opacity-20'}`} />
               </button>
             </form>
           </div>

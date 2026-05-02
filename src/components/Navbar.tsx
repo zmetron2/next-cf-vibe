@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sun, Moon, Search, Menu, X, ArrowRight, User, LogOut, Settings, ChevronDown, UserCircle } from 'lucide-react';
+import { Sun, Moon, Search, Menu, X, ArrowRight, User, LogOut, Settings, ChevronDown, UserCircle, Shield } from 'lucide-react';
 import Logo from './Logo';
 
 export default function Navbar() {
@@ -159,6 +159,9 @@ export default function Navbar() {
                       
                       <Link href="/mypage" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                         <UserCircle size={18} /> 마이페이지
+                      </Link>
+                      <Link href="/admin" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                        <Shield size={18} /> 관리자 대쉬보드
                       </Link>
                       <Link href="/profile/edit" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                         <Settings size={18} /> 프로필 수정
